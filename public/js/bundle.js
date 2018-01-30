@@ -24966,7 +24966,8 @@ if (false) {(function () {
   mounted() {
     const video = document.getElementById("video");
     video.addEventListener('timeupdate', () => {
-      app.nowTime = video.currentTime
+      console.log(this.nowTime)
+      this.nowTime = video.currentTime
     }, false);
   },
   methods: {
@@ -25012,7 +25013,6 @@ if (false) {(function () {
 
     this.source = getData.source["1"].replace(/\'/g, '\"');
   },
-
   filters: {
     toTime: function (value) {
       if (!value) return ''
@@ -25020,15 +25020,13 @@ if (false) {(function () {
     }
   },
   watch: {
-    nowTime: function (nowTime) {
+    nowTime: function (nowt) {
+      console.log(nowt)
       this.tableData2.forEach((data, index, array) => {
-        if (data.time <= nowTime && nowTime < data.endTime) {
+        if (data.time <= nowt && nowt < data.endTime) {
           document.getElementById("tableBody").scrollTop = index * 42;
         }
       })
-    },
-    news: function (news) {
-      console.log(news)
     }
   }
 });
@@ -25078,7 +25076,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\nh3 {\n  color: red;\n}", ""]);
+exports.push([module.i, "\nh3 {\n  color: red;\n}\n", ""]);
 
 // exports
 

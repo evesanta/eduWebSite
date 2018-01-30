@@ -19,7 +19,8 @@ export default {
   mounted() {
     const video = document.getElementById("video");
     video.addEventListener('timeupdate', () => {
-      app.nowTime = video.currentTime
+      console.log(this.nowTime)
+      this.nowTime = video.currentTime
     }, false);
   },
   methods: {
@@ -65,7 +66,6 @@ export default {
 
     this.source = getData.source["1"].replace(/\'/g, '\"');
   },
-
   filters: {
     toTime: function (value) {
       if (!value) return ''
@@ -73,15 +73,13 @@ export default {
     }
   },
   watch: {
-    nowTime: function (nowTime) {
+    nowTime: function (nowt) {
+      console.log(nowt)
       this.tableData2.forEach((data, index, array) => {
-        if (data.time <= nowTime && nowTime < data.endTime) {
+        if (data.time <= nowt && nowt < data.endTime) {
           document.getElementById("tableBody").scrollTop = index * 42;
         }
       })
-    },
-    news: function (news) {
-      console.log(news)
     }
   }
 }
