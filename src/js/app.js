@@ -6,6 +6,10 @@ Vue.use(VueRouter)
 
 // 1. ルートコンポーネントを定義します
 // 他のファイルからインポートすることもできます
+
+import Video from './components/video/video.vue'
+
+
 const Foo = {
   template: '<div>foo</div>'
 }
@@ -26,6 +30,10 @@ const routes = [
   {
     path: '/bar',
     component: Bar
+  },
+  {
+    path: '/video',
+    component: Video
   }
 ]
 

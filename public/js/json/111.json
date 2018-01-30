@@ -1,0 +1,25 @@
+{
+  "title": "C言語のHelloWorld",
+  "url": "https://firebasestorage.googleapis.com/v0/b/seektests.appspot.com/o/movie%2FC%E8%A8%80%E8%AA%9E%E3%81%AEHelloWorld.mp4?alt=media&token=d0b71245-a6b8-4533-8ab8-771cc9e870cc",
+  "chapter": {
+    "0": "初めに",
+    "3": "今日の話題",
+    "15": "補足資料への誘導",
+    "19": "プログラミング開始！",
+    "30": "Hello Worldのちょっとした説明",
+    "36": "RubyのHello Worldのススメ",
+    "41": "プログラム実行",
+    "47": "プログラムの説明開始",
+    "51": "1行目の説明",
+    "62": "3行目の説明",
+    "77": "4行目の説明",
+    "86": "6行目の説明",
+    "94": "終わりの挨拶"
+  },
+  "ref": {
+    "1": "こんにちはこれが参考資料ですnnPaiza.IOへはこのURLから進むことができます。 https: //paiza.io/ja実行環境のインストール方法は〇〇の動画を参考にしてください"
+  },
+  "source": {
+    "1": "#include <stdio.h>\n\nint main(void){\n\tprintf('Hello World ');\n\n\treturn 0;\n}"
+  }
+}
