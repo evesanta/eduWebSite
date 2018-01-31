@@ -17,7 +17,7 @@
     "94": "終わりの挨拶"
   },
   "ref": {
-    "1": "こんにちはこれが参考資料ですnnPaiza.IOへはこのURLから進むことができます。 https: //paiza.io/ja実行環境のインストール方法は〇〇の動画を参考にしてください"
+    "1": "C言語だよ！！Cだもん！オオーーーーーい"
   },
   "source": {
     "1": "#include <stdio.h>\n\nint main(void){\n\tprintf('Hello World ');\n\n\treturn 0;\n}"

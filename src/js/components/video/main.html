@@ -6,7 +6,7 @@
       <video id="video" controls :src="videoUrl" @click="saisei()" autobuffer></video>
     </section>
     <section class="item-box">
-<!--
+      <!--
       <el-button> &lt; 前の講座へ</el-button><el-button>
   次の講座へ > </el-button>
 <el-button type="primary">Good!</el-button>
@@ -36,7 +36,7 @@
         </tr>
       </thead>
       <tbody id="tableBody">
-        <tr v-for="(item, index) in tableData2" :class="{ 'nowPlay': item.time <= nowTime && nowTime < item.endTime}" @click="say(index)">
+        <tr v-for="(item, index) in tableData" :class="{ 'nowPlay': item.time <= nowTime && nowTime < item.endTime}" @click="say(index)">
           <td class="time">{{ item.time | toTime }}</td>
           <td class="name">{{ item.name }}</td>
         </tr>

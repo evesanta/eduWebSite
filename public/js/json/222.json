@@ -1,0 +1,14 @@
+{
+  "title": "R言語のHelloWorld",
+  "url": "https://firebasestorage.googleapis.com/v0/b/seektests.appspot.com/o/movie%2FC%E8%A8%80%E8%AA%9E%E3%81%AEHelloWorld.mp4?alt=media&token=d0b71245-a6b8-4533-8ab8-771cc9e870cc",
+  "chapter": {
+    "0": "初めに",
+    "3": "今日の話題"
+  },
+  "ref": {
+    "1": "このページはR言語！だよ！RRRRRRRR！！！Lじゃないよ"
+  },
+  "source": {
+    "1": "#include <stdio.h>\n\nint main(void){\n\tprintf('Hello World ');\n\n\treturn 0;\n}"
+  }
+}

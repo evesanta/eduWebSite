@@ -60,34 +60,317 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var g;
+"use strict";
 
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
 
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
+var bind = __webpack_require__(5);
+var isBuffer = __webpack_require__(26);
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
 }
 
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
 
-module.exports = g;
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
 
 
 /***/ }),
@@ -282,21 +565,534 @@ process.umask = function() { return 0; };
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-module.exports = __webpack_require__(3);
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(28);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(6);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(6);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jQuery__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jQuery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jQuery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  data() {
+    return {
+      nowTime: 0,
+      tableData: [],
+      title: '',
+      videoUrl: '',
+      loaded: "",
+      ref: "",
+      source: "",
+      message: 'hello!',
+      jsonData: "読み込み中"
+    }
+  },
+  mounted() {
+    const video = document.getElementById("video");
+    video.addEventListener('timeupdate', () => {
+      console.log(this.nowTime)
+      this.nowTime = video.currentTime
+    }, false);
+  },
+  methods: {
+    say: function (index) {
+      const video = document.getElementById("video");
+      video.currentTime = this.tableData[index].time;
+      video.play();
+    },
+    saisei: function () {
+      video.paused ? video.play() : video.pause();
+    },
+    update: async function () {
+      var getData = await getJson(this.$route.params.id.toString())
+
+      this.title = getData.title
+      this.videoUrl = getData.url
+
+      this.tableData = getTable(getData.chapter)
+
+      var temp = getData.ref["1"]
+
+      this.ref = temp.replace('nn', '\<br/\>');
+
+      this.source = getData.source["1"].replace(/\'/g, '\"');
+
+    }
+  },
+
+  created: async function () {
+    this.loaded = "loaded"
+
+    this.update()
+
+  },
+  filters: {
+    toTime: function (value) {
+      if (!value) return ''
+      return Math.floor(value / 60) + ":" + ('00' + (value % 60)).slice(-2);
+    }
+  },
+  watch: {
+    nowTime: function (nowt) {
+      console.log(nowt)
+      this.tableData.forEach((data, index, array) => {
+        if (data.time <= nowt && nowt < data.endTime) {
+          document.getElementById("tableBody").scrollTop = index * 42;
+        }
+      })
+    },
+    '$route' (to, from) {
+      this.update()
+    }
+  }
+});
+
+var getTable = function (data) {
+
+  var table = []
+
+  for (var index in data) {
+    if (index != 0) table[table.length - 1].endTime = index;
+    const shortName = (data[index].length > 20) ?
+      data[index].slice(0, 17) + "..." : data[index];
+    table.push({
+      time: index,
+      endTime: Infinity,
+      name: shortName,
+      nowPlay: false
+    })
+  }
+
+  return table
+}
+
+var getJson = async function (name) {
+  var getData = null
+  await __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/js/json/" + name + ".json").then(x => {
+    getData = x.data
+  });
+  return getData
+}
+// this.app.$options.methods.update(this.app.$options.data)
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(29);
+var buildURL = __webpack_require__(31);
+var parseHeaders = __webpack_require__(32);
+var isURLSameOrigin = __webpack_require__(33);
+var createError = __webpack_require__(7);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(34);
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if (process.env.NODE_ENV !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(35);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(30);
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(11);
+
+
+/***/ }),
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_video_video_vue__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_video_video_vue__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_home_vue__ = __webpack_require__(45);
 // 0. モジュールシステムを使っている場合 (例: vue-cli 経由で)、Vue と VueRouter をインポートし、`Vue.use(VueRouter)` を呼び出します。
 
 
@@ -305,6 +1101,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 // 1. ルートコンポーネントを定義します
 // 他のファイルからインポートすることもできます
+
+
 
 
 
@@ -323,15 +1121,15 @@ const Bar = {
 // ネストされたルートに関しては後で説明します
 const routes = [
   {
-    path: '/foo',
-    component: Foo
+    path: '/home',
+    component: __WEBPACK_IMPORTED_MODULE_3__components_home_vue__["a" /* default */]
   },
   {
     path: '/bar',
     component: Bar
   },
   {
-    path: '/video',
+    path: '/video/:id',
     component: __WEBPACK_IMPORTED_MODULE_2__components_video_video_vue__["a" /* default */]
   }
 ]
@@ -354,7 +1152,7 @@ const app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 
 /***/ }),
-/* 4 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
@@ -11156,10 +11954,10 @@ return Vue$3;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(5).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(13).setImmediate))
 
 /***/ }),
-/* 5 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
@@ -11212,7 +12010,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(6);
+__webpack_require__(14);
 // On some exotic environments, it's not clear which object `setimmeidate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -11223,10 +12021,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 6 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -11416,10 +12214,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(1)))
 
 /***/ }),
-/* 7 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14050,11 +14848,102 @@ if (inBrowser && window.Vue) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__script_js__ = __webpack_require__(4);
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0661772a_hasScoped_false_buble_transforms_main_html__ = __webpack_require__(43);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(17)
+}
+var normalizeComponent = __webpack_require__(22)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__script_js__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0661772a_hasScoped_false_buble_transforms_main_html__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/js/components/video/video.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0661772a", Component.options)
+  } else {
+    hotAPI.reload("data-v-0661772a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(18);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(20)("5deb7f99", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0661772a\",\"scoped\":false,\"hasInlineConfig\":false}!./style.css", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0661772a\",\"scoped\":false,\"hasInlineConfig\":false}!./style.css");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(19)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n@charset \"UTF-8\";\nbody {\n  margin: 0;\n}\nheader {\n  background-color: #3C7;\n  color: white;\n}\nheader h1 {\n  margin-top: 0;\n  padding-top: 10px;\n  padding-left: 10px;\n  margin-bottom: 0;\n}\n.container {\n  height: 100%;\n}\n{\n  z-index: 20;\n}\n.main {\n  margin: 0 auto;\n  height: 100%;\n  display: flex;\n  padding-bottom: 0;\n  padding-top: 10px;\n  width: 1300px;\n}\n.main .left {\n  width: 728px;\n}\n.main .left section {\n  min-width: 100%;\n  width: 600px;\n  height: 410px;\n}\n.main .left section video {\n  background-color: black;\n  width: 100%;\n  height: 100%;\n}\n.main .left .item-box {\n  height: 50px;\n  background-color: #ACF;\n  border: 1px solid #AAA;\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  z-index: 2;\n  position: relative;\n  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);\n  box-sizing: border-box;\n}\n.main .left .item-box button {\n  margin-right: 10px;\n  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);\n}\n.main .left .description {\n  background-color: #e8f4fd;\n  height: 405px;\n  overflow-y: scroll;\n  box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.4) inset;\n  padding-top: 50px;\n  margin-top: -50px;\n  z-index: 1;\n  position: relative;\n}\n.main .left .description pre {\n  margin: 10px 60px;\n  z-index: 1;\n}\n.main .left .description pre:last-child {\n  margin-bottom: 80px;\n}\n.main .left .description .code-html {\n  border: 2px solid #e8a12a;\n}\n.main .left .description .code-html .toolbar {\n  background: #e8a12a;\n  font-family: arial, sans-serif;\n}\n.main .left .description .code-css {\n  border: 2px solid #8CF;\n}\n.main .left .description .code-css .toolbar {\n  background: #8CF;\n  font-family: arial, sans-serif;\n}\n.main .left .description .code-js {\n  border: 2px solid #3db271;\n}\n.main .left .description .code-js .toolbar {\n  background: #3db271;\n  font-family: arial, sans-serif;\n}\n.main .left .description .code-c {\n  border: 2px solid #3276b4;\n}\n.main .left .description .code-c .toolbar {\n  background: #3276b4;\n  font-family: arial, sans-serif;\n}\n.main .left .description .code-ruby {\n  border: 2px solid #e8699a;\n}\n.main .left .description .code-ruby .toolbar {\n  background: #e8699a;\n  font-family: arial, sans-serif;\n}\n.main .left .description .sankou {\n  margin: 20px 60px;\n  border: 2px solid #ffcc22;\n  background-color: white;\n  position: relative;\n  padding-left: 30px;\n}\n.main .left .description .sankou .title {\n  border-radius: 20px;\n  padding: 3px 6px;\n  position: absolute;\n  left: 5px;\n  top: -15px;\n  background-color: #ffcc22;\n  color: white;\n}\n.main .right {\n  width: 572px;\n  text-align: center;\n}\n.main .right .table {\n  margin: 0 auto;\n  border-collapse: collapse;\n  background-color: white;\n  text-align: left;\n  line-height: 1.5;\n  border: 2px solid #DDD;\n  z-index: 3;\n}\n.main .right .table thead {\n  display: block;\n}\n.main .right .table thead th {\n  padding: 10px;\n  font-weight: bold;\n  vertical-align: top;\n  background-color: #EFE;\n  border-bottom: 3px solid #3C7;\n}\n.main .right .table tbody {\n  cursor: pointer;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n  height: 350px;\n}\n.main .right .table tbody::-webkit-scrollbar {\n  display: none;\n}\n.main .right .table tbody td {\n  padding: 10px;\n  vertical-align: top;\n  border-bottom: 1px solid #ccc;\n  white-space: nowrap;\n  overflow-x: hidden;\n}\n.main .right .table tbody tr {\n  opacity: 0.4;\n  font-size: 14px;\n  transition: background-color 0.5s 0s ease;\n}\n.main .right .table tbody tr:hover {\n  background-color: #EFE;\n  opacity: 0.7;\n}\n.main .right .table tbody .nowPlay {\n  color: #3C7;\n  opacity: 1;\n}\n.main .right .table .time {\n  width: 72px;\n}\n.main .right .table .name {\n  width: 380px;\n}\n.main .right .recommand {\n  margin: 10px auto 0 auto;\n  padding-top: 0;\n  width: 490px;\n  height: 445px;\n  background-color: #e8f4fd;\n  border: 2px solid #DDD;\n}\n.main .right .recommand h3 {\n  margin-top: 0;\n  text-align: center;\n}\n.breadcrumb {\n  margin-top: 0;\n  padding-left: 0;\n  padding-bottom: 0;\n  margin-left: 20px;\n  margin-bottom: 0;\n  height: 24px;\n}\n.breadcrumb li {\n  display: inline;\n  /*横に並ぶように*/\n  list-style: none;\n  font-weight: bold;\n  /*太字*/\n}\n.breadcrumb li:after {\n  /* >を表示*/\n  content: '>';\n  padding: 0 3px;\n  color: #555;\n}\n.breadcrumb li:last-child:after {\n  content: '';\n}\n.breadcrumb li a {\n  text-decoration: none;\n  color: #3C7;\n  /*色*/\n}\n.breadcrumb li a:hover {\n  text-decoration: underline;\n}\n.loaded {\n  display: none;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports) {
 
 /*
@@ -14136,7 +15025,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 13 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -14155,7 +15044,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(14)
+var listToStyles = __webpack_require__(21)
 
 /*
 type StyleObject = {
@@ -14364,7 +15253,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 14 */
+/* 21 */
 /***/ (function(module, exports) {
 
 /**
@@ -14397,7 +15286,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 15 */
+/* 22 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -14506,11 +15395,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24881,1040 +25766,22 @@ return jQuery;
 
 
 /***/ }),
-/* 21 */,
-/* 22 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__script_js__ = __webpack_require__(23);
-/* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0661772a_hasScoped_false_buble_transforms_main_html__ = __webpack_require__(26);
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(24)
-}
-var normalizeComponent = __webpack_require__(15)
-/* script */
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__script_js__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0661772a_hasScoped_false_buble_transforms_main_html__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/js/components/video/video.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0661772a", Component.options)
-  } else {
-    hotAPI.reload("data-v-0661772a", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
-
-
-/***/ }),
-/* 23 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jQuery__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jQuery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jQuery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  data() {
-    return {
-      nowTime: 0,
-      tableData2: [],
-      title: '',
-      videoUrl: '',
-      loaded: "",
-      ref: "",
-      source: "",
-      message: 'hello!',
-      jsonData: "読み込み中"
-    }
-  },
-  mounted() {
-    const video = document.getElementById("video");
-    video.addEventListener('timeupdate', () => {
-      console.log(this.nowTime)
-      this.nowTime = video.currentTime
-    }, false);
-  },
-  methods: {
-    say: function (index) {
-      const video = document.getElementById("video");
-      video.currentTime = this.tableData2[index].time;
-      video.play();
-      //      document.getElementById("tableBody").scrollTop = 41;
-    },
-    saisei: function () {
-      video.paused ? video.play() : video.pause();
-    }
-  },
-
-  created: async function () {
-    this.loaded = "loaded"
-    //this.videoUrl = "asd"
-
-    var getData = await getJson()
-
-    this.title = getData.title
-
-    this.videoUrl = getData.url
-
-    var table = []
-    var val = getData.chapter
-    for (var index in val) {
-      if (index != 0) table[table.length - 1].endTime = index;
-      const shortName = (val[index].length > 20) ?
-        val[index].slice(0, 17) + "..." : val[index];
-      table.push({
-        time: index,
-        endTime: Infinity,
-        name: shortName,
-        nowPlay: false
-      })
-    }
-    this.tableData2 = table
-
-    var temp = getData.ref["1"]
-
-    this.ref = temp.replace('nn', '\<br/\>');
-
-    this.source = getData.source["1"].replace(/\'/g, '\"');
-  },
-  filters: {
-    toTime: function (value) {
-      if (!value) return ''
-      return Math.floor(value / 60) + ":" + ('00' + (value % 60)).slice(-2);
-    }
-  },
-  watch: {
-    nowTime: function (nowt) {
-      console.log(nowt)
-      this.tableData2.forEach((data, index, array) => {
-        if (data.time <= nowt && nowt < data.endTime) {
-          document.getElementById("tableBody").scrollTop = index * 42;
-        }
-      })
-    }
-  }
-});
-
-var getJson = async function (name) {
-  var getData = null
-  await __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/js/json/111.json").then(x => {
-    getData = x.data
-  });
-  return getData
-}
-// this.app.$options.methods.update(this.app.$options.data)
-
-
-/***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(25);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(13)("5deb7f99", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0661772a\",\"scoped\":false,\"hasInlineConfig\":false}!./style.css", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0661772a\",\"scoped\":false,\"hasInlineConfig\":false}!./style.css");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+module.exports = __webpack_require__(25);
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(12)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n@charset \"UTF-8\";\nbody {\n  margin: 0;\n}\nheader {\n  background-color: #3C7;\n  color: white;\n}\nheader h1 {\n  margin-top: 0;\n  padding-top: 10px;\n  padding-left: 10px;\n  margin-bottom: 0;\n}\n.container {\n  height: 100%;\n}\n{\n  z-index: 20;\n}\n.main {\n  margin: 0 auto;\n  height: 100%;\n  display: flex;\n  padding-bottom: 0;\n  padding-top: 10px;\n  width: 1300px;\n}\n.main .left {\n  width: 728px;\n}\n.main .left section {\n  min-width: 100%;\n  width: 600px;\n  height: 410px;\n}\n.main .left section video {\n  background-color: black;\n  width: 100%;\n  height: 100%;\n}\n.main .left .item-box {\n  height: 50px;\n  background-color: #ACF;\n  border: 1px solid #AAA;\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  z-index: 2;\n  position: relative;\n  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);\n  box-sizing: border-box;\n}\n.main .left .item-box button {\n  margin-right: 10px;\n  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);\n}\n.main .left .description {\n  background-color: #e8f4fd;\n  height: 405px;\n  overflow-y: scroll;\n  box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.4) inset;\n  padding-top: 50px;\n  margin-top: -50px;\n  z-index: 1;\n  position: relative;\n}\n.main .left .description pre {\n  margin: 10px 60px;\n  z-index: 1;\n}\n.main .left .description pre:last-child {\n  margin-bottom: 80px;\n}\n.main .left .description .code-html {\n  border: 2px solid #e8a12a;\n}\n.main .left .description .code-html .toolbar {\n  background: #e8a12a;\n  font-family: arial, sans-serif;\n}\n.main .left .description .code-css {\n  border: 2px solid #8CF;\n}\n.main .left .description .code-css .toolbar {\n  background: #8CF;\n  font-family: arial, sans-serif;\n}\n.main .left .description .code-js {\n  border: 2px solid #3db271;\n}\n.main .left .description .code-js .toolbar {\n  background: #3db271;\n  font-family: arial, sans-serif;\n}\n.main .left .description .code-c {\n  border: 2px solid #3276b4;\n}\n.main .left .description .code-c .toolbar {\n  background: #3276b4;\n  font-family: arial, sans-serif;\n}\n.main .left .description .code-ruby {\n  border: 2px solid #e8699a;\n}\n.main .left .description .code-ruby .toolbar {\n  background: #e8699a;\n  font-family: arial, sans-serif;\n}\n.main .left .description .sankou {\n  margin: 20px 60px;\n  border: 2px solid #ffcc22;\n  background-color: white;\n  position: relative;\n  padding-left: 30px;\n}\n.main .left .description .sankou .title {\n  border-radius: 20px;\n  padding: 3px 6px;\n  position: absolute;\n  left: 5px;\n  top: -15px;\n  background-color: #ffcc22;\n  color: white;\n}\n.main .right {\n  width: 572px;\n  text-align: center;\n}\n.main .right .table {\n  margin: 0 auto;\n  border-collapse: collapse;\n  background-color: white;\n  text-align: left;\n  line-height: 1.5;\n  border: 2px solid #DDD;\n  z-index: 3;\n}\n.main .right .table thead {\n  display: block;\n}\n.main .right .table thead th {\n  padding: 10px;\n  font-weight: bold;\n  vertical-align: top;\n  background-color: #EFE;\n  border-bottom: 3px solid #3C7;\n}\n.main .right .table tbody {\n  cursor: pointer;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n  height: 350px;\n}\n.main .right .table tbody::-webkit-scrollbar {\n  display: none;\n}\n.main .right .table tbody td {\n  padding: 10px;\n  vertical-align: top;\n  border-bottom: 1px solid #ccc;\n  white-space: nowrap;\n  overflow-x: hidden;\n}\n.main .right .table tbody tr {\n  opacity: 0.4;\n  font-size: 14px;\n  transition: background-color 0.5s 0s ease;\n}\n.main .right .table tbody tr:hover {\n  background-color: #EFE;\n  opacity: 0.7;\n}\n.main .right .table tbody .nowPlay {\n  color: #3C7;\n  opacity: 1;\n}\n.main .right .table .time {\n  width: 72px;\n}\n.main .right .table .name {\n  width: 380px;\n}\n.main .right .recommand {\n  margin: 10px auto 0 auto;\n  padding-top: 0;\n  width: 490px;\n  height: 445px;\n  background-color: #e8f4fd;\n  border: 2px solid #DDD;\n}\n.main .right .recommand h3 {\n  margin-top: 0;\n  text-align: center;\n}\n.breadcrumb {\n  margin-top: 0;\n  padding-left: 0;\n  padding-bottom: 0;\n  margin-left: 20px;\n  margin-bottom: 0;\n  height: 24px;\n}\n.breadcrumb li {\n  display: inline;\n  /*横に並ぶように*/\n  list-style: none;\n  font-weight: bold;\n  /*太字*/\n}\n.breadcrumb li:after {\n  /* >を表示*/\n  content: '>';\n  padding: 0 3px;\n  color: #555;\n}\n.breadcrumb li:last-child:after {\n  content: '';\n}\n.breadcrumb li a {\n  text-decoration: none;\n  color: #3C7;\n  /*色*/\n}\n.breadcrumb li a:hover {\n  text-decoration: underline;\n}\n.loaded {\n  display: none;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "main" }, [
-    _c("div", { staticClass: "left" }, [
-      _c("section", [
-        _c("video", {
-          attrs: {
-            id: "video",
-            controls: "",
-            src: _vm.videoUrl,
-            autobuffer: ""
-          },
-          on: {
-            click: function($event) {
-              _vm.saisei()
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("section", { staticClass: "item-box" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "description" }, [
-        _c("article", { staticClass: "sankou" }, [
-          _c("span", { staticClass: "title" }, [_vm._v("参考資料1")]),
-          _vm._v(" " + _vm._s(_vm.ref) + "\n\n      ")
-        ]),
-        _vm._v(" "),
-        _c(
-          "pre",
-          { staticClass: "line-numbers code-c", attrs: { "data-no": "1" } },
-          [
-            _c(
-              "code",
-              { staticClass: "language-c", attrs: { "data-language": "c" } },
-              [_vm._v(_vm._s(_vm.source))]
-            ),
-            _vm._v("\n")
-          ]
-        ),
-        _vm._v(" "),
-        _vm._m(0)
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "right" }, [
-      _c("table", { staticClass: "table" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          { attrs: { id: "tableBody" } },
-          _vm._l(_vm.tableData2, function(item, index) {
-            return _c(
-              "tr",
-              {
-                class: {
-                  nowPlay:
-                    item.time <= _vm.nowTime && _vm.nowTime < item.endTime
-                },
-                on: {
-                  click: function($event) {
-                    _vm.say(index)
-                  }
-                }
-              },
-              [
-                _c("td", { staticClass: "time" }, [
-                  _vm._v(_vm._s(_vm._f("toTime")(item.time)))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "name" }, [_vm._v(_vm._s(item.name))])
-              ]
-            )
-          })
-        )
-      ]),
-      _vm._v(" "),
-      _vm._m(2)
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "pre",
-      { staticClass: "line-numbers code-ruby", attrs: { "data-no": "2" } },
-      [
-        _c(
-          "code",
-          { staticClass: "language-ruby", attrs: { "data-language": "ruby" } },
-          [_vm._v('puts "Hello World"')]
-        ),
-        _vm._v("\n")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { staticClass: "time" }, [_vm._v("時間")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "name" }, [_vm._v("チャプター")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "recommand" }, [
-      _c("h3", [_vm._v("おすすめ動画 or 質問箱")])
-    ])
-  }
-]
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0661772a", esExports)
-  }
-}
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
-var bind = __webpack_require__(29);
-var isBuffer = __webpack_require__(36);
-
-/*global toString:true*/
-
-// utils is a library of generic helper functions non-specific to axios
-
-var toString = Object.prototype.toString;
-
-/**
- * Determine if a value is an Array
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Array, otherwise false
- */
-function isArray(val) {
-  return toString.call(val) === '[object Array]';
-}
-
-/**
- * Determine if a value is an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an ArrayBuffer, otherwise false
- */
-function isArrayBuffer(val) {
-  return toString.call(val) === '[object ArrayBuffer]';
-}
-
-/**
- * Determine if a value is a FormData
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an FormData, otherwise false
- */
-function isFormData(val) {
-  return (typeof FormData !== 'undefined') && (val instanceof FormData);
-}
-
-/**
- * Determine if a value is a view on an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
- */
-function isArrayBufferView(val) {
-  var result;
-  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
-    result = ArrayBuffer.isView(val);
-  } else {
-    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
-  }
-  return result;
-}
-
-/**
- * Determine if a value is a String
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a String, otherwise false
- */
-function isString(val) {
-  return typeof val === 'string';
-}
-
-/**
- * Determine if a value is a Number
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Number, otherwise false
- */
-function isNumber(val) {
-  return typeof val === 'number';
-}
-
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-  return typeof val === 'undefined';
-}
-
-/**
- * Determine if a value is an Object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Object, otherwise false
- */
-function isObject(val) {
-  return val !== null && typeof val === 'object';
-}
-
-/**
- * Determine if a value is a Date
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Date, otherwise false
- */
-function isDate(val) {
-  return toString.call(val) === '[object Date]';
-}
-
-/**
- * Determine if a value is a File
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a File, otherwise false
- */
-function isFile(val) {
-  return toString.call(val) === '[object File]';
-}
-
-/**
- * Determine if a value is a Blob
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Blob, otherwise false
- */
-function isBlob(val) {
-  return toString.call(val) === '[object Blob]';
-}
-
-/**
- * Determine if a value is a Function
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Function, otherwise false
- */
-function isFunction(val) {
-  return toString.call(val) === '[object Function]';
-}
-
-/**
- * Determine if a value is a Stream
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Stream, otherwise false
- */
-function isStream(val) {
-  return isObject(val) && isFunction(val.pipe);
-}
-
-/**
- * Determine if a value is a URLSearchParams object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a URLSearchParams object, otherwise false
- */
-function isURLSearchParams(val) {
-  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
-}
-
-/**
- * Trim excess whitespace off the beginning and end of a string
- *
- * @param {String} str The String to trim
- * @returns {String} The String freed of excess whitespace
- */
-function trim(str) {
-  return str.replace(/^\s*/, '').replace(/\s*$/, '');
-}
-
-/**
- * Determine if we're running in a standard browser environment
- *
- * This allows axios to run in a web worker, and react-native.
- * Both environments support XMLHttpRequest, but not fully standard globals.
- *
- * web workers:
- *  typeof window -> undefined
- *  typeof document -> undefined
- *
- * react-native:
- *  navigator.product -> 'ReactNative'
- */
-function isStandardBrowserEnv() {
-  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
-    return false;
-  }
-  return (
-    typeof window !== 'undefined' &&
-    typeof document !== 'undefined'
-  );
-}
-
-/**
- * Iterate over an Array or an Object invoking a function for each item.
- *
- * If `obj` is an Array callback will be called passing
- * the value, index, and complete array for each item.
- *
- * If 'obj' is an Object callback will be called passing
- * the value, key, and complete object for each property.
- *
- * @param {Object|Array} obj The object to iterate
- * @param {Function} fn The callback to invoke for each item
- */
-function forEach(obj, fn) {
-  // Don't bother if no value provided
-  if (obj === null || typeof obj === 'undefined') {
-    return;
-  }
-
-  // Force an array if not already something iterable
-  if (typeof obj !== 'object') {
-    /*eslint no-param-reassign:0*/
-    obj = [obj];
-  }
-
-  if (isArray(obj)) {
-    // Iterate over array values
-    for (var i = 0, l = obj.length; i < l; i++) {
-      fn.call(null, obj[i], i, obj);
-    }
-  } else {
-    // Iterate over object keys
-    for (var key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        fn.call(null, obj[key], key, obj);
-      }
-    }
-  }
-}
-
-/**
- * Accepts varargs expecting each argument to be an object, then
- * immutably merges the properties of each object and returns result.
- *
- * When multiple objects contain the same key the later object in
- * the arguments list will take precedence.
- *
- * Example:
- *
- * ```js
- * var result = merge({foo: 123}, {foo: 456});
- * console.log(result.foo); // outputs 456
- * ```
- *
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */
-function merge(/* obj1, obj2, obj3, ... */) {
-  var result = {};
-  function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
-      result[key] = merge(result[key], val);
-    } else {
-      result[key] = val;
-    }
-  }
-
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    forEach(arguments[i], assignValue);
-  }
-  return result;
-}
-
-/**
- * Extends object a by mutably adding to it the properties of object b.
- *
- * @param {Object} a The object to be extended
- * @param {Object} b The object to copy properties from
- * @param {Object} thisArg The object to bind function to
- * @return {Object} The resulting value of object a
- */
-function extend(a, b, thisArg) {
-  forEach(b, function assignValue(val, key) {
-    if (thisArg && typeof val === 'function') {
-      a[key] = bind(val, thisArg);
-    } else {
-      a[key] = val;
-    }
-  });
-  return a;
-}
-
-module.exports = {
-  isArray: isArray,
-  isArrayBuffer: isArrayBuffer,
-  isBuffer: isBuffer,
-  isFormData: isFormData,
-  isArrayBufferView: isArrayBufferView,
-  isString: isString,
-  isNumber: isNumber,
-  isObject: isObject,
-  isUndefined: isUndefined,
-  isDate: isDate,
-  isFile: isFile,
-  isBlob: isBlob,
-  isFunction: isFunction,
-  isStream: isStream,
-  isURLSearchParams: isURLSearchParams,
-  isStandardBrowserEnv: isStandardBrowserEnv,
-  forEach: forEach,
-  merge: merge,
-  extend: extend,
-  trim: trim
-};
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(27);
-var normalizeHeaderName = __webpack_require__(38);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(30);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(30);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(27);
-var settle = __webpack_require__(39);
-var buildURL = __webpack_require__(41);
-var parseHeaders = __webpack_require__(42);
-var isURLSameOrigin = __webpack_require__(43);
-var createError = __webpack_require__(31);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(44);
-
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if (process.env.NODE_ENV !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config, null, request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
-        request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(45);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
-};
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var enhanceError = __webpack_require__(40);
-
-/**
- * Create an Error with the specified message, config, error code, request and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, request, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, request, response);
-};
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
-}
-
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(35);
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(27);
-var bind = __webpack_require__(29);
-var Axios = __webpack_require__(37);
-var defaults = __webpack_require__(28);
+var utils = __webpack_require__(0);
+var bind = __webpack_require__(5);
+var Axios = __webpack_require__(27);
+var defaults = __webpack_require__(3);
 
 /**
  * Create an instance of Axios
@@ -25947,15 +25814,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(33);
-axios.CancelToken = __webpack_require__(51);
-axios.isCancel = __webpack_require__(32);
+axios.Cancel = __webpack_require__(9);
+axios.CancelToken = __webpack_require__(41);
+axios.isCancel = __webpack_require__(8);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(52);
+axios.spread = __webpack_require__(42);
 
 module.exports = axios;
 
@@ -25964,7 +25831,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 36 */
+/* 26 */
 /***/ (function(module, exports) {
 
 /*!
@@ -25991,16 +25858,16 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 37 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(28);
-var utils = __webpack_require__(27);
-var InterceptorManager = __webpack_require__(46);
-var dispatchRequest = __webpack_require__(47);
+var defaults = __webpack_require__(3);
+var utils = __webpack_require__(0);
+var InterceptorManager = __webpack_require__(36);
+var dispatchRequest = __webpack_require__(37);
 
 /**
  * Create a new instance of Axios
@@ -26077,13 +25944,13 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 38 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(27);
+var utils = __webpack_require__(0);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -26096,13 +25963,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 39 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(31);
+var createError = __webpack_require__(7);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -26129,7 +25996,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 40 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26157,13 +26024,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 41 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(27);
+var utils = __webpack_require__(0);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -26232,13 +26099,13 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 42 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(27);
+var utils = __webpack_require__(0);
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -26292,13 +26159,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 43 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(27);
+var utils = __webpack_require__(0);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -26367,7 +26234,7 @@ module.exports = (
 
 
 /***/ }),
-/* 44 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26410,13 +26277,13 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 45 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(27);
+var utils = __webpack_require__(0);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -26470,13 +26337,13 @@ module.exports = (
 
 
 /***/ }),
-/* 46 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(27);
+var utils = __webpack_require__(0);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -26529,18 +26396,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 47 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(27);
-var transformData = __webpack_require__(48);
-var isCancel = __webpack_require__(32);
-var defaults = __webpack_require__(28);
-var isAbsoluteURL = __webpack_require__(49);
-var combineURLs = __webpack_require__(50);
+var utils = __webpack_require__(0);
+var transformData = __webpack_require__(38);
+var isCancel = __webpack_require__(8);
+var defaults = __webpack_require__(3);
+var isAbsoluteURL = __webpack_require__(39);
+var combineURLs = __webpack_require__(40);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -26622,13 +26489,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 48 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(27);
+var utils = __webpack_require__(0);
 
 /**
  * Transform the data for a request or a response
@@ -26649,7 +26516,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 49 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26670,7 +26537,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 50 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26691,13 +26558,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 51 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(33);
+var Cancel = __webpack_require__(9);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -26755,7 +26622,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 52 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26787,6 +26654,305 @@ module.exports = function spread(callback) {
   };
 };
 
+
+/***/ }),
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "main" }, [
+    _c("div", { staticClass: "left" }, [
+      _c("section", [
+        _c("video", {
+          attrs: {
+            id: "video",
+            controls: "",
+            src: _vm.videoUrl,
+            autobuffer: ""
+          },
+          on: {
+            click: function($event) {
+              _vm.saisei()
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "item-box" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "description" }, [
+        _c("article", { staticClass: "sankou" }, [
+          _c("span", { staticClass: "title" }, [_vm._v("参考資料1")]),
+          _vm._v(" " + _vm._s(_vm.ref) + "\n\n      ")
+        ]),
+        _vm._v(" "),
+        _c(
+          "pre",
+          { staticClass: "line-numbers code-c", attrs: { "data-no": "1" } },
+          [
+            _c(
+              "code",
+              { staticClass: "language-c", attrs: { "data-language": "c" } },
+              [_vm._v(_vm._s(_vm.source))]
+            ),
+            _vm._v("\n")
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "right" }, [
+      _c("table", { staticClass: "table" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          { attrs: { id: "tableBody" } },
+          _vm._l(_vm.tableData, function(item, index) {
+            return _c(
+              "tr",
+              {
+                class: {
+                  nowPlay:
+                    item.time <= _vm.nowTime && _vm.nowTime < item.endTime
+                },
+                on: {
+                  click: function($event) {
+                    _vm.say(index)
+                  }
+                }
+              },
+              [
+                _c("td", { staticClass: "time" }, [
+                  _vm._v(_vm._s(_vm._f("toTime")(item.time)))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "name" }, [_vm._v(_vm._s(item.name))])
+              ]
+            )
+          })
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(2)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "pre",
+      { staticClass: "line-numbers code-ruby", attrs: { "data-no": "2" } },
+      [
+        _c(
+          "code",
+          { staticClass: "language-ruby", attrs: { "data-language": "ruby" } },
+          [_vm._v('puts "Hello World"')]
+        ),
+        _vm._v("\n")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "time" }, [_vm._v("時間")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "name" }, [_vm._v("チャプター")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "recommand" }, [
+      _c("h3", [_vm._v("おすすめ動画 or 質問箱")])
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0661772a", esExports)
+  }
+}
+
+/***/ }),
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  data: function() {
+    return {
+      message: 'hello'
+    }
+  },
+  computed: {
+    isVisible: function() {
+      if (this.message) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+});
+
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_selector_type_script_index_0_home_vue__ = __webpack_require__(44);
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_20abea0b_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_home_vue__ = __webpack_require__(48);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(46)
+}
+var normalizeComponent = __webpack_require__(22)
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_selector_type_script_index_0_home_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_20abea0b_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_home_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/js/components/home.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-20abea0b", Component.options)
+  } else {
+    hotAPI.reload("data-v-20abea0b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(47);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(20)("e5489a1a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-20abea0b\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./home.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-20abea0b\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./home.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(19)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm.isVisible ? _c("p", [_vm._v(_vm._s(_vm.message))]) : _vm._e(),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: "/video/111" } }, [_vm._v("C言語")]),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: "/video/222" } }, [_vm._v("R言語")])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-20abea0b", esExports)
+  }
+}
 
 /***/ })
 /******/ ]);

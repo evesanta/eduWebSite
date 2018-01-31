@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       nowTime: 0,
-      tableData2: [],
+      tableData: [],
       title: '',
       videoUrl: '',
       loaded: "",
@@ -26,45 +26,34 @@ export default {
   methods: {
     say: function (index) {
       const video = document.getElementById("video");
-      video.currentTime = this.tableData2[index].time;
+      video.currentTime = this.tableData[index].time;
       video.play();
-      //      document.getElementById("tableBody").scrollTop = 41;
     },
     saisei: function () {
       video.paused ? video.play() : video.pause();
+    },
+    update: async function () {
+      var getData = await getJson(this.$route.params.id.toString())
+
+      this.title = getData.title
+      this.videoUrl = getData.url
+
+      this.tableData = getTable(getData.chapter)
+
+      var temp = getData.ref["1"]
+
+      this.ref = temp.replace('nn', '\<br/\>');
+
+      this.source = getData.source["1"].replace(/\'/g, '\"');
+
     }
   },
 
   created: async function () {
     this.loaded = "loaded"
-    //this.videoUrl = "asd"
 
-    var getData = await getJson()
+    this.update()
 
-    this.title = getData.title
-
-    this.videoUrl = getData.url
-
-    var table = []
-    var val = getData.chapter
-    for (var index in val) {
-      if (index != 0) table[table.length - 1].endTime = index;
-      const shortName = (val[index].length > 20) ?
-        val[index].slice(0, 17) + "..." : val[index];
-      table.push({
-        time: index,
-        endTime: Infinity,
-        name: shortName,
-        nowPlay: false
-      })
-    }
-    this.tableData2 = table
-
-    var temp = getData.ref["1"]
-
-    this.ref = temp.replace('nn', '\<br/\>');
-
-    this.source = getData.source["1"].replace(/\'/g, '\"');
   },
   filters: {
     toTime: function (value) {
@@ -75,18 +64,40 @@ export default {
   watch: {
     nowTime: function (nowt) {
       console.log(nowt)
-      this.tableData2.forEach((data, index, array) => {
+      this.tableData.forEach((data, index, array) => {
         if (data.time <= nowt && nowt < data.endTime) {
           document.getElementById("tableBody").scrollTop = index * 42;
         }
       })
+    },
+    '$route' (to, from) {
+      this.update()
     }
   }
 }
 
+var getTable = function (data) {
+
+  var table = []
+
+  for (var index in data) {
+    if (index != 0) table[table.length - 1].endTime = index;
+    const shortName = (data[index].length > 20) ?
+      data[index].slice(0, 17) + "..." : data[index];
+    table.push({
+      time: index,
+      endTime: Infinity,
+      name: shortName,
+      nowPlay: false
+    })
+  }
+
+  return table
+}
+
 var getJson = async function (name) {
   var getData = null
-  await axios.get("/js/json/111.json").then(x => {
+  await axios.get("/js/json/" + name + ".json").then(x => {
     getData = x.data
   });
   return getData
