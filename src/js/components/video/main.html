@@ -1,0 +1,50 @@
+<div class="main">
+
+  <div class="left">
+
+    <section>
+      <video id="video" controls :src="videoUrl" @click="saisei()" autobuffer></video>
+    </section>
+    <section class="item-box">
+      <!--
+      <el-button> &lt; 前の講座へ</el-button><el-button>
+  次の講座へ > </el-button>
+<el-button type="primary">Good!</el-button>
+-->
+    </section>
+    <div class="description">
+      <article class="sankou">
+        <span class="title">参考資料1</span> {{ref}}
+
+      </article>
+
+      <pre class="line-numbers code-c" data-no="1">
+<code class="language-c" data-language="c">{{source}}</code>
+</pre>
+      <pre class="line-numbers code-ruby" data-no="2">
+<code class="language-ruby" data-language="ruby">puts "Hello World"</code>
+</pre>
+
+    </div>
+  </div>
+  <div class="right">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="time">時間</th>
+          <th class="name">チャプター</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr v-for="(item, index) in tableData" :class="{ 'nowPlay': item.time <= nowTime && nowTime < item.endTime}" @click="say(index)">
+          <td class="time">{{ item.time | toTime }}</td>
+          <td class="name">{{ item.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <section class="recommand">
+      <h3>おすすめ動画 or 質問箱</h3>
+      <!--          <el-button @click="say(1)">Default</el-button>-->
+    </section>
+  </div>
+</div>
