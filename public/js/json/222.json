@@ -9,6 +9,7 @@
     "1": "このページはR言語！だよ！RRRRRRRR！！！Lじゃないよ"
   },
   "source": {
-    "1": "#include <stdio.h>\n\nint main(void){\n\tprintf('Hello World ');\n\n\treturn 0;\n}"
+    "1": "#include <math.h>\n\nint main(void){\n\tprintf('Hello World ');\n\n\treturn 0;\n}",
+    "2": "#include <math.h>\n\nint main(void){\n\tprintf('Hello World ');\n\n\treturn 0;\n}"
   }
 }

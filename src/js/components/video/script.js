@@ -1,6 +1,15 @@
-import $ from 'jQuery';
-
 import axios from "axios"
+
+import hljs from "highlight.js"
+
+import marked from "marked"
+
+
+marked.setOptions({
+  highlight: function (code, lang) {
+    return hljs.highlightAuto(code, [lang]).value;
+  }
+});
 
 export default {
   data() {
@@ -13,7 +22,8 @@ export default {
       ref: "",
       source: "",
       message: 'hello!',
-      jsonData: "読み込み中"
+      jsonData: "読み込み中",
+      source2: ""
     }
   },
   mounted() {
@@ -44,7 +54,13 @@ export default {
 
       this.ref = temp.replace('nn', '\<br/\>');
 
-      this.source = getData.source["1"].replace(/\'/g, '\"');
+      this.source = marked(getData.source["1"].replace(/\'/g, '\"'));
+      //      $(function () {　
+      //        $('pre code').each(function (i, block) {
+      //          console.log(12)
+      //          hljs.highlightBlock(block);
+      //        });
+      //      });
 
     }
   },
@@ -54,12 +70,15 @@ export default {
 
     this.update()
 
+
+
   },
   filters: {
     toTime: function (value) {
       if (!value) return ''
       return Math.floor(value / 60) + ":" + ('00' + (value % 60)).slice(-2);
-    }
+    },
+    marked: marked
   },
   watch: {
     nowTime: function (nowt) {
@@ -75,7 +94,6 @@ export default {
     }
   }
 }
-
 var getTable = function (data) {
 
   var table = []
