@@ -1,5 +1,6 @@
 {
   "title": "C言語のHelloWorld",
+  "subCategory": "C言語",
   "url": "https://firebasestorage.googleapis.com/v0/b/seektests.appspot.com/o/movie%2FC%E8%A8%80%E8%AA%9E%E3%81%AEHelloWorld.mp4?alt=media&token=d0b71245-a6b8-4533-8ab8-771cc9e870cc",
   "chapter": {
     "0": "初めに",
@@ -21,5 +22,7 @@
   },
   "source": {
     "1": "## マークダウンで説明することができます。  \n1. 番号付きリスト1\n    1. 番号付きリスト1_1\n    1. 番号付きリスト1_2\n1. 番号付きリスト2\n1. 番号付きリスト3.  \n\n\n\n> お世話になります。xxxです。\n> \n> ご連絡いただいた、バグの件ですが、仕様です。  \n\n```ruby\n　class Hoge\n　  def hoge\n　    print 'hoge'\n　  end\n　end\n　```\n\n\nこれもマークダウンで書いています\n```js\nconsole.log(12)\n```\nこんな風にかけます"
-  }
+  },
+  "nextVideo": "222",
+  "preVideo": ""
 }

@@ -1,5 +1,21 @@
 <div>
-
+  <ul class="breadcrumb">
+    <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="ホームのＵＲＬ" itemprop="url">
+        <span itemprop="title">ホーム</span>
+      </a>
+    </li>
+    <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="カテゴリーＵＲＬ" itemprop="url">
+        <span itemprop="title">{{subCate}}</span>
+      </a>
+    </li>
+    <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="子カテゴリーのＵＲＬ" itemprop="url">
+        <span itemprop="title">{{title}}</span>
+      </a>
+    </li>
+  </ul>
   <div class="main">
 
     <div class="left">
@@ -8,11 +24,14 @@
         <video id="video" controls :src="videoUrl" @click="saisei()" autobuffer></video>
       </section>
       <section class="item-box">
-        <!--
-      <el-button> &lt; 前の講座へ</el-button><el-button>
-  次の講座へ > </el-button>
-<el-button type="primary">Good!</el-button>
--->
+        <router-link :to="preVideo">
+          <el-button :class="preVideo != '/video/' ? ''  : 'is-disabled'"> &lt; 前の講座へ</el-button>
+        </router-link>
+
+        <router-link :to="nextVideo">
+          <el-button :class="nextVideo != '/video/' ? ''  : 'is-disabled'">
+            次の講座へ > </el-button>
+        </router-link>
       </section>
       <div class="description">
 
@@ -39,6 +58,7 @@
       <section class="recommand">
         <h3>おすすめ動画 or 質問箱</h3>
         <!--          <el-button @click="say(1)">Default</el-button>-->
+        現在、この機能は使えません。<br/><br/> アップデートをお待ちください
       </section>
     </div>
   </div>

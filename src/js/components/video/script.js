@@ -17,13 +17,16 @@ export default {
       nowTime: 0,
       tableData: [],
       title: '',
+      subCate: '',
       videoUrl: '',
       loaded: "",
       ref: "",
       source: "",
       message: 'hello!',
       jsonData: "読み込み中",
-      source2: ""
+      source2: "",
+      nextVideo: "/video/",
+      preVideo: "/video/"
     }
   },
   mounted() {
@@ -46,7 +49,12 @@ export default {
       var getData = await getJson(this.$route.params.id.toString())
 
       this.title = getData.title
+      this.subCate = getData.subCategory
       this.videoUrl = getData.url
+      this.preVideo = "/video/" + getData.preVideo
+      this.nextVideo = "/video/" + getData.nextVideo
+
+      console.log(this.preVideo)
 
       this.tableData = getTable(getData.chapter)
 
