@@ -2,19 +2,23 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="index.css">
+
 </head>
 
 <body>
 
   <div id="app">
-    <h1>Hello App!</h1>
-    <p>
-      <!-- ナビゲーションに router-link コンポーネントを使う -->
-      <!-- リンク先を `to` プロパティに指定します -->
-      <!-- デフォルトで `<router-link>` は `<a>` タグとして描画されます -->
-      <router-link to="/home">home</router-link>
-      <router-link to="/video/111">Video</router-link>
-    </p>
+    <header>
+      <h1>教材動画の置き場</h1>
+      <p>
+        <!-- ナビゲーションに router-link コンポーネントを使う -->
+        <!-- リンク先を `to` プロパティに指定します -->
+        <!-- デフォルトで `<router-link>` は `<a>` タグとして描画されます -->
+        <router-link to="/home">HOME</router-link>
+        <router-link to="/video/111">VIDEO</router-link>
+      </p>
+    </header>
     <!-- ルートアウトレット -->
     <!-- ルートとマッチしたコンポーネントがここへ描画されます -->
     <router-view></router-view>
@@ -26,3 +30,44 @@
 </body>
 
 </html>
+
+<style>
+  body {
+    margin: 0;
+  }
+  
+  header {
+    display: flex;
+    background-color: #3C7;
+    color: white;
+  }
+  
+  header h1 {
+    display: inline-block;
+    color: antiquewhite margin-top: 0;
+    padding-top: 0px;
+    padding-left: 10px;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  
+  header p {
+    padding-top: 0px;
+    margin-bottom: 0;
+  }
+  
+  header a {
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 20px;
+  }
+  
+  header a:visited {
+    color: #FFF;
+  }
+  
+  header a.router-link-exact-active {
+    border-bottom: 2px solid #FFF;
+  }
+
+</style>

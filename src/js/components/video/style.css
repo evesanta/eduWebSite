@@ -1,280 +1,204 @@
 @charset "UTF-8";
-body {
-  margin: 0;
-}
+.mainContainer {
+  height: calc(100vh - 48px);
+  width: 100vw;
+  min-width: 1300px;
+  background-color: aliceblue; }
+  .mainContainer .main {
+    margin: 0 auto;
+    width: 1300px;
+    height: calc(100vh - 72px);
+    min-height: 610px;
+    background-color: aqua;
+    display: flex; }
+    .mainContainer .main .left {
+      width: 768px; }
+      .mainContainer .main .left .video {
+        height: 432px;
+        background-color: antiquewhite; }
+        .mainContainer .main .left .video video {
+          width: 100%; }
+      .mainContainer .main .left .itemBox {
+        box-sizing: border-box;
+        height: 50px;
+        background-color: #3C7;
+        border: 1px solid #AAA;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end; }
+        .mainContainer .main .left .itemBox button {
+          margin-right: 20px; }
+      .mainContainer .main .left .chapter {
+        height: calc(100vh - 432px - 50px - 72px);
+        width: 100%;
+        background-color: burlywood; }
+        .mainContainer .main .left .chapter .table {
+          margin: 0 auto;
+          border-collapse: collapse;
+          background-color: white;
+          text-align: left;
+          line-height: 1.5;
+          border: 2px solid #DDD;
+          z-index: 3;
+          height: 100%;
+          min-height: 128px; }
+          .mainContainer .main .left .chapter .table thead {
+            display: block; }
+            .mainContainer .main .left .chapter .table thead th {
+              padding: 10px;
+              font-weight: bold;
+              vertical-align: top;
+              background-color: #EFE;
+              border-bottom: 3px solid #3C7; }
+          .mainContainer .main .left .chapter .table tbody {
+            cursor: pointer;
+            display: block;
+            overflow-y: scroll;
+            height: calc(100% - 54px); }
+            .mainContainer .main .left .chapter .table tbody::-webkit-scrollbar {
+              display: none; }
+            .mainContainer .main .left .chapter .table tbody td {
+              padding: 10px;
+              vertical-align: top;
+              border-bottom: 1px solid #ccc; }
+            .mainContainer .main .left .chapter .table tbody tr {
+              opacity: 0.4;
+              font-size: 14px;
+              transition: background-color 0.5s 0s ease; }
+              .mainContainer .main .left .chapter .table tbody tr:hover {
+                background-color: #EFE;
+                opacity: 0.7; }
+            .mainContainer .main .left .chapter .table tbody .nowPlay {
+              color: #3C7;
+              opacity: 1; }
+          .mainContainer .main .left .chapter .table .time {
+            padding-left: 40px;
+            width: 120px; }
+          .mainContainer .main .left .chapter .table .name {
+            width: 648px; }
+    .mainContainer .main .right {
+      width: 532px;
+      border: 3px solid #AAA;
+      box-sizing: border-box;
+      padding: 0 20px;
+      background-color: #fcf9f1;
+      height: 100%;
+      overflow-y: scroll; }
+      .mainContainer .main .right h1 {
+        border-bottom: 2px solid #DDD; }
+      .mainContainer .main .right pre {
+        border: 2px solid #DDD;
+        background-color: beige;
+        padding: 10px 10px;
+        font-size: 12px;
+        overflow-x: scroll; }
 
-header {
-  background-color: #3C7;
-  color: white;
-}
+/*
+Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine (@thingsinjars)
+シンタックスハイライト
+*/
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #000;
+  background: #f8f8ff; }
 
-header h1 {
-  margin-top: 0;
-  padding-top: 10px;
+.hljs-comment,
+.hljs-quote {
+  color: #408080;
+  font-style: italic; }
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-subst {
+  color: #954121; }
+
+.hljs-number {
+  color: #40a070; }
+
+.hljs-string,
+.hljs-doctag {
+  color: #219161; }
+
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-section,
+.hljs-type {
+  color: #19469d; }
+
+.hljs-params {
+  color: #00f; }
+
+.hljs-title {
+  color: #458;
+  font-weight: bold; }
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal; }
+
+.hljs-variable,
+.hljs-template-variable {
+  color: #008080; }
+
+.hljs-regexp,
+.hljs-link {
+  color: #b68; }
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073; }
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3; }
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold; }
+
+.hljs-deletion {
+  background: #fdd; }
+
+.hljs-addition {
+  background: #dfd; }
+
+.hljs-emphasis {
+  font-style: italic; }
+
+.hljs-strong {
+  font-weight: bold; }
+
+blockquote {
   padding-left: 10px;
-  margin-bottom: 0;
-}
-
-.container {
-  height: 100%;
-}
-
-{
-  z-index: 20;
-}
-
-.main {
-  margin: 0 auto;
-  height: 100%;
-  display: flex;
-  padding-bottom: 0;
-  padding-top: 10px;
-  width: 1300px;
-}
-
-.main .left {
-  width: 728px;
-}
-
-.main .left section {
-  min-width: 100%;
-  width: 600px;
-  height: 410px;
-}
-
-.main .left section video {
-  background-color: black;
-  width: 100%;
-  height: 100%;
-}
-
-.main .left .item-box {
-  height: 50px;
-  background-color: #ACF;
-  border: 1px solid #AAA;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  z-index: 2;
-  position: relative;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-}
-
-.main .left .item-box button {
-  margin-right: 10px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.main .left .description {
-  background-color: #e8f4fd;
-  height: 405px;
-  overflow-y: scroll;
-  box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.4) inset;
-  padding-top: 50px;
-  margin-top: -50px;
-  z-index: 1;
-  position: relative;
-}
-
-.main .left .description pre {
-  margin: 10px 60px;
-  z-index: 1;
-}
-
-.main .left .description pre:last-child {
-  margin-bottom: 80px;
-}
-
-.main .left .description .code-html {
-  border: 2px solid #e8a12a;
-}
-
-.main .left .description .code-html .toolbar {
-  background: #e8a12a;
-  font-family: arial, sans-serif;
-}
-
-.main .left .description .code-css {
-  border: 2px solid #8CF;
-}
-
-.main .left .description .code-css .toolbar {
-  background: #8CF;
-  font-family: arial, sans-serif;
-}
-
-.main .left .description .code-js {
-  border: 2px solid #3db271;
-}
-
-.main .left .description .code-js .toolbar {
-  background: #3db271;
-  font-family: arial, sans-serif;
-}
-
-.main .left .description .code-c {
-  border: 2px solid #3276b4;
-}
-
-.main .left .description .code-c .toolbar {
-  background: #3276b4;
-  font-family: arial, sans-serif;
-}
-
-.main .left .description .code-ruby {
-  border: 2px solid #e8699a;
-}
-
-.main .left .description .code-ruby .toolbar {
-  background: #e8699a;
-  font-family: arial, sans-serif;
-}
-
-.main .left .description .sankou {
-  margin: 20px 60px;
-  border: 2px solid #ffcc22;
-  background-color: white;
-  position: relative;
-  padding-left: 30px;
-}
-
-.main .left .description .sankou .title {
-  border-radius: 20px;
-  padding: 3px 6px;
-  position: absolute;
-  left: 5px;
-  top: -15px;
-  background-color: #ffcc22;
-  color: white;
-}
-
-.main .right {
-  width: 572px;
-  text-align: center;
-}
-
-.main .right .table {
-  margin: 0 auto;
-  border-collapse: collapse;
-  background-color: white;
-  text-align: left;
-  line-height: 1.5;
-  border: 2px solid #DDD;
-  z-index: 3;
-}
-
-.main .right .table thead {
-  display: block;
-}
-
-.main .right .table thead th {
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
-  background-color: #EFE;
-  border-bottom: 3px solid #3C7;
-}
-
-.main .right .table tbody {
-  cursor: pointer;
-  display: block;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 350px;
-}
-
-.main .right .table tbody::-webkit-scrollbar {
-  display: none;
-}
-
-.main .right .table tbody td {
-  padding: 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
-  white-space: nowrap;
-  overflow-x: hidden;
-}
-
-.main .right .table tbody tr {
-  opacity: 0.4;
-  font-size: 14px;
-  transition: background-color 0.5s 0s ease;
-}
-
-.main .right .table tbody tr:hover {
-  background-color: #EFE;
-  opacity: 0.7;
-}
-
-.main .right .table tbody .nowPlay {
-  color: #3C7;
-  opacity: 1;
-}
-
-.main .right .table .time {
-  width: 72px;
-}
-
-.main .right .table .name {
-  width: 380px;
-}
-
-.main .right .recommand {
-  margin: 10px auto 0 auto;
-  padding-top: 0;
-  width: 490px;
-  height: 445px;
-  background-color: #e8f4fd;
-  border: 2px solid #DDD;
-}
-
-.main .right .recommand h3 {
-  margin-top: 0;
-  text-align: center;
-}
+  border-left: 6px solid #DDD; }
 
 .breadcrumb {
-  margin-top: 0;
-  padding-left: 0;
-  padding-bottom: 0;
-  margin-left: 20px;
-  margin-bottom: 0;
-  height: 24px;
-}
+  padding: 0;
+  margin: 0;
+  margin-left: 10px; }
+  .breadcrumb li {
+    display: inline;
+    /*横に並ぶように*/
+    list-style: none;
+    font-weight: bold;
+    /*太字*/ }
+    .breadcrumb li:after {
+      /* >を表示*/
+      content: '>';
+      padding: 0 3px;
+      color: #555; }
+    .breadcrumb li:last-child:after {
+      content: ''; }
+    .breadcrumb li a {
+      text-decoration: none;
+      color: #3C7;
+      /*色*/ }
+      .breadcrumb li a:hover {
+        text-decoration: underline; }
 
-.breadcrumb li {
-  display: inline;
-  /*横に並ぶように*/
-  list-style: none;
-  font-weight: bold;
-  /*太字*/
-}
-
-.breadcrumb li:after {
-  /* >を表示*/
-  content: '>';
-  padding: 0 3px;
-  color: #555;
-}
-
-.breadcrumb li:last-child:after {
-  content: '';
-}
-
-.breadcrumb li a {
-  text-decoration: none;
-  color: #3C7;
-  /*色*/
-}
-
-.breadcrumb li a:hover {
-  text-decoration: underline;
-}
-
-.loaded {
-  display: none;
-}
-
-
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=style.css.map */

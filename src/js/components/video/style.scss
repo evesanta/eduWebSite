@@ -1,0 +1,266 @@
+$mainColor: #3C7;
+$main-width: 1300px;
+$headerHeight: 48px;
+$itemBoxHeight: 50px;
+$videoHeight: 432px;
+$leftWidth: 768px;
+$tableTimeWidth: 120px;
+// メインcss
+.mainContainer {
+  // headerHeight変えて
+  // height: calc(100vh - $headerHeight);
+  height: calc(100vh - 48px);
+  width: 100vw;
+  min-width: $main-width;
+  background-color: aliceblue;
+  .main {
+    margin: 0 auto;
+    width: $main-width;
+    // headerHeight変えて
+    // height: calc(100vh - $headerHeight);
+    height: calc(100vh - 72px);
+    min-height: 610px;
+    background-color: aqua;
+    display: flex;
+    .left {
+      width: 768px;
+      .video {
+        height: $videoHeight;
+        background-color: antiquewhite;
+        video {
+          width: 100%;
+        }
+      }
+      .itemBox {
+        box-sizing: border-box;
+        height: $itemBoxHeight;
+        background-color: $mainColor;
+        border: 1px solid #AAA;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        button {
+          margin-right: 20px;
+        }
+      }
+      .chapter {
+        height: calc(100vh - 432px - 50px - 72px);
+        width: 100%;
+        background-color: burlywood;
+        .table {
+          margin: 0 auto;
+          border-collapse: collapse;
+          background-color: white;
+          text-align: left;
+          line-height: 1.5;
+          border: 2px solid #DDD;
+          z-index: 3;
+          height: 100%;
+          min-height: 128px;
+          thead {
+            display: block;
+            th {
+              padding: 10px;
+              font-weight: bold;
+              vertical-align: top;
+              background-color: #EFE;
+              border-bottom: 3px solid $mainColor;
+            }
+          }
+          tbody {
+            cursor: pointer;
+            display: block;
+            overflow-y: scroll;
+            height: calc(100% - 54px);
+            &::-webkit-scrollbar {
+              display: none;
+            }
+            td {
+              padding: 10px;
+              vertical-align: top;
+              border-bottom: 1px solid #ccc;
+            }
+            tr {
+              opacity: 0.4;
+              font-size: 14px;
+              transition: background-color 0.5s 0s ease;
+              &:hover {
+                background-color: #EFE;
+                opacity: 0.7;
+              }
+            }
+            .nowPlay {
+              color: $mainColor;
+              opacity: 1;
+            }
+          }
+          .time {
+            padding-left: 40px;
+            width: $tableTimeWidth;
+          }
+          .name {
+            width: $leftWidth - $tableTimeWidth;
+          }
+        }
+      }
+    }
+    .right {
+      width: $main-width - $leftWidth;
+      border: 3px solid #AAA;
+      box-sizing: border-box;
+      padding: 0 20px;
+      background-color: rgb(252, 249, 241);
+      height: 100%;
+      overflow-y: scroll;
+      h1 {
+        border-bottom: 2px solid #DDD;
+      }
+      pre {
+        border: 2px solid #DDD;
+        background-color: beige;
+        padding: 10px 10px;
+        font-size: 12px;
+        overflow-x: scroll;
+      }
+    }
+  }
+}
+
+
+/*
+Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine (@thingsinjars)
+シンタックスハイライト
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #000;
+  background: #f8f8ff;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #408080;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-subst {
+  color: #954121;
+}
+
+.hljs-number {
+  color: #40a070;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #219161;
+}
+
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-section,
+.hljs-type {
+  color: #19469d;
+}
+
+.hljs-params {
+  color: #00f;
+}
+
+.hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+  color: #008080;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #b68;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+blockquote {
+  padding-left: 10px;
+  border-left: 6px solid #DDD
+}
+
+//シンタックスハイライト終わり
+//パンくず
+.breadcrumb {
+  padding: 0;
+  margin: 0;
+  margin-left: 10px;
+  li {
+    display: inline;
+    /*横に並ぶように*/
+    list-style: none;
+    font-weight: bold;
+    /*太字*/
+    &:after {
+      /* >を表示*/
+      content: '>';
+      padding: 0 3px;
+      color: #555;
+    }
+    &:last-child:after {
+      content: '';
+    }
+    a {
+      text-decoration: none;
+      color: $mainColor;
+      /*色*/
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// パンくず終わり

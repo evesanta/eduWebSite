@@ -11,6 +11,22 @@ import Video from './components/video/video.vue'
 
 import Home from './components/home.vue'
 
+import SourceBox from './components/sourceBox.vue'
+
+import VueHighlightJS from 'vue-highlightjs'
+
+import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/ja'
+
+Vue.use(ElementUI, {
+  locale
+})
+
+
+// Tell Vue.js to use vue-highlightjs
+Vue.use(VueHighlightJS)
+
+Vue.component("source-box", SourceBox)
 
 const Foo = {
   template: '<div>foo</div>'

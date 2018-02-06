@@ -1,6 +1,15 @@
-import $ from 'jQuery';
-
 import axios from "axios"
+
+import hljs from "highlight.js"
+
+import marked from "marked"
+
+
+marked.setOptions({
+  highlight: function (code, lang) {
+    return hljs.highlightAuto(code, [lang]).value;
+  }
+});
 
 export default {
   data() {
@@ -8,18 +17,21 @@ export default {
       nowTime: 0,
       tableData: [],
       title: '',
+      subCate: '',
       videoUrl: '',
       loaded: "",
       ref: "",
       source: "",
       message: 'hello!',
-      jsonData: "読み込み中"
+      jsonData: "読み込み中",
+      source2: "",
+      nextVideo: "/video/",
+      preVideo: "/video/"
     }
   },
   mounted() {
     const video = document.getElementById("video");
     video.addEventListener('timeupdate', () => {
-      console.log(this.nowTime)
       this.nowTime = video.currentTime
     }, false);
   },
@@ -36,7 +48,11 @@ export default {
       var getData = await getJson(this.$route.params.id.toString())
 
       this.title = getData.title
+      this.subCate = getData.subCategory
       this.videoUrl = getData.url
+      this.preVideo = "/video/" + getData.preVideo
+      this.nextVideo = "/video/" + getData.nextVideo
+
 
       this.tableData = getTable(getData.chapter)
 
@@ -44,7 +60,13 @@ export default {
 
       this.ref = temp.replace('nn', '\<br/\>');
 
-      this.source = getData.source["1"].replace(/\'/g, '\"');
+      this.source = marked(getData.source["1"].replace(/\'/g, '\"'));
+      //      $(function () {　
+      //        $('pre code').each(function (i, block) {
+      //          console.log(12)
+      //          hljs.highlightBlock(block);
+      //        });
+      //      });
 
     }
   },
@@ -54,16 +76,18 @@ export default {
 
     this.update()
 
+
+
   },
   filters: {
     toTime: function (value) {
       if (!value) return ''
       return Math.floor(value / 60) + ":" + ('00' + (value % 60)).slice(-2);
-    }
+    },
+    marked: marked
   },
   watch: {
     nowTime: function (nowt) {
-      console.log(nowt)
       this.tableData.forEach((data, index, array) => {
         if (data.time <= nowt && nowt < data.endTime) {
           document.getElementById("tableBody").scrollTop = index * 42;
@@ -75,7 +99,6 @@ export default {
     }
   }
 }
-
 var getTable = function (data) {
 
   var table = []

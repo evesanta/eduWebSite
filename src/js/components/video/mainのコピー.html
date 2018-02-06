@@ -1,4 +1,4 @@
-<div class="mainContainer">
+<div>
   <ul class="breadcrumb">
     <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
       <a href="ホームのＵＲＬ" itemprop="url">
@@ -17,11 +17,13 @@
     </li>
   </ul>
   <div class="main">
+
     <div class="left">
-      <div class="video">
+
+      <section>
         <video id="video" controls :src="videoUrl" @click="saisei()" autobuffer></video>
-      </div>
-      <div class="itemBox">
+      </section>
+      <section class="item-box">
         <router-link :to="preVideo">
           <el-button :class="preVideo != '/video/' ? ''  : 'is-disabled'"> &lt; 前の講座へ</el-button>
         </router-link>
@@ -30,30 +32,35 @@
           <el-button :class="nextVideo != '/video/' ? ''  : 'is-disabled'">
             次の講座へ > </el-button>
         </router-link>
-      </div>
-      <div class="chapter">
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="time">時間</th>
-              <th class="name">チャプター</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody">
-            <tr v-for="(item, index) in tableData" :class="{ 'nowPlay': item.time <= nowTime && nowTime < item.endTime}" @click="say(index)">
-              <td class="time">{{ item.time | toTime }}</td>
-              <td class="name">{{ item.name }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </section>
+      <div class="description">
 
+        <div v-html="source"></div>
+
+
+      </div>
     </div>
     <div class="right">
-      <div v-html="source"></div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="time">時間</th>
+            <th class="name">チャプター</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr v-for="(item, index) in tableData" :class="{ 'nowPlay': item.time <= nowTime && nowTime < item.endTime}" @click="say(index)">
+            <td class="time">{{ item.time | toTime }}</td>
+            <td class="name">{{ item.name }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <section class="recommand">
+        <h3>おすすめ動画 or 質問箱</h3>
+        <!--          <el-button @click="say(1)">Default</el-button>-->
+        現在、この機能は使えません。<br/><br/> アップデートをお待ちください
+      </section>
     </div>
-
-
   </div>
 
 </div>
