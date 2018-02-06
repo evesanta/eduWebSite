@@ -1,3 +1,3 @@
 <template src="./main.html"></template>
-<style src="./style.css"></style>
+<style lang="scss" src="./style.scss"></style>
 <script src="./script.js"></script>

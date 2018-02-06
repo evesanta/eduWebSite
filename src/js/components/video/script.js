@@ -32,7 +32,6 @@ export default {
   mounted() {
     const video = document.getElementById("video");
     video.addEventListener('timeupdate', () => {
-      console.log(this.nowTime)
       this.nowTime = video.currentTime
     }, false);
   },
@@ -54,7 +53,6 @@ export default {
       this.preVideo = "/video/" + getData.preVideo
       this.nextVideo = "/video/" + getData.nextVideo
 
-      console.log(this.preVideo)
 
       this.tableData = getTable(getData.chapter)
 
@@ -90,7 +88,6 @@ export default {
   },
   watch: {
     nowTime: function (nowt) {
-      console.log(nowt)
       this.tableData.forEach((data, index, array) => {
         if (data.time <= nowt && nowt < data.endTime) {
           document.getElementById("tableBody").scrollTop = index * 42;
