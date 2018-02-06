@@ -16,12 +16,22 @@
       </a>
     </li>
   </ul>
+  <span class="octicon octicon-mark-github"></span>
   <div class="main">
     <div class="left">
       <div class="video">
         <video id="video" controls :src="videoUrl" @click="saisei()" autobuffer></video>
       </div>
       <div class="itemBox">
+        <a href="https://github.com/evesanta/eduWebSite" 　target="_blank">
+          <div class="gitHub">
+
+            <octicon name="mark-github"></octicon>
+            <octicon name="logo-github"></octicon>
+
+          </div>
+        </a>
+
         <router-link :to="preVideo">
           <el-button :class="preVideo != '/video/' ? ''  : 'is-disabled'"> &lt; 前の講座へ</el-button>
         </router-link>
