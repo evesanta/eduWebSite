@@ -1,0 +1,20 @@
+{
+  "title": "R言語の使い方",
+  "subCategory": "R言語",
+  "url": "https://firebasestorage.googleapis.com/v0/b/seektests.appspot.com/o/movie%2FWINCAPS3_Command.mp4?alt=media&token=4f385c9d-481c-4ee0-9589-9f008e65c22b",
+  "chapter": {
+    "0": "初めに",
+    "4": "この動画の内容",
+    "16": "Moveコマンド",
+    "73": "プログラムの説明",
+    "103": "Approachコマンド"
+  },
+  "ref": {
+    "1": "このページはR言語！だよ！RRRRRRRR！！！Lじゃないよ"
+  },
+  "source": {
+    "1": "### moveコマンド\n\n```\nMove こん\n```\n\n#### ホール1からホール3へ動かすプログラム\n```\nSub Main\n\tTakearm Keep = 0\n\tSpeed 100\n\tMove P, @0, P10\n\tMove P, @0, P[11]\n\tMove P, @0, P12, Speed = 50\n\tMove P, @0, P10\n\tGivearm\nEnd Sub\n```\n\n### approachコマンド\n```\nApproach hoge hoge\n```"
+  },
+  "preVideo": "111",
+  "nextVideo": ""
+}
