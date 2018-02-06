@@ -39,6 +39,21 @@ $tableTimeWidth: 120px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        a {
+          &:visited {
+            color: #000;
+          }
+          .gitHub {
+            margin-right: 20px;
+            background-color: white;
+            height: 38px;
+            line-height: 42px;
+            padding: 0 20px;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+            color: #000;
+          }
+        }
         button {
           margin-right: 20px;
         }

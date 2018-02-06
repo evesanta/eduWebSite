@@ -2,7 +2,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+
+
 Vue.use(VueRouter)
+
+import Octicon from 'vue-octicon/components/Octicon.vue'
+import 'vue-octicon/icons'
+
+Vue.component('octicon', Octicon);
+
+
 
 // 1. ルートコンポーネントを定義します
 // 他のファイルからインポートすることもできます
