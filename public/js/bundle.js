@@ -14437,13 +14437,14 @@ __WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
       subCate: '',
       videoUrl: '',
       loaded: "",
-      ref: "",
       source: "",
       message: 'hello!',
       jsonData: "読み込み中",
       source2: "",
       nextVideo: "/video/",
-      preVideo: "/video/"
+      preVideo: "/video/",
+      preName: "",
+      nextName: ""
     }
   },
   mounted() {
@@ -14469,11 +14470,10 @@ __WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
       this.videoUrl = getData.url
       this.preVideo = "/video/" + getData.preVideo
       this.nextVideo = "/video/" + getData.nextVideo
-
-
+      this.preName = getData.preName
+      this.nextName = getData.nextName
 
       this.tableData = getTable(getData.chapter)
-
       this.source = __WEBPACK_IMPORTED_MODULE_2_marked___default()(getData.source["1"].replace(/\'/g, '\"'));
 
     }
@@ -14995,6 +14995,22 @@ module.exports = hljs;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -22252,7 +22268,7 @@ exports = module.exports = __webpack_require__(19)(false);
 
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n.mainContainer {\n  height: calc(100vh - 48px);\n  width: 100vw;\n  min-width: 1300px;\n  background-color: aliceblue;\n}\n.mainContainer .main {\n    margin: 0 auto;\n    width: 1300px;\n    height: calc(100vh - 72px);\n    min-height: 610px;\n    background-color: aqua;\n    display: flex;\n}\n.mainContainer .main .left {\n      width: 768px;\n}\n.mainContainer .main .left .video {\n        height: 432px;\n        background-color: antiquewhite;\n}\n.mainContainer .main .left .video video {\n          width: 100%;\n}\n.mainContainer .main .left .itemBox {\n        box-sizing: border-box;\n        height: 50px;\n        background-color: #3C7;\n        border: 1px solid #AAA;\n        display: flex;\n        align-items: center;\n        justify-content: flex-end;\n}\n.mainContainer .main .left .itemBox a {\n          transition: opacity 0.3s 0s ease;\n}\n.mainContainer .main .left .itemBox a:visited {\n            color: #000;\n}\n.mainContainer .main .left .itemBox a .gitHub {\n            margin-right: 20px;\n            background-color: white;\n            height: 38px;\n            line-height: 42px;\n            padding: 0 20px;\n            border-radius: 4px;\n            border: 1px solid #dcdfe6;\n            color: #000;\n}\n.mainContainer .main .left .itemBox a:hover {\n            opacity: 0.8;\n}\n.mainContainer .main .left .itemBox button {\n          margin-right: 20px;\n}\n.mainContainer .main .left .chapter {\n        height: calc(100vh - 432px - 50px - 72px);\n        width: 100%;\n        background-color: burlywood;\n}\n.mainContainer .main .left .chapter .table {\n          margin: 0 auto;\n          border-collapse: collapse;\n          background-color: white;\n          text-align: left;\n          line-height: 1.5;\n          border: 2px solid #DDD;\n          z-index: 3;\n          height: 100%;\n          min-height: 128px;\n}\n.mainContainer .main .left .chapter .table thead {\n            display: block;\n}\n.mainContainer .main .left .chapter .table thead th {\n              padding: 10px;\n              font-weight: bold;\n              vertical-align: top;\n              background-color: #EFE;\n              border-bottom: 3px solid #3C7;\n}\n.mainContainer .main .left .chapter .table tbody {\n            cursor: pointer;\n            display: block;\n            overflow-y: scroll;\n            height: calc(100% - 54px);\n}\n.mainContainer .main .left .chapter .table tbody::-webkit-scrollbar {\n              display: none;\n}\n.mainContainer .main .left .chapter .table tbody td {\n              padding: 10px;\n              vertical-align: top;\n              border-bottom: 1px solid #ccc;\n}\n.mainContainer .main .left .chapter .table tbody tr {\n              opacity: 0.4;\n              font-size: 14px;\n              transition: background-color 0.5s 0s ease;\n}\n.mainContainer .main .left .chapter .table tbody tr:hover {\n                background-color: #EFE;\n                opacity: 0.7;\n}\n.mainContainer .main .left .chapter .table tbody .nowPlay {\n              color: #3C7;\n              opacity: 1;\n}\n.mainContainer .main .left .chapter .table .time {\n            padding-left: 40px;\n            width: 120px;\n}\n.mainContainer .main .left .chapter .table .name {\n            width: 648px;\n}\n.mainContainer .main .right {\n      width: 532px;\n      border: 3px solid #AAA;\n      box-sizing: border-box;\n      padding: 0 20px;\n      background-color: #fcf9f1;\n      height: 100%;\n      overflow-y: scroll;\n}\n.mainContainer .main .right h1 {\n        border-bottom: 2px solid #DDD;\n}\n.mainContainer .main .right pre {\n        border: 2px solid #DDD;\n        background-color: beige;\n        padding: 10px 10px;\n        font-size: 12px;\n        overflow-x: scroll;\n}\n\n/*\nDocco style used in http://jashkenas.github.com/docco/ converted by Simon Madine (@thingsinjars)\nシンタックスハイライト\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #000;\n  background: #f8f8ff;\n}\n.hljs-comment,\n.hljs-quote {\n  color: #408080;\n  font-style: italic;\n}\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-literal,\n.hljs-subst {\n  color: #954121;\n}\n.hljs-number {\n  color: #40a070;\n}\n.hljs-string,\n.hljs-doctag {\n  color: #219161;\n}\n.hljs-selector-id,\n.hljs-selector-class,\n.hljs-section,\n.hljs-type {\n  color: #19469d;\n}\n.hljs-params {\n  color: #00f;\n}\n.hljs-title {\n  color: #458;\n  font-weight: bold;\n}\n.hljs-tag,\n.hljs-name,\n.hljs-attribute {\n  color: #000080;\n  font-weight: normal;\n}\n.hljs-variable,\n.hljs-template-variable {\n  color: #008080;\n}\n.hljs-regexp,\n.hljs-link {\n  color: #b68;\n}\n.hljs-symbol,\n.hljs-bullet {\n  color: #990073;\n}\n.hljs-built_in,\n.hljs-builtin-name {\n  color: #0086b3;\n}\n.hljs-meta {\n  color: #999;\n  font-weight: bold;\n}\n.hljs-deletion {\n  background: #fdd;\n}\n.hljs-addition {\n  background: #dfd;\n}\n.hljs-emphasis {\n  font-style: italic;\n}\n.hljs-strong {\n  font-weight: bold;\n}\nblockquote {\n  padding-left: 10px;\n  border-left: 6px solid #DDD;\n}\n.breadcrumb {\n  padding: 0;\n  margin: 0;\n  margin-left: 10px;\n}\n.breadcrumb li {\n    display: inline;\n    /*横に並ぶように*/\n    list-style: none;\n    font-weight: bold;\n    /*太字*/\n}\n.breadcrumb li:after {\n      /* >を表示*/\n      content: '>';\n      padding: 0 3px;\n      color: #555;\n}\n.breadcrumb li:last-child:after {\n      content: '';\n}\n.breadcrumb li a {\n      text-decoration: none;\n      color: #3C7;\n      /*色*/\n}\n.breadcrumb li a:hover {\n        text-decoration: underline;\n}\n", ""]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n.mainContainer {\n  height: calc(100vh - 48px);\n  width: 100vw;\n  min-width: 1300px;\n  background-color: aliceblue;\n}\n.mainContainer .main {\n    margin: 0 auto;\n    width: 1300px;\n    height: calc(100vh - 72px);\n    min-height: 610px;\n    background-color: aqua;\n    display: flex;\n}\n.mainContainer .main .left {\n      width: 768px;\n}\n.mainContainer .main .left .video {\n        height: 432px;\n        background-color: antiquewhite;\n}\n.mainContainer .main .left .video video {\n          width: 100%;\n}\n.mainContainer .main .left .itemBox {\n        box-sizing: border-box;\n        height: 50px;\n        background-color: #3C7;\n        border: 1px solid #AAA;\n        display: flex;\n        align-items: center;\n        justify-content: flex-end;\n}\n.mainContainer .main .left .itemBox a {\n          transition: opacity 0.3s 0s ease;\n          text-decoration: none;\n}\n.mainContainer .main .left .itemBox a:visited {\n            color: #000;\n}\n.mainContainer .main .left .itemBox a .gitHub {\n            margin-right: 20px;\n            background-color: white;\n            height: 38px;\n            line-height: 42px;\n            padding: 0 20px;\n            border-radius: 4px;\n            border: 1px solid #dcdfe6;\n            color: #000;\n}\n.mainContainer .main .left .itemBox a:hover {\n            opacity: 0.8;\n}\n.mainContainer .main .left .itemBox button {\n          margin-right: 20px;\n}\n.mainContainer .main .left .chapter {\n        height: calc(100vh - 432px - 50px - 72px);\n        width: 100%;\n        background-color: burlywood;\n}\n.mainContainer .main .left .chapter .table {\n          margin: 0 auto;\n          border-collapse: collapse;\n          background-color: white;\n          text-align: left;\n          line-height: 1.5;\n          border: 2px solid #DDD;\n          z-index: 3;\n          height: 100%;\n          min-height: 128px;\n}\n.mainContainer .main .left .chapter .table thead {\n            display: block;\n}\n.mainContainer .main .left .chapter .table thead th {\n              padding: 10px;\n              font-weight: bold;\n              vertical-align: top;\n              background-color: #EFE;\n              border-bottom: 3px solid #3C7;\n}\n.mainContainer .main .left .chapter .table tbody {\n            cursor: pointer;\n            display: block;\n            overflow-y: scroll;\n            height: calc(100% - 54px);\n}\n.mainContainer .main .left .chapter .table tbody::-webkit-scrollbar {\n              display: none;\n}\n.mainContainer .main .left .chapter .table tbody td {\n              padding: 10px;\n              vertical-align: top;\n              border-bottom: 1px solid #ccc;\n}\n.mainContainer .main .left .chapter .table tbody tr {\n              opacity: 0.4;\n              font-size: 14px;\n              transition: background-color 0.5s 0s ease;\n}\n.mainContainer .main .left .chapter .table tbody tr:hover {\n                background-color: #EFE;\n                opacity: 0.7;\n}\n.mainContainer .main .left .chapter .table tbody .nowPlay {\n              color: #3C7;\n              opacity: 1;\n}\n.mainContainer .main .left .chapter .table .time {\n            padding-left: 40px;\n            width: 120px;\n}\n.mainContainer .main .left .chapter .table .name {\n            width: 648px;\n}\n.mainContainer .main .right {\n      width: 532px;\n      border: 3px solid #AAA;\n      box-sizing: border-box;\n      padding: 0 20px;\n      background-color: #fcf9f1;\n      height: 100%;\n      overflow-y: scroll;\n}\n.mainContainer .main .right h1 {\n        border-bottom: 2px solid #DDD;\n}\n.mainContainer .main .right pre {\n        border: 2px solid #DDD;\n        background-color: beige;\n        padding: 10px 10px;\n        font-size: 12px;\n        overflow-x: scroll;\n}\n\n/*\nDocco style used in http://jashkenas.github.com/docco/ converted by Simon Madine (@thingsinjars)\nシンタックスハイライト\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #000;\n  background: #f8f8ff;\n}\n.hljs-comment,\n.hljs-quote {\n  color: #408080;\n  font-style: italic;\n}\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-literal,\n.hljs-subst {\n  color: #954121;\n}\n.hljs-number {\n  color: #40a070;\n}\n.hljs-string,\n.hljs-doctag {\n  color: #219161;\n}\n.hljs-selector-id,\n.hljs-selector-class,\n.hljs-section,\n.hljs-type {\n  color: #19469d;\n}\n.hljs-params {\n  color: #00f;\n}\n.hljs-title {\n  color: #458;\n  font-weight: bold;\n}\n.hljs-tag,\n.hljs-name,\n.hljs-attribute {\n  color: #000080;\n  font-weight: normal;\n}\n.hljs-variable,\n.hljs-template-variable {\n  color: #008080;\n}\n.hljs-regexp,\n.hljs-link {\n  color: #b68;\n}\n.hljs-symbol,\n.hljs-bullet {\n  color: #990073;\n}\n.hljs-built_in,\n.hljs-builtin-name {\n  color: #0086b3;\n}\n.hljs-meta {\n  color: #999;\n  font-weight: bold;\n}\n.hljs-deletion {\n  background: #fdd;\n}\n.hljs-addition {\n  background: #dfd;\n}\n.hljs-emphasis {\n  font-style: italic;\n}\n.hljs-strong {\n  font-weight: bold;\n}\nblockquote {\n  padding-left: 10px;\n  border-left: 6px solid #DDD;\n}\n.breadcrumb {\n  padding: 0;\n  margin: 0;\n  margin-left: 10px;\n}\n.breadcrumb li {\n    display: inline;\n    /*横に並ぶように*/\n    list-style: none;\n    font-weight: bold;\n    /*太字*/\n}\n.breadcrumb li:after {\n      /* >を表示*/\n      content: '>';\n      padding: 0 3px;\n      color: #555;\n}\n.breadcrumb li:last-child:after {\n      content: '';\n}\n.breadcrumb li a {\n      text-decoration: none;\n      color: #3C7;\n      /*色*/\n}\n.breadcrumb li a:hover {\n        text-decoration: underline;\n}\n", ""]);
 
 // exports
 
@@ -41844,8 +41860,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "mainContainer" }, [
     _c("ul", { staticClass: "breadcrumb" }, [
-      _vm._m(0),
-      _vm._v(" "),
       _c(
         "li",
         {
@@ -41855,12 +41869,11 @@ var render = function() {
           }
         },
         [
-          _c("a", { attrs: { href: "カテゴリーＵＲＬ", itemprop: "url" } }, [
-            _c("span", { attrs: { itemprop: "title" } }, [
-              _vm._v(_vm._s(_vm.subCate))
-            ])
+          _c("router-link", { attrs: { to: "/home" } }, [
+            _c("span", { attrs: { itemprop: "title" } }, [_vm._v("ホーム")])
           ])
-        ]
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
@@ -41872,15 +41885,9 @@ var render = function() {
           }
         },
         [
-          _c(
-            "a",
-            { attrs: { href: "子カテゴリーのＵＲＬ", itemprop: "url" } },
-            [
-              _c("span", { attrs: { itemprop: "title" } }, [
-                _vm._v(_vm._s(_vm.title))
-              ])
-            ]
-          )
+          _c("span", { attrs: { itemprop: "title" } }, [
+            _vm._v(_vm._s(_vm.title))
+          ])
         ]
       )
     ]),
@@ -41936,7 +41943,7 @@ var render = function() {
                 _c(
                   "el-button",
                   { class: _vm.preVideo != "/video/" ? "" : "is-disabled" },
-                  [_vm._v(" < 前の講座へ")]
+                  [_vm._v(" < " + _vm._s(_vm.preName))]
                 )
               ],
               1
@@ -41949,7 +41956,7 @@ var render = function() {
                 _c(
                   "el-button",
                   { class: _vm.nextVideo != "/video/" ? "" : "is-disabled" },
-                  [_vm._v("\n            次の講座へ > ")]
+                  [_vm._v("\n            " + _vm._s(_vm.nextName) + " > ")]
                 )
               ],
               1
@@ -41960,7 +41967,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "chapter" }, [
           _c("table", { staticClass: "table" }, [
-            _vm._m(1),
+            _vm._m(0),
             _vm._v(" "),
             _c(
               "tbody",
@@ -42006,25 +42013,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        attrs: {
-          itemscope: "itemscope",
-          itemtype: "http://data-vocabulary.org/Breadcrumb"
-        }
-      },
-      [
-        _c("a", { attrs: { href: "ホームのＵＲＬ", itemprop: "url" } }, [
-          _c("span", { attrs: { itemprop: "title" } }, [_vm._v("ホーム")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { staticClass: "time" }, [_vm._v("時間")]),
@@ -42055,7 +42043,7 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(470)
+  __webpack_require__(560)
 }
 var normalizeComponent = __webpack_require__(21)
 /* script */
@@ -42101,46 +42089,8 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 470 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(471);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(20)("e5489a1a", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-20abea0b\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./home.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-20abea0b\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./home.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 471 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(19)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 470 */,
+/* 471 */,
 /* 472 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -42151,12 +42101,59 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "main-box" },
     [
-      _vm.isVisible ? _c("p", [_vm._v(_vm._s(_vm.message))]) : _vm._e(),
+      _c("P", [
+        _vm._v("ホームはまだきちんと作っていないので、これから作ります。")
+      ]),
       _vm._v(" "),
-      _c("router-link", { attrs: { to: "/video/111" } }, [_vm._v("C言語")]),
+      _c("h3", [_vm._v("C言語")]),
       _vm._v(" "),
-      _c("router-link", { attrs: { to: "/video/222" } }, [_vm._v("R言語")])
+      _c("ul", [
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: "/video/111" } }, [
+              _vm._v("C言語")
+            ])
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("PacScript")]),
+      _vm._v(" "),
+      _c("ul", [
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: "/video/333" } }, [
+              _vm._v("コマンドの利用")
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: "/video/444" } }, [
+              _vm._v("制御方法")
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: "/video/555" } }, [
+              _vm._v("JNIの利用")
+            ])
+          ],
+          1
+        )
+      ])
     ],
     1
   )
@@ -83466,6 +83463,46 @@ exports.default = {
     }
   }
 };
+
+/***/ }),
+/* 560 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(561);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(20)("14b097ad", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-20abea0b\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./home.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-20abea0b\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./home.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 561 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(19)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.main-box {\n  padding-left: 40px;\n}\n.main-box ul a {\n    text-decoration: none;\n    color: green;\n}\n.main-box ul a:visited {\n      color: green;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

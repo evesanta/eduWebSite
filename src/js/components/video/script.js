@@ -19,13 +19,14 @@ export default {
       subCate: '',
       videoUrl: '',
       loaded: "",
-      ref: "",
       source: "",
       message: 'hello!',
       jsonData: "読み込み中",
       source2: "",
       nextVideo: "/video/",
-      preVideo: "/video/"
+      preVideo: "/video/",
+      preName: "",
+      nextName: ""
     }
   },
   mounted() {
@@ -51,11 +52,10 @@ export default {
       this.videoUrl = getData.url
       this.preVideo = "/video/" + getData.preVideo
       this.nextVideo = "/video/" + getData.nextVideo
-
-
+      this.preName = getData.preName
+      this.nextName = getData.nextName
 
       this.tableData = getTable(getData.chapter)
-
       this.source = marked(getData.source["1"].replace(/\'/g, '\"'));
 
     }

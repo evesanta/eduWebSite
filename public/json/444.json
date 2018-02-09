@@ -18,5 +18,7 @@
     "1": "# 各制御について\n\n### 注意事項\nこの動画を見る前に、[WINCAPS3の各コマンドについて](https://eduwebsite-1224.firebaseapp.com/#/video/333)を見ることをお勧めします。\n\n## 補間動作\n\n### PTP制御\nプログラム\n\n```\nSub Main\n\tTakearm Keep = 0\n\tSpeed 100  \n\tMove P, @0 P10\n\tMove P, @0 P11\n\tMove P, @0 P13\n\tMove P, @0 P12\n\tMove P, @0 P10\n\tGivearm\nEnd Sub  \n```\n\n```\nSub Main\n\tTakearm Keep = 0\n\tSpeed 100\n\tMove P, @0 P10\n\tMove P, @0 P15\n\tMove P, @0 P16\n\tMove P, @0 P10\n\tGivearm\nEnd Sub  \n```\n\n### 直線補間制御\n上のソースコードを置換するだけで作成できます。\n\n### 円弧補間制御\n```\nMove C 経由位置, @パス開始変位位置 目標位置, 動作オプション \n```\n\nプログラム  \n\n```\nSub Main\n\tTakearm Keep = 0\n\tSpeed 100\n\tMove L, @0 P10\n\tMove L, @0 P11\n\tMove C, P13, @0 P12\n\tMove L, @0 P10\n\tGivearm\nEnd Sub  \n```"
   },
   "preVideo": "333",
-  "nextVideo": "555"
+  "nextVideo": "555",
+    "preName":"コマンドの使い方",
+  "nextName":"JNIの利用"
 }

@@ -41,6 +41,7 @@ $tableTimeWidth: 120px;
         justify-content: flex-end;
         a {
           transition: opacity 0.3s 0s ease;
+          text-decoration: none;
           &:visited {
             color: #000;
           }

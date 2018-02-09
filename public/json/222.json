@@ -13,6 +13,8 @@
     "1": "#include <math.h>\n\nint main(void){\n\tprintf('Hello World ');\n\n\treturn 0;\n}",
     "2": "#include <math.h>\n\nint main(void){\n\tprintf('Hello World ');\n\n\treturn 0;\n}"
   },
-  "preVideo": "111",
-  "nextVideo": ""
+  "preVideo": "",
+  "nextVideo": "",
+      "preName":"",
+  "nextName":""
 }
