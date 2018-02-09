@@ -1,22 +1,19 @@
 <div class="mainContainer">
   <ul class="breadcrumb">
     <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
-      <a href="ホームのＵＲＬ" itemprop="url">
-        <span itemprop="title">ホーム</span>
-      </a>
+      <router-link to="/home"><span itemprop="title">ホーム</span></router-link>
     </li>
+    <!--
+<li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
+  <a href="カテゴリーＵＲＬ" itemprop="url">
+    <span itemprop="title">{{subCate}}</span>
+  </a>
+</li>
+-->
     <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
-      <a href="カテゴリーＵＲＬ" itemprop="url">
-        <span itemprop="title">{{subCate}}</span>
-      </a>
-    </li>
-    <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
-      <a href="子カテゴリーのＵＲＬ" itemprop="url">
-        <span itemprop="title">{{title}}</span>
-      </a>
+      <span itemprop="title">{{title}}</span>
     </li>
   </ul>
-  <span class="octicon octicon-mark-github"></span>
   <div class="main">
     <div class="left">
       <div class="video">
@@ -33,12 +30,12 @@
         </a>
 
         <router-link :to="preVideo">
-          <el-button :class="preVideo != '/video/' ? ''  : 'is-disabled'"> &lt; 前の講座へ</el-button>
+          <el-button :class="preVideo != '/video/' ? ''  : 'is-disabled'"> &lt; {{preName}}</el-button>
         </router-link>
 
         <router-link :to="nextVideo">
           <el-button :class="nextVideo != '/video/' ? ''  : 'is-disabled'">
-            次の講座へ > </el-button>
+            {{nextName}} > </el-button>
         </router-link>
       </div>
       <div class="chapter">

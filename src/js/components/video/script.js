@@ -19,13 +19,14 @@ export default {
       subCate: '',
       videoUrl: '',
       loaded: "",
-      ref: "",
       source: "",
       message: 'hello!',
       jsonData: "読み込み中",
       source2: "",
       nextVideo: "/video/",
-      preVideo: "/video/"
+      preVideo: "/video/",
+      preName: "",
+      nextName: ""
     }
   },
   mounted() {
@@ -51,21 +52,11 @@ export default {
       this.videoUrl = getData.url
       this.preVideo = "/video/" + getData.preVideo
       this.nextVideo = "/video/" + getData.nextVideo
-
+      this.preName = getData.preName
+      this.nextName = getData.nextName
 
       this.tableData = getTable(getData.chapter)
-
-      var temp = getData.ref["1"]
-
-      this.ref = temp.replace('nn', '\<br/\>');
-
       this.source = marked(getData.source["1"].replace(/\'/g, '\"'));
-      //      $(function () {　
-      //        $('pre code').each(function (i, block) {
-      //          console.log(12)
-      //          hljs.highlightBlock(block);
-      //        });
-      //      });
 
     }
   },
@@ -119,7 +110,7 @@ var getTable = function (data) {
 
 var getJson = async function (name) {
   var getData = null
-  await axios.get("/js/json/" + name + ".json").then(x => {
+  await axios.get("/json/" + name + ".json").then(x => {
     getData = x.data
   });
   return getData
