@@ -65,3 +65,5 @@ typings/
 *.css.map
 
 .DS_Store
+
+markdown/

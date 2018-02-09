@@ -53,19 +53,10 @@ export default {
       this.nextVideo = "/video/" + getData.nextVideo
 
 
+
       this.tableData = getTable(getData.chapter)
 
-      var temp = getData.ref["1"]
-
-      this.ref = temp.replace('nn', '\<br/\>');
-
       this.source = marked(getData.source["1"].replace(/\'/g, '\"'));
-      //      $(function () {　
-      //        $('pre code').each(function (i, block) {
-      //          console.log(12)
-      //          hljs.highlightBlock(block);
-      //        });
-      //      });
 
     }
   },
@@ -119,7 +110,7 @@ var getTable = function (data) {
 
 var getJson = async function (name) {
   var getData = null
-  await axios.get("/js/json/" + name + ".json").then(x => {
+  await axios.get("/json/" + name + ".json").then(x => {
     getData = x.data
   });
   return getData

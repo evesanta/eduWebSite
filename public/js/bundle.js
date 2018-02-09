@@ -14471,19 +14471,10 @@ __WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
       this.nextVideo = "/video/" + getData.nextVideo
 
 
+
       this.tableData = getTable(getData.chapter)
 
-      var temp = getData.ref["1"]
-
-      this.ref = temp.replace('nn', '\<br/\>');
-
       this.source = __WEBPACK_IMPORTED_MODULE_2_marked___default()(getData.source["1"].replace(/\'/g, '\"'));
-      //      $(function () {　
-      //        $('pre code').each(function (i, block) {
-      //          console.log(12)
-      //          hljs.highlightBlock(block);
-      //        });
-      //      });
 
     }
   },
@@ -14537,7 +14528,7 @@ var getTable = function (data) {
 
 var getJson = async function (name) {
   var getData = null
-  await __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/js/json/" + name + ".json").then(x => {
+  await __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/json/" + name + ".json").then(x => {
     getData = x.data
   });
   return getData

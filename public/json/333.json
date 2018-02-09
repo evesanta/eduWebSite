@@ -22,5 +22,5 @@
     "1": "# コマンドの使い方  \n### Moveコマンド\n\n```\nMove 動作補完, @パス開始変位量, 目標位置, 動作オプション\n```\n\n#### ホール1からホール3へ動かすプログラム\n```\nSub Main\n\tTakearm Keep = 0\n\tSpeed 100\n\t\n\tMove P, @0, P10\n\tMove P, @0, P[11]\n\tMove P, @0, P12, Speed = 50\n\tMove P, @0, P10\n\tGivearm\nEnd Sub\n```\n\n### approachコマンド\n```\nApproach 動作補完, @パス開始変位量, アプローチ長, 動作オプション\n```\n\n#### 変更部分だけ\n```\nApproach P, P12, @0 30, Speed = 50\n```\n\n### DriveAコマンド\n```\nDriveA @パス開始変位量, 目標位置, 動作オプション\n```\n\n#### DriveAのプログラム\n```\nSub Main\n\tTakearm Keep = 0\n\tSpeed 100\n\tDriveA @0 J[1]\n\tDriveA (7, -70)\n\tDriveA (7, 0), Speed = 50\n\tDriveA (1, 90)\n\tDriveA (1, 0), Speed = 50\nEnd Sub\n```\n\n### Departコマンド\n```\nDepart 動作補間, @パス開始変位量, デパート長, 動作オプション\n```\n\n#### Departプログラム（変更部分のみ）\n```\nDepart P, @0 30, Speed = 50\n```\n"
   },
   "preVideo": "111",
-  "nextVideo": ""
+  "nextVideo": "444"
 }
