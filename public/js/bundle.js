@@ -14438,7 +14438,6 @@ __WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
       videoUrl: '',
       loaded: "",
       source: "",
-      message: 'hello!',
       videoData: ["/video/", "/video/", "", ""],
       chapOk: true
     }
@@ -14452,11 +14451,14 @@ __WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
   methods: {
     say: function(index) {
       this.chapOk = true;
+      this.moveScroll(this.nowTime);
       const video = document.getElementById("video");
       video.currentTime = this.tableData[index].time;
       video.play();
     },
     saisei: function() {
+      this.chapOk = true;
+      this.moveScroll(this.nowTime);
       video.paused ? video.play() : video.pause();
     },
     update: async function() {
@@ -14473,6 +14475,13 @@ __WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
       this.tableData = getTable(getData.chapter)
       this.source = __WEBPACK_IMPORTED_MODULE_2_marked___default()(getData.source["1"].replace(/\'/g, '\"'));
 
+    },
+    moveScroll: function(nowt) {
+      this.tableData.forEach((data, index, array) => {
+        if (this.chapOk && data.time <= nowt && nowt < data.endTime) {
+          document.getElementById("tableBody").scrollTop = index * 42;
+        }
+      })
     }
   },
 
@@ -14490,11 +14499,7 @@ __WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
   watch: {
     nowTime: function(nowt) {
       if (document.getElementById("tableBody").scrollTop % 42 != 0) this.chapOk = false
-      this.tableData.forEach((data, index, array) => {
-        if (this.chapOk && data.time <= nowt && nowt < data.endTime) {
-          document.getElementById("tableBody").scrollTop = index * 42;
-        }
-      })
+      this.moveScroll(nowt);
     },
     '$route' (to, from) {
       this.update()
