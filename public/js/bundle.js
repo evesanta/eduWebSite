@@ -76,7 +76,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(86)
 }
-var normalizeComponent = __webpack_require__(20)
+var normalizeComponent = __webpack_require__(21)
 /* script */
 
 
@@ -133,7 +133,7 @@ if (false) {(function () {
 /* harmony export (immutable) */ __webpack_exports__["c"] = deepMerge;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
 
 
@@ -12017,7 +12017,7 @@ exports.default = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(12);
-var createDesc = __webpack_require__(23);
+var createDesc = __webpack_require__(24);
 module.exports = __webpack_require__(13) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -12030,7 +12030,7 @@ module.exports = __webpack_require__(13) ? function (object, key, value) {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(22);
+var anObject = __webpack_require__(23);
 var IE8_DOM_DEFINE = __webpack_require__(70);
 var toPrimitive = __webpack_require__(39);
 var dP = Object.defineProperty;
@@ -12075,7 +12075,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(43)('wks');
-var uid = __webpack_require__(25);
+var uid = __webpack_require__(26);
 var Symbol = __webpack_require__(6).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
@@ -12138,6 +12138,88 @@ module.exports = g;
 
 /***/ }),
 /* 19 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -12365,7 +12447,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -12474,7 +12556,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 var core = module.exports = { version: '2.5.3' };
@@ -12482,7 +12564,7 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(16);
@@ -12493,7 +12575,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -12507,7 +12589,7 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
@@ -12520,7 +12602,7 @@ module.exports = Object.keys || function keys(O) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -12531,14 +12613,14 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12563,88 +12645,6 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 } : function (obj) {
   return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
 };
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
 
 /***/ }),
 /* 29 */
@@ -14051,7 +14051,7 @@ exports.default = function (ref) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(6);
-var core = __webpack_require__(21);
+var core = __webpack_require__(22);
 var ctx = __webpack_require__(507);
 var hide = __webpack_require__(11);
 var PROTOTYPE = 'prototype';
@@ -14159,7 +14159,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(43)('keys');
-var uid = __webpack_require__(25);
+var uid = __webpack_require__(26);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -14233,7 +14233,7 @@ exports.f = __webpack_require__(15);
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(6);
-var core = __webpack_require__(21);
+var core = __webpack_require__(22);
 var LIBRARY = __webpack_require__(46);
 var wksExt = __webpack_require__(49);
 var defineProperty = __webpack_require__(12).f;
@@ -14438,6 +14438,7 @@ __WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
       videoUrl: '',
       loaded: "",
       source: "",
+      githubLink: "",
       videoData: ["/video/", "/video/", "", ""],
       chapOk: true
     }
@@ -14467,13 +14468,14 @@ __WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
       this.title = getData.title
       this.subCate = getData.subCategory
       this.videoUrl = getData.url
+      this.githubLink = getData.github;
       this.videoData[0] = "/video/" + getData.preVideo
       this.videoData[1] = "/video/" + getData.nextVideo
       this.videoData[2] = getData.preName
       this.videoData[3] = getData.nextName
 
       this.tableData = getTable(getData.chapter)
-      this.source = __WEBPACK_IMPORTED_MODULE_2_marked___default()(getData.source["1"].replace(/\'/g, '\"'));
+      this.source = __WEBPACK_IMPORTED_MODULE_2_marked___default()(getData.source);
 
     },
     moveScroll: function(nowt) {
@@ -14511,11 +14513,11 @@ var getTable = function(data) {
   var table = []
 
   for (var index in data) {
-    if (index != 0) table[table.length - 1].endTime = index;
-    const shortName = (data[index].length > 20) ?
-      data[index].slice(0, 17) + "..." : data[index];
+    if (index != 0) table[table.length - 1].endTime = data[index].time;
+    const shortName = (data[index].name.length > 20) ?
+      data[index].name.slice(0, 17) + "..." : data[index].name;
     table.push({
-      time: index,
+      time: data[index].time,
       endTime: Infinity,
       name: shortName,
       nowPlay: false
@@ -14527,7 +14529,7 @@ var getTable = function(data) {
 
 var getJson = async function(name) {
   var getData = null
-  await __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/json/" + name + ".json").then(x => {
+  await __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("json/" + name + ".json").then(x => {
     getData = x.data
   });
   return getData
@@ -16638,7 +16640,7 @@ module.exports = __webpack_require__(11);
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(22);
+var anObject = __webpack_require__(23);
 var dPs = __webpack_require__(518);
 var enumBugKeys = __webpack_require__(44);
 var IE_PROTO = __webpack_require__(42)('IE_PROTO');
@@ -16747,7 +16749,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_element_ui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_element_ui__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_element_ui_lib_locale_lang_ja__ = __webpack_require__(559);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_element_ui_lib_locale_lang_ja___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_element_ui_lib_locale_lang_ja__);
-// 0. モジュールシステムを使っている場合 (例: vue-cli 経由で)、Vue と VueRouter をインポートし、`Vue.use(VueRouter)` を呼び出します。
 
 
 
@@ -16759,11 +16760,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('octicon', __WEBPACK_IMPORTED_MODULE_2_vue_octicon_components_Octicon_vue__["a" /* default */]);
-
-
-
-// 1. ルートコンポーネントを定義します
-// 他のファイルからインポートすることもできます
 
 
 
@@ -16781,7 +16777,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_8_elem
 })
 
 
-// Tell Vue.js to use vue-highlightjs
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_7_vue_highlightjs___default.a)
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("source-box", __WEBPACK_IMPORTED_MODULE_6__components_sourceBox_vue__["a" /* default */])
@@ -16793,13 +16788,7 @@ const Bar = {
   template: '<div>bar</div>'
 }
 
-// 2. ルートをいくつか定義します
-// 各ルートは 1 つのコンポーネントとマッピングされる必要があります。
-// このコンポーネントは実際の `Vue.extend()`、
-// またはコンポーネントオプションのオブジェクトでも構いません。
-// ネストされたルートに関しては後で説明します
-const routes = [
-  {
+const routes = [{
     path: '/home',
     component: __WEBPACK_IMPORTED_MODULE_5__components_home_vue__["a" /* default */]
   },
@@ -16813,22 +16802,13 @@ const routes = [
   }
 ]
 
-// 3. ルーターインスタンスを作成して、ルートオプションを渡します
-// 追加のオプションをここで指定できますが、
-// この例ではシンプルにしましょう
 const router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   routes // `routes: routes` の短縮表記
 })
 
-// 4. root となるインスタンスを作成してマウントします
-// アプリケーション全体がルーターを認知できるように、
-// ルーターをインジェクトすることを忘れないでください。
 const app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   router
 }).$mount('#app')
-
-// これで開始です!
-
 
 /***/ }),
 /* 83 */
@@ -19732,7 +19712,7 @@ var content = __webpack_require__(87);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(19)("52d648be", content, false, {});
+var update = __webpack_require__(20)("52d648be", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -19751,7 +19731,7 @@ if(false) {
 /* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(28)(false);
+exports = module.exports = __webpack_require__(19)(false);
 // imports
 
 
@@ -22189,7 +22169,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(269)
 }
-var normalizeComponent = __webpack_require__(20)
+var normalizeComponent = __webpack_require__(21)
 /* script */
 
 /* template */
@@ -22242,7 +22222,7 @@ var content = __webpack_require__(270);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(19)("07aa6470", content, false, {});
+var update = __webpack_require__(20)("07aa6470", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -22261,12 +22241,12 @@ if(false) {
 /* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(28)(false);
+exports = module.exports = __webpack_require__(19)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n.mainContainer {\n  height: calc(100vh - 48px);\n  width: 100vw;\n  min-width: 1300px;\n  background-color: aliceblue;\n}\n.mainContainer .main {\n    margin: 0 auto;\n    width: 1300px;\n    height: calc(100vh - 72px);\n    min-height: 610px;\n    background-color: aqua;\n    display: flex;\n}\n.mainContainer .main .left {\n      width: 768px;\n}\n.mainContainer .main .left .video {\n        height: 432px;\n        background-color: antiquewhite;\n}\n.mainContainer .main .left .video video {\n          width: 100%;\n}\n.mainContainer .main .left .itemBox {\n        box-sizing: border-box;\n        height: 50px;\n        background-color: #3C7;\n        border: 1px solid #AAA;\n        display: flex;\n        align-items: center;\n        justify-content: flex-end;\n}\n.mainContainer .main .left .itemBox a {\n          transition: opacity 0.3s 0s ease;\n          text-decoration: none;\n          position: relative;\n          margin-right: 20px;\n}\n.mainContainer .main .left .itemBox a:visited {\n            color: #000;\n}\n.mainContainer .main .left .itemBox a .gitHub {\n            background-color: white;\n            height: 38px;\n            line-height: 42px;\n            padding: 0 20px;\n            border-radius: 4px;\n            border: 1px solid #dcdfe6;\n            color: #000;\n            display: inline-block;\n            height: 38px;\n            text-align: center;\n}\n.mainContainer .main .left .itemBox a .gitHub:hover {\n              opacity: 0.8;\n}\n.mainContainer .main .left .itemBox a .gitHub:hover + .tooltip {\n              opacity: 0.9;\n              transition: opacity 0.5s 0.4s ease;\n}\n.mainContainer .main .left .itemBox a .tooltip {\n            position: absolute;\n            width: 140px;\n            top: 50px;\n            background-color: #666;\n            color: white;\n            padding: 5px 10px;\n            box-sizing: border-box;\n            border-radius: 5px;\n            opacity: 0;\n            transition: opacity 0.2s 0s ease;\n            text-align: center;\n}\n.mainContainer .main .left .itemBox a button:hover {\n            opacity: 0.8;\n}\n.mainContainer .main .left .itemBox a button:hover + .tooltip {\n            opacity: 0.9;\n            transition: opacity 0.5s 0.4s ease;\n}\n.mainContainer .main .left .itemBox .is-disabled {\n          margin-right: 20px;\n}\n.mainContainer .main .left .chapter {\n        height: calc(100vh - 432px - 50px - 72px);\n        width: 100%;\n        background-color: burlywood;\n}\n.mainContainer .main .left .chapter .table {\n          margin: 0 auto;\n          border-collapse: collapse;\n          background-color: white;\n          text-align: left;\n          line-height: 1.5;\n          border: 2px solid #DDD;\n          z-index: 3;\n          height: 100%;\n          min-height: 128px;\n}\n.mainContainer .main .left .chapter .table thead {\n            display: block;\n}\n.mainContainer .main .left .chapter .table thead th {\n              padding: 10px;\n              font-weight: bold;\n              vertical-align: top;\n              background-color: #EFE;\n              border-bottom: 3px solid #3C7;\n}\n.mainContainer .main .left .chapter .table tbody {\n            cursor: pointer;\n            display: block;\n            overflow-y: scroll;\n            height: calc(100% - 54px);\n}\n.mainContainer .main .left .chapter .table tbody::-webkit-scrollbar {\n              display: none;\n}\n.mainContainer .main .left .chapter .table tbody td {\n              padding: 10px;\n              vertical-align: top;\n              border-bottom: 1px solid #ccc;\n}\n.mainContainer .main .left .chapter .table tbody tr {\n              opacity: 0.4;\n              font-size: 14px;\n              transition: background-color 0.5s 0s ease;\n}\n.mainContainer .main .left .chapter .table tbody tr:hover {\n                background-color: #EFE;\n                opacity: 0.7;\n}\n.mainContainer .main .left .chapter .table tbody .nowPlay {\n              color: #3C7;\n              opacity: 1;\n}\n.mainContainer .main .left .chapter .table .time {\n            padding-left: 40px;\n            width: 120px;\n}\n.mainContainer .main .left .chapter .table .name {\n            width: 648px;\n}\n.mainContainer .main .right {\n      width: 532px;\n      border: 3px solid #AAA;\n      box-sizing: border-box;\n      padding: 0 20px;\n      background-color: #fcf9f1;\n      height: 100%;\n      overflow-y: scroll;\n}\n.mainContainer .main .right h1 {\n        border-bottom: 2px solid #DDD;\n}\n.mainContainer .main .right pre {\n        border: 2px solid #DDD;\n        background-color: beige;\n        padding: 10px;\n        font-size: 12px;\n        overflow-x: auto;\n}\n\n/*\nDocco style used in http://jashkenas.github.com/docco/ converted by Simon Madine (@thingsinjars)\nシンタックスハイライト\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #000;\n  background: #f8f8ff;\n}\n.hljs-comment,\n.hljs-quote {\n  color: #408080;\n  font-style: italic;\n}\n.hljs-keyword,\n.hljs-literal,\n.hljs-selector-tag,\n.hljs-subst {\n  color: #954121;\n}\n.hljs-number {\n  color: #40a070;\n}\n.hljs-doctag,\n.hljs-string {\n  color: #219161;\n}\n.hljs-section,\n.hljs-selector-class,\n.hljs-selector-id,\n.hljs-type {\n  color: #19469d;\n}\n.hljs-params {\n  color: #00f;\n}\n.hljs-title {\n  color: #458;\n  font-weight: bold;\n}\n.hljs-attribute,\n.hljs-name,\n.hljs-tag {\n  color: #000080;\n  font-weight: normal;\n}\n.hljs-template-variable,\n.hljs-variable {\n  color: #008080;\n}\n.hljs-link,\n.hljs-regexp {\n  color: #b68;\n}\n.hljs-bullet,\n.hljs-symbol {\n  color: #990073;\n}\n.hljs-built_in,\n.hljs-builtin-name {\n  color: #0086b3;\n}\n.hljs-meta {\n  color: #999;\n  font-weight: bold;\n}\n.hljs-deletion {\n  background: #fdd;\n}\n.hljs-addition {\n  background: #dfd;\n}\n.hljs-emphasis {\n  font-style: italic;\n}\n.hljs-strong {\n  font-weight: bold;\n}\nblockquote {\n  padding-left: 10px;\n  border-left: 6px solid #DDD;\n}\n.breadcrumb {\n  padding: 0;\n  margin: 0 0 0 10px;\n}\n.breadcrumb li {\n    display: inline;\n    /*横に並ぶように*/\n    list-style: none;\n    font-weight: bold;\n    /*太字*/\n}\n.breadcrumb li:after {\n      /* >を表示*/\n      content: '>';\n      padding: 0 3px;\n      color: #555;\n}\n.breadcrumb li:last-child:after {\n      content: '';\n}\n.breadcrumb li a {\n      text-decoration: none;\n      color: #3C7;\n      /*色*/\n}\n.breadcrumb li a:hover {\n        text-decoration: underline;\n}\n", ""]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n.mainContainer {\n  height: calc(100vh - 48px);\n  width: 100vw;\n  min-width: 1300px;\n  background-color: aliceblue;\n}\n.mainContainer .main {\n    margin: 0 auto;\n    width: 1300px;\n    height: calc(100vh - 72px);\n    min-height: 610px;\n    background-color: aqua;\n    display: flex;\n}\n.mainContainer .main .left {\n      width: 768px;\n}\n.mainContainer .main .left .video {\n        height: 432px;\n        background-color: antiquewhite;\n}\n.mainContainer .main .left .video video {\n          width: 100%;\n          height: 100%;\n}\n.mainContainer .main .left .itemBox {\n        box-sizing: border-box;\n        height: 50px;\n        background-color: #3C7;\n        border: 1px solid #AAA;\n        display: flex;\n        align-items: center;\n        justify-content: flex-end;\n}\n.mainContainer .main .left .itemBox a {\n          transition: opacity 0.3s 0s ease;\n          text-decoration: none;\n          position: relative;\n          margin-right: 20px;\n}\n.mainContainer .main .left .itemBox a:visited {\n            color: #000;\n}\n.mainContainer .main .left .itemBox a .gitHub {\n            background-color: white;\n            height: 38px;\n            line-height: 42px;\n            padding: 0 20px;\n            border-radius: 4px;\n            border: 1px solid #dcdfe6;\n            color: #000;\n            display: inline-block;\n            height: 38px;\n            text-align: center;\n}\n.mainContainer .main .left .itemBox a .gitHub:hover {\n              opacity: 0.8;\n}\n.mainContainer .main .left .itemBox a .gitHub:hover + .tooltip {\n              opacity: 0.9;\n              transition: opacity 0.5s 0.4s ease;\n}\n.mainContainer .main .left .itemBox a .tooltip {\n            position: absolute;\n            width: 140px;\n            top: 50px;\n            background-color: #666;\n            color: white;\n            padding: 5px 10px;\n            box-sizing: border-box;\n            border-radius: 5px;\n            opacity: 0;\n            transition: opacity 0.2s 0s ease;\n            text-align: center;\n}\n.mainContainer .main .left .itemBox a button:hover {\n            opacity: 0.8;\n}\n.mainContainer .main .left .itemBox a button:hover + .tooltip {\n            opacity: 0.9;\n            transition: opacity 0.5s 0.4s ease;\n}\n.mainContainer .main .left .itemBox .is-disabled {\n          margin-right: 20px;\n}\n.mainContainer .main .left .chapter {\n        height: calc(100vh - 432px - 50px - 72px);\n        width: 100%;\n        background-color: burlywood;\n}\n.mainContainer .main .left .chapter .table {\n          margin: 0 auto;\n          border-collapse: collapse;\n          background-color: white;\n          text-align: left;\n          line-height: 1.5;\n          border: 2px solid #DDD;\n          z-index: 3;\n          height: 100%;\n          min-height: 128px;\n}\n.mainContainer .main .left .chapter .table thead {\n            display: block;\n}\n.mainContainer .main .left .chapter .table thead th {\n              padding: 10px;\n              font-weight: bold;\n              vertical-align: top;\n              background-color: #EFE;\n              border-bottom: 3px solid #3C7;\n}\n.mainContainer .main .left .chapter .table tbody {\n            cursor: pointer;\n            display: block;\n            overflow-y: scroll;\n            height: calc(100% - 54px);\n}\n.mainContainer .main .left .chapter .table tbody::-webkit-scrollbar {\n              display: none;\n}\n.mainContainer .main .left .chapter .table tbody td {\n              padding: 10px;\n              vertical-align: top;\n              border-bottom: 1px solid #ccc;\n}\n.mainContainer .main .left .chapter .table tbody tr {\n              opacity: 0.4;\n              font-size: 14px;\n              transition: background-color 0.5s 0s ease;\n}\n.mainContainer .main .left .chapter .table tbody tr:hover {\n                background-color: #EFE;\n                opacity: 0.7;\n}\n.mainContainer .main .left .chapter .table tbody .nowPlay {\n              color: #3C7;\n              opacity: 1;\n}\n.mainContainer .main .left .chapter .table .time {\n            padding-left: 40px;\n            width: 120px;\n}\n.mainContainer .main .left .chapter .table .name {\n            width: 648px;\n}\n.mainContainer .main .right {\n      width: 532px;\n      border: 3px solid #AAA;\n      box-sizing: border-box;\n      padding: 0 20px;\n      background-color: #fcf9f1;\n      height: 100%;\n      overflow-y: scroll;\n}\n.mainContainer .main .right h1 {\n        border-bottom: 2px solid #DDD;\n}\n.mainContainer .main .right pre {\n        border: 2px solid #DDD;\n        background-color: beige;\n        padding: 10px;\n        font-size: 12px;\n        overflow-x: auto;\n}\n.mainContainer .main .right h2,\n      .mainContainer .main .right h3,\n      .mainContainer .main .right h4,\n      .mainContainer .main .right h5 {\n        margin-bottom: 0;\n}\n\n/*\nDocco style used in http://jashkenas.github.com/docco/ converted by Simon Madine (@thingsinjars)\nシンタックスハイライト\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #000;\n  background: #f8f8ff;\n}\n.hljs-comment,\n.hljs-quote {\n  color: #408080;\n  font-style: italic;\n}\n.hljs-keyword,\n.hljs-literal,\n.hljs-selector-tag,\n.hljs-subst {\n  color: #954121;\n}\n.hljs-number {\n  color: #40a070;\n}\n.hljs-doctag,\n.hljs-string {\n  color: #219161;\n}\n.hljs-section,\n.hljs-selector-class,\n.hljs-selector-id,\n.hljs-type {\n  color: #19469d;\n}\n.hljs-params {\n  color: #00f;\n}\n.hljs-title {\n  color: #458;\n  font-weight: bold;\n}\n.hljs-attribute,\n.hljs-name,\n.hljs-tag {\n  color: #000080;\n  font-weight: normal;\n}\n.hljs-template-variable,\n.hljs-variable {\n  color: #008080;\n}\n.hljs-link,\n.hljs-regexp {\n  color: #b68;\n}\n.hljs-bullet,\n.hljs-symbol {\n  color: #990073;\n}\n.hljs-built_in,\n.hljs-builtin-name {\n  color: #0086b3;\n}\n.hljs-meta {\n  color: #999;\n  font-weight: bold;\n}\n.hljs-deletion {\n  background: #fdd;\n}\n.hljs-addition {\n  background: #dfd;\n}\n.hljs-emphasis {\n  font-style: italic;\n}\n.hljs-strong {\n  font-weight: bold;\n}\nblockquote {\n  padding-left: 10px;\n  border-left: 6px solid #DDD;\n}\n.breadcrumb {\n  padding: 0;\n  margin: 0 0 0 10px;\n}\n.breadcrumb li {\n    display: inline;\n    /*横に並ぶように*/\n    list-style: none;\n    font-weight: bold;\n    /*太字*/\n}\n.breadcrumb li:after {\n      /* >を表示*/\n      content: '>';\n      padding: 0 3px;\n      color: #555;\n}\n.breadcrumb li:last-child:after {\n      content: '';\n}\n.breadcrumb li a {\n      text-decoration: none;\n      color: #3C7;\n      /*色*/\n}\n.breadcrumb li a:hover {\n        text-decoration: underline;\n}\n", ""]);
 
 // exports
 
@@ -41858,21 +41838,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "mainContainer" }, [
     _c("ul", { staticClass: "breadcrumb" }, [
-      _c(
-        "li",
-        {
-          attrs: {
-            itemscope: "itemscope",
-            itemtype: "http://data-vocabulary.org/Breadcrumb"
-          }
-        },
-        [
-          _c("router-link", { attrs: { to: "/home" } }, [
-            _c("span", { attrs: { itemprop: "title" } }, [_vm._v("ホーム")])
-          ])
-        ],
-        1
-      ),
+      _vm._m(0),
       _vm._v(" "),
       _c(
         "li",
@@ -41912,31 +41878,33 @@ var render = function() {
           "div",
           { staticClass: "itemBox" },
           [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "https://github.com/evesanta/eduWebSite",
-                  target: "_blank"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  { staticClass: "gitHub" },
+            _vm.githubLink != ""
+              ? _c(
+                  "a",
+                  {
+                    attrs: {
+                      href: "https://github.com/evesanta/eduWebSite",
+                      target: "_blank"
+                    }
+                  },
                   [
-                    _c("octicon", { attrs: { name: "mark-github" } }),
+                    _c(
+                      "span",
+                      { staticClass: "gitHub" },
+                      [
+                        _c("octicon", { attrs: { name: "mark-github" } }),
+                        _vm._v(" "),
+                        _c("octicon", { attrs: { name: "logo-github" } })
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
-                    _c("octicon", { attrs: { name: "logo-github" } })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("span", { staticClass: "tooltip" }, [
-                  _vm._v("動画で紹介した全てのコード")
-                ])
-              ]
-            ),
+                    _c("span", { staticClass: "tooltip" }, [
+                      _vm._v("動画で紹介した全てのコード")
+                    ])
+                  ]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _vm.videoData[0] != "/video/"
               ? _c(
@@ -41975,7 +41943,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "chapter" }, [
           _c("table", { staticClass: "table" }, [
-            _vm._m(0),
+            _vm._m(1),
             _vm._v(" "),
             _c(
               "tbody",
@@ -42021,6 +41989,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "li",
+      {
+        attrs: {
+          itemscope: "itemscope",
+          itemtype: "http://data-vocabulary.org/Breadcrumb"
+        }
+      },
+      [_c("span", { attrs: { itemprop: "title" } }, [_vm._v("ホーム")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { staticClass: "time" }, [_vm._v("時間")]),
@@ -42053,7 +42036,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(470)
 }
-var normalizeComponent = __webpack_require__(20)
+var normalizeComponent = __webpack_require__(21)
 /* script */
 
 
@@ -42107,7 +42090,7 @@ var content = __webpack_require__(471);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(19)("14b097ad", content, false, {});
+var update = __webpack_require__(20)("14b097ad", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -42126,7 +42109,7 @@ if(false) {
 /* 471 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(28)(false);
+exports = module.exports = __webpack_require__(19)(false);
 // imports
 
 
@@ -42226,7 +42209,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(474)
 }
-var normalizeComponent = __webpack_require__(20)
+var normalizeComponent = __webpack_require__(21)
 /* script */
 var __vue_script__ = null
 /* template */
@@ -42279,7 +42262,7 @@ var content = __webpack_require__(475);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(19)("38812b52", content, false, {});
+var update = __webpack_require__(20)("38812b52", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -42298,7 +42281,7 @@ if(false) {
 /* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(28)(false);
+exports = module.exports = __webpack_require__(19)(false);
 // imports
 
 
@@ -80890,7 +80873,7 @@ exports.default = aria.Utils;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__validator___ = __webpack_require__(536);
@@ -81169,7 +81152,7 @@ module.exports = { "default": __webpack_require__(505), __esModule: true };
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(506);
-module.exports = __webpack_require__(21).Object.assign;
+module.exports = __webpack_require__(22).Object.assign;
 
 
 /***/ }),
@@ -81225,9 +81208,9 @@ module.exports = function (it) {
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
-var getKeys = __webpack_require__(24);
+var getKeys = __webpack_require__(25);
 var gOPS = __webpack_require__(45);
-var pIE = __webpack_require__(26);
+var pIE = __webpack_require__(27);
 var toObject = __webpack_require__(75);
 var IObject = __webpack_require__(73);
 var $assign = Object.assign;
@@ -81382,7 +81365,7 @@ module.exports = function (TO_STRING) {
 "use strict";
 
 var create = __webpack_require__(78);
-var descriptor = __webpack_require__(23);
+var descriptor = __webpack_require__(24);
 var setToStringTag = __webpack_require__(48);
 var IteratorPrototype = {};
 
@@ -81400,8 +81383,8 @@ module.exports = function (Constructor, NAME, next) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(12);
-var anObject = __webpack_require__(22);
-var getKeys = __webpack_require__(24);
+var anObject = __webpack_require__(23);
+var getKeys = __webpack_require__(25);
 
 module.exports = __webpack_require__(13) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -81537,7 +81520,7 @@ __webpack_require__(527);
 __webpack_require__(533);
 __webpack_require__(534);
 __webpack_require__(535);
-module.exports = __webpack_require__(21).Symbol;
+module.exports = __webpack_require__(22).Symbol;
 
 
 /***/ }),
@@ -81556,22 +81539,22 @@ var META = __webpack_require__(528).KEY;
 var $fails = __webpack_require__(17);
 var shared = __webpack_require__(43);
 var setToStringTag = __webpack_require__(48);
-var uid = __webpack_require__(25);
+var uid = __webpack_require__(26);
 var wks = __webpack_require__(15);
 var wksExt = __webpack_require__(49);
 var wksDefine = __webpack_require__(50);
 var enumKeys = __webpack_require__(529);
 var isArray = __webpack_require__(530);
-var anObject = __webpack_require__(22);
+var anObject = __webpack_require__(23);
 var isObject = __webpack_require__(16);
 var toIObject = __webpack_require__(14);
 var toPrimitive = __webpack_require__(39);
-var createDesc = __webpack_require__(23);
+var createDesc = __webpack_require__(24);
 var _create = __webpack_require__(78);
 var gOPNExt = __webpack_require__(531);
 var $GOPD = __webpack_require__(532);
 var $DP = __webpack_require__(12);
-var $keys = __webpack_require__(24);
+var $keys = __webpack_require__(25);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -81695,7 +81678,7 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(79).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(26).f = $propertyIsEnumerable;
+  __webpack_require__(27).f = $propertyIsEnumerable;
   __webpack_require__(45).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(46)) {
@@ -81785,7 +81768,7 @@ setToStringTag(global.JSON, 'JSON', true);
 /* 528 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(25)('meta');
+var META = __webpack_require__(26)('meta');
 var isObject = __webpack_require__(16);
 var has = __webpack_require__(9);
 var setDesc = __webpack_require__(12).f;
@@ -81845,9 +81828,9 @@ var meta = module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(24);
+var getKeys = __webpack_require__(25);
 var gOPS = __webpack_require__(45);
-var pIE = __webpack_require__(26);
+var pIE = __webpack_require__(27);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -81901,8 +81884,8 @@ module.exports.f = function getOwnPropertyNames(it) {
 /* 532 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(26);
-var createDesc = __webpack_require__(23);
+var pIE = __webpack_require__(27);
+var createDesc = __webpack_require__(24);
 var toIObject = __webpack_require__(14);
 var toPrimitive = __webpack_require__(39);
 var has = __webpack_require__(9);
@@ -82066,7 +82049,7 @@ function whitespace(rule, value, source, errors, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__required__ = __webpack_require__(80);
@@ -82701,7 +82684,7 @@ function date(rule, value, callback, source, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rule___ = __webpack_require__(2);
 

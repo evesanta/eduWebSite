@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <link rel="stylesheet" href="index.css">
 
 </head>
@@ -13,18 +13,13 @@
     <header>
       <h1>教材動画の置き場</h1>
       <p>
-        <!-- ナビゲーションに router-link コンポーネントを使う -->
-        <!-- リンク先を `to` プロパティに指定します -->
-        <!-- デフォルトで `<router-link>` は `<a>` タグとして描画されます -->
-        <router-link to="/home">HOME</router-link>
+        <!-- <router-link to="/home">HOME</router-link> -->
       </p>
     </header>
-    <!-- ルートアウトレット -->
-    <!-- ルートとマッチしたコンポーネントがここへ描画されます -->
     <router-view></router-view>
   </div>
 
-  <script src="/js/bundle.js"></script>
+  <script src="js/bundle.js"></script>
 
 
 </body>
@@ -70,5 +65,4 @@
   header a.router-link-exact-active {
     border-bottom: 2px solid #FFF;
   }
-
 </style>
