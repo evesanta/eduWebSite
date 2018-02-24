@@ -20,7 +20,7 @@ export default {
       videoUrl: '',
       loaded: "",
       source: "",
-      message: 'hello!',
+      githubLink: "",
       videoData: ["/video/", "/video/", "", ""],
       chapOk: true
     }
@@ -34,11 +34,14 @@ export default {
   methods: {
     say: function(index) {
       this.chapOk = true;
+      this.moveScroll(this.nowTime);
       const video = document.getElementById("video");
       video.currentTime = this.tableData[index].time;
       video.play();
     },
     saisei: function() {
+      this.chapOk = true;
+      this.moveScroll(this.nowTime);
       video.paused ? video.play() : video.pause();
     },
     update: async function() {
@@ -47,14 +50,22 @@ export default {
       this.title = getData.title
       this.subCate = getData.subCategory
       this.videoUrl = getData.url
+      this.githubLink = getData.github;
       this.videoData[0] = "/video/" + getData.preVideo
       this.videoData[1] = "/video/" + getData.nextVideo
       this.videoData[2] = getData.preName
       this.videoData[3] = getData.nextName
 
       this.tableData = getTable(getData.chapter)
-      this.source = marked(getData.source["1"].replace(/\'/g, '\"'));
+      this.source = marked(getData.source);
 
+    },
+    moveScroll: function(nowt) {
+      this.tableData.forEach((data, index, array) => {
+        if (this.chapOk && data.time <= nowt && nowt < data.endTime) {
+          document.getElementById("tableBody").scrollTop = index * 42;
+        }
+      })
     }
   },
 
@@ -72,11 +83,7 @@ export default {
   watch: {
     nowTime: function(nowt) {
       if (document.getElementById("tableBody").scrollTop % 42 != 0) this.chapOk = false
-      this.tableData.forEach((data, index, array) => {
-        if (this.chapOk && data.time <= nowt && nowt < data.endTime) {
-          document.getElementById("tableBody").scrollTop = index * 42;
-        }
-      })
+      this.moveScroll(nowt);
     },
     '$route' (to, from) {
       this.update()
@@ -88,11 +95,11 @@ var getTable = function(data) {
   var table = []
 
   for (var index in data) {
-    if (index != 0) table[table.length - 1].endTime = index;
-    const shortName = (data[index].length > 20) ?
-      data[index].slice(0, 17) + "..." : data[index];
+    if (index != 0) table[table.length - 1].endTime = data[index].time;
+    const shortName = (data[index].name.length > 20) ?
+      data[index].name.slice(0, 17) + "..." : data[index].name;
     table.push({
-      time: index,
+      time: data[index].time,
       endTime: Infinity,
       name: shortName,
       nowPlay: false
@@ -104,7 +111,7 @@ var getTable = function(data) {
 
 var getJson = async function(name) {
   var getData = null
-  await axios.get("/json/" + name + ".json").then(x => {
+  await axios.get("json/" + name + ".json").then(x => {
     getData = x.data
   });
   return getData

@@ -33,6 +33,7 @@ $tableTimeWidth: 120px; // メインcss
 
         video {
           width: 100%;
+          height: 100%;
         }
       }
 
@@ -200,6 +201,13 @@ $tableTimeWidth: 120px; // メインcss
         padding: 10px;
         font-size: 12px;
         overflow-x: auto;
+      }
+
+      h2,
+      h3,
+      h4,
+      h5 {
+        margin-bottom: 0;
       }
     }
   }

@@ -1,7 +1,8 @@
 <div class="mainContainer">
   <ul class="breadcrumb">
     <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
-      <router-link to="/home"><span itemprop="title">ホーム</span></router-link>
+      <!-- <router-link to="/home"><span itemprop="title">ホーム</span></router-link> -->
+      <span itemprop="title">ホーム</span>
     </li>
     <!--
 <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
@@ -20,7 +21,7 @@
         <video id="video" controls :src="videoUrl" @click="saisei()" autobuffer></video>
       </div>
       <div class="itemBox">
-        <a href="https://github.com/evesanta/eduWebSite" 　target="_blank">
+        <a href="https://github.com/evesanta/eduWebSite" 　target="_blank" v-if="githubLink != ''">
           <span class="gitHub">
             <octicon name="mark-github"></octicon>
             <octicon name="logo-github"></octicon>
