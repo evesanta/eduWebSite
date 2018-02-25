@@ -8,15 +8,21 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      }, {
-        test: /\.s[a|c]ss$/,
-        loader: 'style!css!sass'
-      }
-    ],
+    loaders: [{
+      test: /\.vue$/,
+      loader: 'vue-loader'
+    }, {
+      test: /\.s[a|c]ss$/,
+      loader: 'style!css!sass'
+    }, {
+      test: /\.js$/,
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: ['es2015', 'stage-3']
+        }
+      }],
+    }],
   },
   resolve: {
     extensions: ['.js'],

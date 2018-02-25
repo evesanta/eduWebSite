@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
+import 'babel-polyfill'
 
 Vue.use(VueRouter)
 
