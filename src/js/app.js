@@ -38,6 +38,12 @@ const Bar = {
 }
 
 const routes = [{
+    path: '/',
+    redirect: to => {
+      return 'home'
+    }
+  },
+  {
     path: '/home',
     component: Home
   },

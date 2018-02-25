@@ -19838,6 +19838,11 @@ var Bar = {
 };
 
 var routes = [{
+  path: '/',
+  redirect: function redirect(to) {
+    return 'home';
+  }
+}, {
   path: '/home',
   component: _home2.default
 }, {
