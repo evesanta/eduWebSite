@@ -1,0 +1,65 @@
+{
+   "title": "コンストラクタ",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/Prog4/video/Java_Constructor.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "5",
+         "name": "アウトライン"
+      },
+      {
+         "time": "9",
+         "name": "概要"
+      },
+      {
+         "time": "13",
+         "name": "コンストラクタの説明"
+      },
+      {
+         "time": "51",
+         "name": "コーディングと解説"
+      },
+      {
+         "time": "54",
+         "name": "デフォルトコンストラクタの動作"
+      },
+      {
+         "time": "82",
+         "name": "プログラムの実行"
+      },
+      {
+         "time": "139",
+         "name": "コンストラクタのコーディング"
+      },
+      {
+         "time": "175",
+         "name": "コンストラクタの実行確認"
+      },
+      {
+         "time": "206",
+         "name": "引数付きコンストラクタ"
+      },
+      {
+         "time": "280",
+         "name": "コンストラクタの注意点"
+      },
+      {
+         "time": "93",
+         "name": "プログラムの解説"
+      },
+      {
+         "time": "311",
+         "name": "コンストラクタから別のコンストラクタを呼び出す方法"
+      },
+      {
+         "time": "386",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# コンストラクタ \n\n動画で示したプログラム\n```java\nclass Sapmle {\n\tpublic static void main(String args[]){\n\t\tDatabase d = new Database();\n\t\t\n\t\tSystem.out.println(\"氏名\" + d.name);\n\t\tSystem.out.println(\"学籍番号\" + d.number);\n\t\tSystem.out.println(\"所属学科\" + d.department);\n\t}\n}\n```\n\n```java\nclass Database {\n\tString name;\n\tint number;\n\tString department;\n}\n```\n\n### コンストラクタ\n```java\n\tDatabase(){\n\t\tthis.name = \"名城太郎\";\n\t\tthis.number = 123456789;\n\t\tthis.department = \"情報工学科\";\n\t\tSystem.out.println(\"コンストラクタが呼び出されました\");\n\t}\n```\n\n### 引数付きコンストラクタ\n```java\n\tDatabase(String name, int number, String department){\n\t\tthis.name = name;\n\t\tthis.number = number;\n\t\tthis.department = department;\n\t\tSystem.out.println(\"引数付きコンストラクタが呼び出されました\");\n\t}\n```\n\n### 動画内8行目の変更点\n```java\nDatabase d = new Database(\"名城花子\", 100000000, \"電気電子工学科\");\n```\n\n### 他のコンストラクタを呼び出す\n```java\n\tDatabase(String name, int number){\n\t\tthis(name, number, \"情報工学科\")\n\t}\n```",
+   "github": "",
+   "preVideo": "",
+   "preName": "",
+   "nextVideo": "1320",
+   "nextName": "アクセス修飾子1"
+}

@@ -1,0 +1,69 @@
+{
+   "title": "パッケージ構成",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/Prog4/video/Java_Package.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "6",
+         "name": "アウトライン"
+      },
+      {
+         "time": "8",
+         "name": "概要"
+      },
+      {
+         "time": "47",
+         "name": "パッケージの扱い方"
+      },
+      {
+         "time": "50",
+         "name": "パッケージの作成方法とクラスとの関係"
+      },
+      {
+         "time": "95",
+         "name": "同名のクラスを作成"
+      },
+      {
+         "time": "115",
+         "name": "パッケージを呼び出す方法"
+      },
+      {
+         "time": "140",
+         "name": "パッケージを完全限定クラス名による呼び出し"
+      },
+      {
+         "time": "153",
+         "name": "パッケージ外からの使用の確認"
+      },
+      {
+         "time": "175",
+         "name": "import文を用いた呼び出し方"
+      },
+      {
+         "time": "219",
+         "name": "新たなクラスの作成"
+      },
+      {
+         "time": "265",
+         "name": "パッケージを階層化する方法"
+      },
+      {
+         "time": "296",
+         "name": "パッケージの実体とは"
+      },
+      {
+         "time": "328",
+         "name": "パッケージ構成の利用例"
+      },
+      {
+         "time": "410",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# パッケージ構成\n\nSampleプロジェクトを作成し、HelloWorldクラスとSampleクラスを作成しましょう\n\n### HelloWorld クラス\n```java\nclass HelloWorld {\n\tpublic static void main(String[] args) {\n\t\tSample s = new Sample();\n\t}\n}\n```\n\n### Sample クラス\n```java\nclass Sapmle {\n\tpublic Sample(){\n\t\tSystem.out.println(\"Hello World!\");\n\t}\n}\n```\n\n新たに作成したクラス\n```java\npackage Label;\n\nclass Sapmle {\n\tpublic Sample(){\n\t\tSystem.out.println(\"From package Label\");\n\t}\n}\n```\n\n#### 完全限定クラス名を用いた指定方法\n```java\nLabel.Sample s = new Label.Sample();\n```\n\n#### import文を用いた方法\n```java\nimport Label.Sample;\n```\n\n#### パッケージ内のすべてのクラスを指定する方法\n```java\nimport Label.*;\n```",
+   "github": "",
+   "preVideo": "",
+   "preName": "",
+   "nextVideo": "",
+   "nextName": ""
+}

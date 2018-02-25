@@ -41921,7 +41921,7 @@ var render = function() {
                 )
               : _c("el-button", { staticClass: "is-disabled" }, [_vm._v("<")]),
             _vm._v(" "),
-            _vm.videoData[1] != "/videao/"
+            _vm.videoData[1] != "/video/"
               ? _c(
                   "router-link",
                   { attrs: { to: _vm.videoData[1] } },
@@ -41936,7 +41936,7 @@ var render = function() {
                   ],
                   1
                 )
-              : _c("el-button", { staticClass: "is-disabled" }, [_vm._v("<")])
+              : _c("el-button", { staticClass: "is-disabled" }, [_vm._v(">")])
           ],
           1
         ),
