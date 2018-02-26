@@ -1,0 +1,33 @@
+{
+   "title": "継承2",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_Inheritance-Part2.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "概要"
+      },
+      {
+         "time": "19",
+         "name": "アウトライン"
+      },
+      {
+         "time": "32",
+         "name": "プログラムの概要"
+      },
+      {
+         "time": "234",
+         "name": "オーバーライドや継承の禁止"
+      },
+      {
+         "time": "278",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# 継承2 \n\n前回の動画を参照しながら、ご覧ください。\n前回の動画との差分　\n```java\n\t// 引数付きコンストラクタ\n\tpublic Hero(String name, int hp){\n\t\tthis.name = name;\n\t\tthis.hp = hp\n\t\tSystem.out.println(\"Heroクラスの引数付きコンストラクタが呼ばれた\");\n\t}\n```",
+   "github": "",
+   "preVideo": "1410",
+   "preName": "継承1",
+   "nextVideo": "1430",
+   "nextName": "抽象化"
+}

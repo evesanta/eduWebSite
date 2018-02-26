@@ -21,12 +21,12 @@
         <video id="video" controls :src="videoUrl" @click="saisei()" autobuffer></video>
       </div>
       <div class="itemBox">
-        <a href="https://github.com/evesanta/eduWebSite" 　target="_blank" v-if="githubLink != ''">
+        <a :href="githubLink" 　target="_blank" v-if="githubLink != ''">
           <span class="gitHub">
             <octicon name="mark-github"></octicon>
             <octicon name="logo-github"></octicon>
           </span>
-          <span　class="tooltip">動画で紹介した全てのコード</span>
+          <span　class="toolltip tooltip">動画で紹介した全てのコード</span>
         </a>
 
         <router-link v-if="videoData[0] != '/video/'" :to="videoData[0]">

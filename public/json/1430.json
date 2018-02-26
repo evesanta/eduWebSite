@@ -1,0 +1,49 @@
+{
+   "title": "抽象化",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_AbstractionClass-Part1.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "概要"
+      },
+      {
+         "time": "13",
+         "name": "アウトライン"
+      },
+      {
+         "time": "23",
+         "name": "extendsとimplementsの使い方"
+      },
+      {
+         "time": "40",
+         "name": "プログラムの概要"
+      },
+      {
+         "time": "47",
+         "name": "プログラムの構成"
+      },
+      {
+         "time": "140",
+         "name": "抽象クラスを用いない場合"
+      },
+      {
+         "time": "193",
+         "name": "抽象クラスを用いる場合"
+      },
+      {
+         "time": "299",
+         "name": "インスタンスの生成について"
+      },
+      {
+         "time": "324",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# 抽象化\n\n動画内のプログラム\n```java\n// Human.java\n// package tyuusyou;\n\npublic class Human {\n\tprotected String name;\n\tprotected int hp;\n\t\n\tpublic void run(){\n\t}\n\t\n\tpublic void yousuwomiru(){\n\t}\n}\n```\n\n```java\n// Hero.java\n// package tyuusyou;\n\npublic class Hero extends Human{\n\tpublic Hero(){\n\t\tthis.hp = 10;\n\t\tthis.name = \"ヒーロー\";\n\t}\n\t\n\tpublic void action(){\n\t\tif(hp > 0){\n\t\t\tSystem.out.println(name + \"は攻撃した\");\n\t\t}else{\n\t\t\tSystem.out.println(name + \"は倒れた\");\n\t\t}\n\t}\n}\n```\n\n```java\n// Main.java\n// package tyuusyou;\n\npublic class Main{\n\tpublic static void main(String[] args){\n\t\tHero hero = new Hero();\n\t\t\n\t\thero.action();\n\t\thero.run();\n\t\thero.yousuwomiru();\n\t}\n}\n```\n\n#### 3:06頃に追加したコード\n```java\n\tpublic void run(){\n\t\tSystem.out.println(name + \"は逃げ出した\");\n\t}\n```\n",
+   "github": "",
+   "preVideo": "1420",
+   "preName": "継承2",
+   "nextVideo": "1440",
+   "nextName": "インターフェース"
+}

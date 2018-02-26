@@ -1,0 +1,33 @@
+{
+   "title": "コンポーネント紹介",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Android_Components.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "アウトライン"
+      },
+      {
+         "time": "9",
+         "name": "作成するアプリの概要"
+      },
+      {
+         "time": "50",
+         "name": "ボタンの配置"
+      },
+      {
+         "time": "152",
+         "name": "ハンドラの実装"
+      },
+      {
+         "time": "340",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# コンポーネント紹介\n\nプロジェクトの作成方法は前の動画をご覧ください\n__ボタンは動画の通り（以下の通り）に配置しましょう__\n\n* Switch\n* CheckBox\n* CheckBox2\n* ToggleButton\n* RadioGroup\n   * RadioButton  \n   * RadioButton  \n   * RadioButton\n\n\n動画内で編集したソースコード\n```java\npackage com.example.app.switchtester2;\n\nimport android.support.v7.app.AppCompatActivity;\nimport android.os.Bundle;\nimport android.view.View;\nimport android.widget.*;\n\npublic class MainActivity extends AppCompatActivity {\n\n    private Switch switch1;\n    private CheckBox checkbox1;\n    private CheckBox checkbox2;\n    private ToggleButton togglebutton;\n    private RadioGroup radiogroup;\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);\n\n        switch1 = (Switch)findViewById(R.id.switch1);\n        checkbox1 = (CheckBox) findViewById(R.id.checkBox);\n        checkbox2 = (CheckBox) findViewById(R.id.checkBox2);\n        togglebutton = (ToggleButton) findViewById(R.id.toggleButton);\n        radiogroup = (RadioGroup) findViewById(R.id.raidioGroup);\n    }\n\n    public void handleSwitchChange(View view){\n        String str;\n        if(switch1.isChecked())str = \"ON\";\n        else str = \"OFF\";\n        showToast(switch1.getText() + \"を\" + str + \"にしました\");\n    }\n\n    public void handleCheckBox1Change(View view){\n        String str;\n        if(checkbox1.isChecked())str = \"ON\";\n        else str = \"OFF\";\n        showToast(checkbox1.getText() + \"を\" + str + \"にしました\");\n    }\n\n    public void handleCheckBox2Change(View view){\n        String str;\n        if(checkbox2.isChecked())str = \"ON\";\n        else str = \"OFF\";\n        showToast(checkbox2.getText() + \"を\" + str + \"にしました\");\n    }\n\n    public void handleToggleButtonChange(View view){\n        String str;\n        if(togglebutton.isChecked())str = \"ON\";\n        else str = \"OFF\";\n        showToast(togglebutton.getText() + \"を\" + str + \"にしました\");\n    }\n\n    public void handleRadioButtonChange(View view){\n        RadioButton radiobutton = (RadioButton)findViewById(radiogroup.getCheckedRadioButtonId());\n        showToast(radiobutton.getText() + \"を選択しました\");\n    }\n\n    private void showToast(String str){\n        Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();\n    }\n}\n\n```",
+   "github": "",
+   "preVideo": "1710",
+   "preName": "初めてのアプリ開発",
+   "nextVideo": "",
+   "nextName": ""
+}

@@ -47,11 +47,12 @@
             text-align: center; }
             .mainContainer .main .left .itemBox a .gitHub:hover {
               opacity: 0.8; }
-            .mainContainer .main .left .itemBox a .gitHub:hover + .tooltip {
+            .mainContainer .main .left .itemBox a .gitHub:hover + .toolltip {
               opacity: 0.9;
               transition: opacity 0.5s 0.4s ease; }
           .mainContainer .main .left .itemBox a .tooltip {
             position: absolute;
+            z-index: 5;
             width: 140px;
             top: 50px;
             background-color: #666;
@@ -122,17 +123,99 @@
       border: 3px solid #AAA;
       box-sizing: border-box;
       padding: 0 20px;
-      background-color: #fcf9f1;
+      background-color: white;
       height: 100%;
       overflow-y: scroll; }
       .mainContainer .main .right h1 {
         border-bottom: 2px solid #DDD; }
       .mainContainer .main .right pre {
-        border: 2px solid #DDD;
-        background-color: beige;
+        font-size: 14px; }
+      .mainContainer .main .right code {
+        position: relative;
         padding: 10px;
-        font-size: 12px;
-        overflow-x: auto; }
+        overflow-x: auto;
+        box-sizing: border-box;
+        background-color: #fffeed;
+        border: 2px solid #EEE;
+        display: inline-block;
+        width: 100%; }
+      .mainContainer .main .right .lang-java {
+        border: 2px solid #ffa342;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-java::before {
+          position: absolute;
+          content: "Java";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #ffa342; }
+      .mainContainer .main .right .lang-css {
+        border: 2px solid #4299ff;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-css::before {
+          position: absolute;
+          content: "CSS";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #4299ff; }
+      .mainContainer .main .right .lang-js {
+        border: 2px solid #e2df00;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-js::before {
+          position: absolute;
+          content: "JavaScript";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #e2df00; }
+      .mainContainer .main .right .lang-ruby {
+        border: 2px solid #ff6c6c;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-ruby::before {
+          position: absolute;
+          content: "Ruby";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #ff6c6c; }
+      .mainContainer .main .right .lang-cpp {
+        border: 2px solid #1fd3d9;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-cpp::before {
+          position: absolute;
+          content: "C++";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #1fd3d9; }
+      .mainContainer .main .right .lang-markdown {
+        border: 2px solid #711fd9;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-markdown::before {
+          position: absolute;
+          content: "MarkDown";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #711fd9; }
+      .mainContainer .main .right .lang-tex {
+        border: 2px solid #2a7ee0;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-tex::before {
+          position: absolute;
+          content: "Tex";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #2a7ee0; }
       .mainContainer .main .right h2,
       .mainContainer .main .right h3,
       .mainContainer .main .right h4,

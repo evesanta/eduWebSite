@@ -1,0 +1,33 @@
+{
+   "title": "ポリモーフィズム",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_Polymorphism.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "5",
+         "name": "概要"
+      },
+      {
+         "time": "10",
+         "name": "アウトライン"
+      },
+      {
+         "time": "59",
+         "name": "ポリモーフィズムを用いる場合"
+      },
+      {
+         "time": "144",
+         "name": "プログラム実行"
+      },
+      {
+         "time": "199",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# ポリモーフィズム\n\n### 準備用の各クラス\n```java\npublic class Giant implements RunningCharacter{\n\t@override\n\tpubic void action(){\n\t\tSystem.out.println(\"巨人はタックルをした\");\n\t}\n\t\n\tpublic void hirumu(){\n\t\tSystem.out.println(\"相手は怯んだ\");\n\t}\n}\n```\n\n```java\npublic class Hero implements RunningCharacter{\n\t@override\n\tpubic void action(){\n\t\tSystem.out.println(\"勇者は攻撃をした\");\n\t}\n}\n```\n\nポリモーフィズムを用いない場合のソースコードは省略させていただきます。\n\n\n### 動画中のプログラム\n```java\npublic class Main {\n\tpublic static void main(String[] args){\n\t\tScanner scanner = new Scanner(System.in);\n\t\tRunningCharacter[] chara = new RunningCharacter[2];\n\t\tchara[0] = new Hero();\n\t\tchara[1] = new Giant();\n\t\t\n\t\tint i;\n\t\twhile(true){\n\t\t\tSystem.out.println(\"行動させるキャラクターを選んでください（1:勇者、 2:巨人）\");\n\t\t\ti = scanner.nextInt();\n\t\t\tchara[i - 1].action();\n\t\t}\n\t}\n}\n```\n\n追加したコード\n```java\n\t\t\tif(chara[i - 1] instanceof Giant) ((Giant) chara[i - 1]).hirumu();\n```",
+   "github": "",
+   "preVideo": "1440",
+   "preName": "インターフェース",
+   "nextVideo": "",
+   "nextName": ""
+}

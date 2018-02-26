@@ -1,0 +1,41 @@
+{
+  "title": "JNIの利用",
+  "subCategory": "PacScript",
+  "url": "https://rjie.meijo-u.ac.jp/lectures/ie-exp3/video/Java_HowToUseJNI.mp4",
+  "chapter": [
+     {
+         "time": "0",
+         "name": "はじめに"
+      },
+       {
+         "time": "35",
+         "name": "Javaファイルのコンパイル"
+      },
+       {
+         "time": "88",
+         "name": "Cファイルの作成"
+      },
+       {
+         "time": "123",
+         "name": "参考資料提示"
+      },
+       {
+         "time": "253",
+         "name": "C++ファイルのコンパイル"
+      },
+       {
+         "time": "312",
+         "name": " JNIを呼び出すクラスを作成"
+      },
+       {
+         "time": "335",
+         "name": "JNIを呼び出すクラスをコンパイル"
+      }
+  ],
+  "source": "# JNIの利用\n### 最初のプログラム\n\n```java\npublic class Callee{\n\tpublic static native int addition(int a, int b);\n}\n```\n\n\nコンパイルコマンド\n\n```shell  \njavac Callee.java\n```\nカレントディレクトリの内容を表示するには`dir`コマンドを使う\n\n```shell\njavah -cp .¥ -d .¥ Callee\n```\n\n参考URLは\n[こちら](https://msdn.microsoft.com/ja-jp/library/x4d2c09s.aspx)\n\n```shell\ncl Callee.c /LD /I \"Your/IncludeFolder/Path\" \"Your/win32File/Path\"\n```\n\nJNIを呼び出すクラス\n\n```java\npublic class Caller{\n\tstatic{\n\t\tSystem.loadLibrary(\"Callee\");\n\t}\n\tpublic static void main(String[] args){\n\t\tint a = 20;\n\t\tint b = 10;\n\t\tSystem.out.println(\"Test\");\n\t\t\n\t\tSystem.out.println(\"a + b =\" + Callee.addition(a,b));\n\t} \n}\n```\n\nコンパイル\n\n```shell\njavac Caller.java\n```\n実行\n\n```\njava Caller\n```",
+  "github":"",
+  "preVideo": "",
+  "nextVideo": "",
+    "preName":"",
+  "nextName":""
+}

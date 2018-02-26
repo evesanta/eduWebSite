@@ -1,0 +1,29 @@
+{
+   "title": "ジェネリクスについて",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/ie-exp3/video/Java_Generics.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "3",
+         "name": "ジェネリクスとは"
+      },
+      {
+         "time": "17",
+         "name": "プログラムによる解説"
+      },
+      {
+         "time": "60",
+         "name": "プログラムの実行"
+      },
+      {
+         "time": "470",
+         "name": "doInBackGroundについて（難）"
+      }
+   ],
+   "source": "# ジェネリクスについて\n\n### 動画内で紹介したソースコード\n```java\nimport java.util.ArrayList;\n\nclass IntArrayTest {\n\tpublic static void main(String[] args) {\n\t\t// ArrayListの作成\n\t\tArrayList list = new Arraylist();\n\t\t\n\t\tint a = 10;\n\t\tint b = 20;\n\t\tint c = 30;\n\t\t// ArrayListへのint型変数の追加\n\t\tlist.add(a);\n\t\tlist.add(b);\n\t\tlist.add(c);\n\t\t\n\t\tSystem.out.println(\"index 2 is \" + ((int)list.get(2)));\n\t\tSystem.out.println(\"b is located in index \" + (list.indexOf(b)));\n\t\t\n\t\t// ArrayListにStringを追加\n\t\tString name = new String(\"Hello\");\n\t\tlist.add(name);\n\t\t\n\t\tSystem.out.println(\"index 3 is \" + ((String)list.get(3)));\n\t\t\n\t\tfloat pi = (float)3.14;\n\t\tlist.add(pi);\n\t}\n}\n```\nこれは最初のコードです。追加された文章は自分でコーディングしましょう  \n\n動画内で紹介した[AsyncTask](https://developer.android.com/reference/android/os/AsyncTask.html)です\n\n\n",
+   "github": "",
+   "preVideo": "",
+   "preName": "",
+   "nextVideo": "",
+   "nextName": ""
+}

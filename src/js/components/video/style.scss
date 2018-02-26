@@ -72,7 +72,7 @@ $tableTimeWidth: 120px; // メインcss
               opacity: 0.8;
             }
 
-            &:hover + .tooltip {
+            &:hover + .toolltip {
               opacity: 0.9;
               transition: opacity 0.5s 0.4s ease;
             }
@@ -80,6 +80,7 @@ $tableTimeWidth: 120px; // メインcss
 
           .tooltip {
             position: absolute;
+            z-index: 5;
             width: 140px;
             top: 50px;
             background-color: #666;
@@ -187,7 +188,7 @@ $tableTimeWidth: 120px; // メインcss
       border: 3px solid #AAA;
       box-sizing: border-box;
       padding: 0 20px;
-      background-color: rgb(252, 249, 241);
+      background-color: white;
       height: 100%;
       overflow-y: scroll;
 
@@ -196,11 +197,130 @@ $tableTimeWidth: 120px; // メインcss
       }
 
       pre {
-        border: 2px solid #DDD;
-        background-color: beige;
+        font-size: 14px;
+      }
+
+      code {
+        position: relative;
         padding: 10px;
-        font-size: 12px;
         overflow-x: auto;
+        box-sizing: border-box;
+        background-color: #fffeed;
+        border: 2px solid #EEE;
+        display: inline-block;
+        width: 100%;
+      }
+
+      .lang-java {
+        $lang-color: #ffa342;
+        border: 2px solid $lang-color;
+        padding-top: 25px;
+
+        &::before {
+          position: absolute;
+          content: "Java";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: $lang-color;
+        }
+      }
+
+      .lang-css {
+        $lang-color: #4299ff;
+        border: 2px solid $lang-color;
+        padding-top: 25px;
+
+        &::before {
+          position: absolute;
+          content: "CSS";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: $lang-color;
+        }
+      }
+
+      .lang-js {
+        $lang-color: #e2df00;
+        border: 2px solid $lang-color;
+        padding-top: 25px;
+
+        &::before {
+          position: absolute;
+          content: "JavaScript";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: $lang-color;
+        }
+      }
+
+      .lang-ruby {
+        $lang-color: #ff6c6c;
+        border: 2px solid $lang-color;
+        padding-top: 25px;
+
+        &::before {
+          position: absolute;
+          content: "Ruby";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: $lang-color;
+        }
+      }
+
+      .lang-cpp {
+        $lang-color: #1fd3d9;
+        border: 2px solid $lang-color;
+        padding-top: 25px;
+
+        &::before {
+          position: absolute;
+          content: "C++";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: $lang-color;
+        }
+      }
+
+      .lang-markdown {
+        $lang-color: #711fd9;
+        border: 2px solid $lang-color;
+        padding-top: 25px;
+
+        &::before {
+          position: absolute;
+          content: "MarkDown";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: $lang-color;
+        }
+      }
+
+      .lang-tex {
+        $lang-color: #2a7ee0;
+        border: 2px solid $lang-color;
+        padding-top: 25px;
+
+        &::before {
+          position: absolute;
+          content: "Tex";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: $lang-color;
+        }
       }
 
       h2,

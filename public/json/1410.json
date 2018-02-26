@@ -1,0 +1,41 @@
+{
+   "title": "継承1",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_Inheritance-Part1.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "継承の概要"
+      },
+      {
+         "time": "19",
+         "name": "アウトライン"
+      },
+      {
+         "time": "34",
+         "name": "プログラムの概要"
+      },
+      {
+         "time": "42",
+         "name": "プログラムの紹介"
+      },
+      {
+         "time": "84",
+         "name": "継承しない場合"
+      },
+      {
+         "time": "208",
+         "name": "継承用いる場合"
+      },
+      {
+         "time": "486",
+         "name": "まとめ"
+      }
+   ],
+   "source": "#  継承1\n\n動画で紹介したプログラム\n```java\n// Main.java\n\npublic class Main {\n\tpublic static void main(String[] args) {\n\t\tHero h = new Hero();\n\t\th.attack();\n\t}\n}\n```\n\n```java\n// Hero.java\n\npublic class Hero {\n\tprivate String name;\n\tprivate int hp;\n\t\n\t// デフォルトコンストラクタの定義\n\tpublic Hero(){\n\t\tthis.name = \"ヒーロー\";\n\t\tthis.hp = 100;\n\t\tSystem.out.println(\"Heroクラスのデフォルトコンストラクタが呼ばれた\");\n\t}\n\t// 攻撃するメソッド\n\tpublic void attack(){\n\t\tSystem.out.println(this.name + \"の攻撃\");\n\t}\n\t\n\t// 休憩するメソッド\n\tpublic void rest(){\n\t\tSystem.out.println(this.name + \"は休んだ\");\n\t\tSystem.out.println(this.name + \"のHPが50回復した\");\n\t\t// 回復してHPが100を超えた場合,HPの上限は100とする\n\t\tif((this.hp += 50) > 100){\n\t\t\tthis.hp = 100;\n\t\t}\n\t\tSystem.out.println(this.name + \"のHPは\" + this.hp + \"になった\")\n\t}\n}\n```\n\nダミーのスーパーヒーロークラスには適宜変更を施してください.\n\n#### 飛び上がるメソッド\n```java\n\tpublic void fly(){\n\t\tSystem.out.println(this.name + \"飛び上がった\");\n\t}\n```\n\n\n### スーパーヒーロ\n*※変更が必要*\n```java\npublic class Hero {\n\tprivate String name;\n\tprivate int hp;\n\t\n\t// デフォルトコンストラクタの定義\n\tpublic Hero(){\n\t\tthis.name = \"ヒーロー\";\n\t\tthis.hp = 100;\n\t\tSystem.out.println(\"Heroクラスのデフォルトコンストラクタが呼ばれた\");\n\t}\n}\n```\n\n",
+   "github": "",
+   "preVideo": "",
+   "preName": "",
+   "nextVideo": "1420",
+   "nextName": "継承2"
+}
