@@ -17,7 +17,8 @@
         height: 432px;
         background-color: antiquewhite; }
         .mainContainer .main .left .video video {
-          width: 100%; }
+          width: 100%;
+          height: 100%; }
       .mainContainer .main .left .itemBox {
         box-sizing: border-box;
         height: 50px;
@@ -26,7 +27,48 @@
         display: flex;
         align-items: center;
         justify-content: flex-end; }
-        .mainContainer .main .left .itemBox button {
+        .mainContainer .main .left .itemBox a {
+          transition: opacity 0.3s 0s ease;
+          text-decoration: none;
+          position: relative;
+          margin-right: 20px; }
+          .mainContainer .main .left .itemBox a:visited {
+            color: #000; }
+          .mainContainer .main .left .itemBox a .gitHub {
+            background-color: white;
+            height: 38px;
+            line-height: 42px;
+            padding: 0 20px;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+            color: #000;
+            display: inline-block;
+            height: 38px;
+            text-align: center; }
+            .mainContainer .main .left .itemBox a .gitHub:hover {
+              opacity: 0.8; }
+            .mainContainer .main .left .itemBox a .gitHub:hover + .toolltip {
+              opacity: 0.9;
+              transition: opacity 0.5s 0.4s ease; }
+          .mainContainer .main .left .itemBox a .tooltip {
+            position: absolute;
+            z-index: 5;
+            width: 140px;
+            top: 50px;
+            background-color: #666;
+            color: white;
+            padding: 5px 10px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.2s 0s ease;
+            text-align: center; }
+          .mainContainer .main .left .itemBox a button:hover {
+            opacity: 0.8; }
+          .mainContainer .main .left .itemBox a button:hover + .tooltip {
+            opacity: 0.9;
+            transition: opacity 0.5s 0.4s ease; }
+        .mainContainer .main .left .itemBox .is-disabled {
           margin-right: 20px; }
       .mainContainer .main .left .chapter {
         height: calc(100vh - 432px - 50px - 72px);
@@ -81,17 +123,104 @@
       border: 3px solid #AAA;
       box-sizing: border-box;
       padding: 0 20px;
-      background-color: #fcf9f1;
+      background-color: white;
       height: 100%;
       overflow-y: scroll; }
       .mainContainer .main .right h1 {
         border-bottom: 2px solid #DDD; }
       .mainContainer .main .right pre {
-        border: 2px solid #DDD;
-        background-color: beige;
-        padding: 10px 10px;
-        font-size: 12px;
-        overflow-x: scroll; }
+        font-size: 14px; }
+      .mainContainer .main .right code {
+        position: relative;
+        padding: 10px;
+        overflow-x: auto;
+        box-sizing: border-box;
+        background-color: #fffeed;
+        border: 2px solid #EEE;
+        display: inline-block;
+        width: 100%; }
+      .mainContainer .main .right .lang-java {
+        border: 2px solid #ffa342;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-java::before {
+          position: absolute;
+          content: "Java";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #ffa342; }
+      .mainContainer .main .right .lang-css {
+        border: 2px solid #4299ff;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-css::before {
+          position: absolute;
+          content: "CSS";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #4299ff; }
+      .mainContainer .main .right .lang-js {
+        border: 2px solid #e2df00;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-js::before {
+          position: absolute;
+          content: "JavaScript";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #e2df00; }
+      .mainContainer .main .right .lang-ruby {
+        border: 2px solid #ff6c6c;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-ruby::before {
+          position: absolute;
+          content: "Ruby";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #ff6c6c; }
+      .mainContainer .main .right .lang-cpp {
+        border: 2px solid #1fd3d9;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-cpp::before {
+          position: absolute;
+          content: "C++";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #1fd3d9; }
+      .mainContainer .main .right .lang-markdown {
+        border: 2px solid #711fd9;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-markdown::before {
+          position: absolute;
+          content: "MarkDown";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #711fd9; }
+      .mainContainer .main .right .lang-tex {
+        border: 2px solid #2a7ee0;
+        padding-top: 25px; }
+        .mainContainer .main .right .lang-tex::before {
+          position: absolute;
+          content: "Tex";
+          color: white;
+          top: 0;
+          left: 0;
+          padding: 2px 7px;
+          background-color: #2a7ee0; }
+      .mainContainer .main .right h2,
+      .mainContainer .main .right h3,
+      .mainContainer .main .right h4,
+      .mainContainer .main .right h5 {
+        margin-bottom: 0; }
 
 /*
 Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine (@thingsinjars)
@@ -110,21 +239,21 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
   font-style: italic; }
 
 .hljs-keyword,
-.hljs-selector-tag,
 .hljs-literal,
+.hljs-selector-tag,
 .hljs-subst {
   color: #954121; }
 
 .hljs-number {
   color: #40a070; }
 
-.hljs-string,
-.hljs-doctag {
+.hljs-doctag,
+.hljs-string {
   color: #219161; }
 
-.hljs-selector-id,
-.hljs-selector-class,
 .hljs-section,
+.hljs-selector-class,
+.hljs-selector-id,
 .hljs-type {
   color: #19469d; }
 
@@ -135,22 +264,22 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
   color: #458;
   font-weight: bold; }
 
-.hljs-tag,
+.hljs-attribute,
 .hljs-name,
-.hljs-attribute {
+.hljs-tag {
   color: #000080;
   font-weight: normal; }
 
-.hljs-variable,
-.hljs-template-variable {
+.hljs-template-variable,
+.hljs-variable {
   color: #008080; }
 
-.hljs-regexp,
-.hljs-link {
+.hljs-link,
+.hljs-regexp {
   color: #b68; }
 
-.hljs-symbol,
-.hljs-bullet {
+.hljs-bullet,
+.hljs-symbol {
   color: #990073; }
 
 .hljs-built_in,
@@ -179,8 +308,7 @@ blockquote {
 
 .breadcrumb {
   padding: 0;
-  margin: 0;
-  margin-left: 10px; }
+  margin: 0 0 0 10px; }
   .breadcrumb li {
     display: inline;
     /*横に並ぶように*/

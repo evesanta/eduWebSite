@@ -1,0 +1,37 @@
+{
+   "title": "アクセス制御1",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_AccessControl-Part1.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "10",
+         "name": "概要"
+      },
+      {
+         "time": "18",
+         "name": "アウトライン"
+      },
+      {
+         "time": "22",
+         "name": "プログラムの紹介"
+      },
+      {
+         "time": "71",
+         "name": "static修飾子の使い方"
+      },
+      {
+         "time": "153",
+         "name": "final修飾子の使い方"
+      },
+      {
+         "time": "287",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# アクセス制御1\n\n### 動画内のプログラム\n```java\n// hello.java\n\npublic class Hero {\n\tString name;\n\tint hp;\n\tint money;\n\t\n\tpublic Hero(){\n\t\tthis.name = \"Hero\";\n\t\tthis.hp = 10;\n\t}\n\t\n\tpublic Hero(String name, int hp){\n\t\tthis.name = name;\n\t\tthis.hp = hp;\n\t}\n}\n```\n\n```java\n// main.java\n\npublic class Main {\n\tpublic  static void main(String[] args){\n\t\tHero hero1 = new Hero(\"剣士\", 100);\n\t\tHero hero2 = new Hero(\"魔法使い\", 50);\n\t\n\t\thero1.money = 1000;\n\t\thero2.money = 1000;\n\t\t\n\t\tSystem.out.println(hero1.name + \"の所持金は\" + hero1.money + \"円\");\n\t\tSystem.out.println(hero2.name + \"の所持金は\" + hero2.money + \"円\");\n\t\t\n\t\tSystem.out.println(hero1.name + \"は敵を倒した\");\n\t\tSystem.out.println(hero1.name + \"は20円手に入れた\");\n\t\thero1.money += 20;\n\t\t\n\t\tSystem.out.println(hero1.name + \"の所持金は\" + hero1.money + \"円\");\n\t\tSystem.out.println(hero2.name + \"の所持金は\" + hero2.money + \"円\");\n\t}\n}\n```\n\n#### 書き換えたコード\n```java\nSystem.out.println(Hero.name + \"の所持金は\" + Hero.money + \"円\");\n```\n\n### 3:15頃に書き加えたコード\n```java\nstatic String partyName = \"魔王討伐隊\";\n```\n```java\n\t\tSystem.out.println(\"スライムが仲間になった!\");\n\t\tScanner sc = new Scanner(System.in);\n\t\t\n\t\tSystem.out.print(\"新しいパーティ名を入力:\");\n\t\tHero.partyName = sc.nextLine();\n\t\tSystem.out.println(\"パーティ名を\" + Hero.partyName + \"に変更した\");\n```\n\n",
+   "github": "",
+   "preVideo": "1310",
+   "preName": "コンストラクタ",
+   "nextVideo": "1330",
+   "nextName": "アクセス制御2"
+}

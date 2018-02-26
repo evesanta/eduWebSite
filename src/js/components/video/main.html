@@ -1,7 +1,8 @@
 <div class="mainContainer">
   <ul class="breadcrumb">
     <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
-      <router-link to="/home"><span itemprop="title">ホーム</span></router-link>
+      <!-- <router-link to="/home"><span itemprop="title">ホーム</span></router-link> -->
+      <span itemprop="title">ホーム</span>
     </li>
     <!--
 <li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
@@ -20,23 +21,26 @@
         <video id="video" controls :src="videoUrl" @click="saisei()" autobuffer></video>
       </div>
       <div class="itemBox">
-        <a href="https://github.com/evesanta/eduWebSite" 　target="_blank">
-          <div class="gitHub">
-
+        <a :href="githubLink" 　target="_blank" v-if="githubLink != ''">
+          <span class="gitHub">
             <octicon name="mark-github"></octicon>
             <octicon name="logo-github"></octicon>
-
-          </div>
+          </span>
+          <span　class="toolltip tooltip">動画で紹介した全てのコード</span>
         </a>
 
-        <router-link :to="preVideo">
-          <el-button :class="preVideo != '/video/' ? ''  : 'is-disabled'"> &lt; {{preName}}</el-button>
+        <router-link v-if="videoData[0] != '/video/'" :to="videoData[0]">
+          <el-button> &lt; {{videoData[2]}}</el-button>
+          <span　class="tooltip">前の動画へ</span>
         </router-link>
+        <el-button v-else　class="is-disabled">&lt;</el-button>
 
-        <router-link :to="nextVideo">
-          <el-button :class="nextVideo != '/video/' ? ''  : 'is-disabled'">
-            {{nextName}} > </el-button>
+        <router-link v-if="videoData[1] != '/video/'" :to="videoData[1]">
+          <el-button> {{videoData[3]}} &gt; </el-button>
+          <span　class="tooltip">次の動画へ</span>
         </router-link>
+        <el-button v-else　class="is-disabled">&gt;</el-button>
+
       </div>
       <div class="chapter">
         <table class="table">
@@ -54,13 +58,10 @@
           </tbody>
         </table>
       </div>
-
     </div>
     <div class="right">
       <div v-html="source"></div>
     </div>
-
-
   </div>
 
 </div>

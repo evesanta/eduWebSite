@@ -1,0 +1,33 @@
+{
+   "title": "初めてのアプリ開発",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Android_Introduction.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "アウトライン"
+      },
+      {
+         "time": "8",
+         "name": "はじめに"
+      },
+      {
+         "time": "22",
+         "name": "プロジェクトの作成"
+      },
+      {
+         "time": "92",
+         "name": "Android Studioの操作方法"
+      },
+      {
+         "time": "226",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# 味めてのアプリ開発\n\n動画内で追加したコード\n```java\nimport android.wedget.*;\n:\n:\n\t\tToast.makeText(this, \"Hello World\", Toast.LENGTH_SHORT).show();\n```",
+   "github": "",
+   "preVideo": "",
+   "preName": "",
+   "nextVideo": "1720",
+   "nextName": "コンポーネント紹介"
+}

@@ -1,0 +1,33 @@
+{
+   "title": "Eclipseの実行",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/Prog4/video/Eclipse_HowToCreateProject.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "5",
+         "name": "導入"
+      },
+      {
+         "time": "21",
+         "name": "プロジェクトの作成"
+      },
+      {
+         "time": "86",
+         "name": "クラスの作成"
+      },
+      {
+         "time": "160",
+         "name": "プログラミング"
+      },
+      {
+         "time": "205",
+         "name": "プログラムの実行"
+      }
+   ],
+   "source": "# Eclipseの実行\n今回はSampleプロジェクトを作成  \nクラス名は\"HelloWorld\"とした\n\n動画内で紹介した、入力した変数や文字列を表示する関数  \n```java\n  System.out.println(\"HelloWorld!\");\n```\n",
+   "github":"",
+   "nextVideo": "1130",
+   "preVideo": "1110",
+   "nextName": "プロジェクトのインポート",
+   "preName": "コマンドプロンプトでの実行"
+}

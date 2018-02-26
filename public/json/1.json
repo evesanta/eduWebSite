@@ -1,0 +1,21 @@
+{
+   "title": "",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/Prog4/video/Java_HowToCompile.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "0",
+         "name": "asdf"
+      },
+      {
+         "time": "12",
+         "name": "asdfsadf"
+      }
+   ],
+   "source": "# タイトルを書いてください\n\n\nソースコードテスト\n\n```java\n/**\n * @author John Smith <john.smith@example.com>\n*/\npackage l2f.gameserver.model;\n\npublic abstract class L2Char extends L2Object {\n  public static final Short ERROR = 0x0001;\n\n  public void moveTo(int x, int y, int z) {\n    _ai = null;\n    log(\"Should not be called\");\n    if (1 > 5) { // wtf!?\n      return;\n    }\n  }\n}\n```\n\n```js\nfunction $initHighlight(block, cls) {\n  try {\n    if (cls.search(/\\bno\\-highlight\\b/) != -1)\n      return process(block, true, 0x0F) +\n             ` class=\"${cls}\"`;\n  } catch (e) {\n    /* handle exception */\n  }\n  for (var i = 0 / 2; i < classes.length; i++) {\n    if (checkCondition(classes[i]) === undefined)\n      console.log('undefinasdffffffffffffffffasdfasdfasdfasdfasdfasdfasdfasdfasdfadfed');\n  }\n}\n\nexport  $initHighlight;\n```\n\n```ruby\n# The Greeter class\nclass Greeter\n  def initialize(name)\n    @name = name.capitalize\n  end\n\n  def salute\n    puts \"Hello #{@name}!\"\n  end\nend\n\ng = Greeter.new(\"world\")\ng.salute\n```\n\n```css\n@font-face {\n  font-family: Chunkfive; src: url('Chunkfive.otf');\n}\n\nbody, .usertext {\n  color: #F0F0F0; background: #600;\n  font-family: Chunkfive, sans;\n}\n\n@import url(print.css);\n@media print {\n  a[href^=http]::after {\n    content: attr(href)\n  }\n}\n```\n\n```cpp\n#include <iostream>\n\nint main(int argc, char *argv[]) {\n\n  /* An annoying \"Hello World\" example */\n  for (auto i = 0; i < 0xFFFF; i++)\n    cout << \"Hello, World!\" << endl;\n\n  char c = '\\n';\n  unordered_map <string, vector<string> > m;\n  m[\"key\"] = \"\\\\\\\\\"; // this is an error\n\n  return -2e3 + 12l;\n}\n```\n\n```markdown\n# hello world\n\nyou can write text [with links](http://example.com) inline or [link references][1].\n\n* one _thing_ has *em*phasis\n* two __things__ are **bold**\n\n[1]: http://example.com\n\n---\n\nhello world\n===========\n\n<this_is inline=\"xml\"></this_is>\n\n> markdown is so cool\n\n    so are code segments\n\n1. one thing (yeah!)\n2. two thing `i can write code`, and `more` wipee!\n```\n\n```tex\n\\documentclass{article}\n\\usepackage[koi8-r]{inputenc}\n\\hoffset=0pt\n\\voffset=.3em\n\\tolerance=400\n\\newcommand{\\eTiX}{\\TeX}\n\\begin{document}\n\\section*{Highlight.js}\n\\begin{table}[c|c]\n$\\frac 12\\, + \\, \\frac 1{x^3}\\text{Hello \\! world}$ & \\textbf{Goodbye\\~ world} \\\\\\eTiX $ \\pi=400 $\n\\end{table}\nCh\\'erie, \\c{c}a ne me pla\\^\\i t pas! % comment \\b\nG\\\"otterd\\\"ammerung~45\\%=34.\n$$\n    \\int\\limits_{0}^{\\pi}\\frac{4}{x-7}=3\n$$\n\\end{document}\n```\n\n",
+   "github": "",
+   "preVideo": "1100",
+   "preName": "本当にテスト前",
+   "nextVideo": "1120",
+   "nextName": "てすと"
+}

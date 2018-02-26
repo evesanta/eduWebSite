@@ -1,0 +1,41 @@
+{
+   "title": "例外処理",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_ExceptionHandling.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "3",
+         "name": "アウトライン"
+      },
+      {
+         "time": "8",
+         "name": "例外処理とは"
+      },
+      {
+         "time": "44",
+         "name": "サンプルコードの解説"
+      },
+      {
+         "time": "173",
+         "name": "例外処理を施していないプログラム実行"
+      },
+      {
+         "time": "201",
+         "name": "例外処理の利用方法"
+      },
+      {
+         "time": "318",
+         "name": "プログラムの実行"
+      },
+      {
+         "time": "375",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# 例外処理\n\n例外処理を施していないソースは記載しません。\n動画内の解説をご覧ください。\n\n\n### 例外処理を施したソースファイル\n```java\nimport java.io.*;\n\npublic class ExampleFileReader2 {\n\tpublic static void main(String[] args) {\n\t\tFileReader fr = null;\n\t\ttry {\n\t\t\tfr = new FileReader(args[0]);\n\t\t\tString text = \"\";\n\t\t\tint ch;\n\t\t\t\n\t\t\twhile ((ch = fr.read()) != -1)\n\t\t\t\ttext += (char)ch;\n\t\t\t\t\n\t\t\tSystem.out.println(args[0] + \"の内容:\");\n\t\t\tSystem.out.println(text);\n\t\t}catch(FileNotFoundException e){\n\t\t\tSystem.out.println(\"ファイル\" + args[0] + \"が見つかりません\");\n\t\t}catch (IOException e) {\n\t\t\te.printStackTrace();\n\t\t}finally {\n\t\t\tSystem.out.println(\"finallyが実行されました\");\n\t\t\tif(fr != null){\n\t\t\t\ttry{\n\t\t\t\t\tfr.close();\n\t\t\t\t}catch (IOException e) {}\n\t\t\t}\n\t\t}\n\t}\n}\n```",
+   "github": "",
+   "preVideo": "",
+   "preName": "",
+   "nextVideo": "",
+   "nextName": ""
+}

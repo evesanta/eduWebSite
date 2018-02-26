@@ -1,0 +1,21 @@
+{
+   "title": "プロジェクトのインポート",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/Prog4/video/Eclipse_HowToImportProject.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "はじめに"
+      },
+      {
+         "time": "10",
+         "name": "プロジェクトのインポート"
+      }
+   ],
+   "source": "# プロジェクトのインポート\n\n\n動画の説明をご覧ください",
+   "github": "",
+   "preVideo": "1120",
+   "preName": "Eclipseの実行",
+   "nextVideo": "1140",
+   "nextName": "コマンドライン引数の指定方法"
+}

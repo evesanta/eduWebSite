@@ -1,0 +1,29 @@
+{
+   "title": "Wiresharkの使い方",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/ie-exp3/video/HowToUseWireshark.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "5",
+         "name": "アウトライン"
+      },
+      {
+         "time": "12",
+         "name": "Wiresharkについて"
+      },
+      {
+         "time": "21",
+         "name": "Wireshark起動"
+      },
+      {
+         "time": "35",
+         "name": "フィルタリングについて"
+      }
+   ],
+   "source": "# Wireshark\n\n## フィルタリング\n例)\n```\n// http\ntcp.port == 54321\ntcp.port == 50000\n\n// tcp\nip.addr == 192.168.0.1\n```\n\n__※通信するプログラムは情報工学実験3のサイトにあります。__\n\n[ここから](https://rjie.meijo-u.ac.jp/lectures/ie-exp3/file/Sample4.zip])でもダウンロード可能です。\n\n",
+   "github": "",
+   "preVideo": "",
+   "preName": "",
+   "nextVideo": "",
+   "nextName": ""
+}

@@ -1,0 +1,41 @@
+{
+   "title": "インターフェース",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_AbstractionClass-Part2.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "概要"
+      },
+      {
+         "time": "14",
+         "name": "アウトライン"
+      },
+      {
+         "time": "25",
+         "name": "extendsとimplementsの使い方"
+      },
+      {
+         "time": "43",
+         "name": "プログラムの構成"
+      },
+      {
+         "time": "99",
+         "name": "プログラムの紹介"
+      },
+      {
+         "time": "296",
+         "name": "extendsとimplementsの併用"
+      },
+      {
+         "time": "428",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# インターフェース\n\nHeroクラスとHumanクラスは前回の動画をご覧ください.\n\n動画内で紹介した一部のプログラム。\n```java\npublic interface RunningCharacter extends Creature{\n\tvoid run();\n}\n```\n\n```java\npublic  interface Creature {\n\tvoid yousuwomiru();\n}\n```\n\n※今回の変更箇所は少量なので、適宜自分で変更してください",
+   "github": "",
+   "preVideo": "1430",
+   "preName": "抽象化",
+   "nextVideo": "1450",
+   "nextName": "ポリモーフィズム"
+}

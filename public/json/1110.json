@@ -1,0 +1,41 @@
+{
+   "title": "コマンドプロンプトでの実行",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/Prog4/video/Java_HowToCompile.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "アウトライン"
+      },
+      {
+         "time": "50",
+         "name": "コンパイル"
+      },
+      {
+         "time": "64",
+         "name": "プログラム実行"
+      },
+      {
+         "time": "81",
+         "name": "パッケージを作成した場合"
+      },
+      {
+         "time": "104",
+         "name": "コンパイルの際の注意(パッケージ)"
+      },
+      {
+         "time": "115",
+         "name": "コンパイル(パッケージ)"
+      },
+      {
+         "time": "127",
+         "name": "プログラム実行(パッケージ)"
+      }
+   ],
+   "source": "# コマンドプロンプトでの実行\n\n#### 作業ディレクトリを変更  \n```\ncd your/workspace/path\n```\n\n#### コンパイル\n```\njavac クラスファイル名.java\n```\n\n#### プログラム実行\n````\njava クラスファイル名\n````\n\n#### パッケージを指定した際のコンパイル\n```\njavac パッケージ名¥クラスファイル名.java\n```\n\n#### パッケージを指定した際の実行\n```\njava パッケージ名.クラスファイル名\n```",
+   "github":"",
+   "nextVideo": "1120",
+   "preVideo": "",
+   "nextName": "Eclipseの実行",
+   "preName": ""
+}
