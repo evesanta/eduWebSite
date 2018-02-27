@@ -1,0 +1,29 @@
+{
+   "title": "GUI1",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/Prog4/video/Java_GUI-Part1.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "7",
+         "name": "アウトライン"
+      },
+      {
+         "time": "12",
+         "name": "CUIとGUIの違い"
+      },
+      {
+         "time": "29",
+         "name": "プログラム解説"
+      },
+      {
+         "time": "37",
+         "name": "プロジェクト作成"
+      }
+   ],
+   "source": "# GUI1\n\n動画をご覧ください。",
+   "github": "",
+   "preVideo": "1610",
+   "preName": "スレッド処理",
+   "nextVideo": "1630",
+   "nextName": "GUI2"
+}

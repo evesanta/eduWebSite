@@ -1,0 +1,17 @@
+{
+   "title": "ティーチング3",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/ie-exp3/video/WINCAPS3_Teaching-Part3.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "3",
+         "name": "はじめに+注意事項"
+      }
+   ],
+   "source": "# ティーチング3\n\nこの動画では、実機を用いてティーチングを行う。",
+   "github": "",
+   "preVideo": "2140",
+   "preName": "ティーチング2",
+   "nextVideo": "2150",
+   "nextName": "コマンドの解説"
+}
