@@ -1,0 +1,45 @@
+{
+   "title": "制御権エラーに関する対処方法",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/ie-exp3/video/WINCAPS3_ErrorHandling.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "5",
+         "name": "動画の目的"
+      },
+      {
+         "time": "11",
+         "name": "アウトライン"
+      },
+      {
+         "time": "16",
+         "name": "実際の制御権エラー事象"
+      },
+      {
+         "time": "118",
+         "name": "制御権について"
+      },
+      {
+         "time": "153",
+         "name": "エラー対策のためのコーディング"
+      },
+      {
+         "time": "189",
+         "name": "対策コーディング後のエラー事象"
+      },
+      {
+         "time": "252",
+         "name": "その他注意したい点"
+      },
+      {
+         "time": "294",
+         "name": "付録\u001c（ウィンドウのイベント処理）"
+      }
+   ],
+   "source": "# 制御権エラーに関する対処方法\n\n端末間で通信を行うプログラムは、[情報工学実験3のサイト](https://rprjie.meijo-u.ac.jp/lectures/ie-exp3/)にあります。\n\n### エラー対策\n動画で追加したソースコード（一部）\n```java\n\t\ttry {\n\t\t\t// ロボット操作\n\t\t\tSystem.out.println(\"Press enter key when ready.\");\n\t\t\tSystem.in.read();\n\t\t\tSystem.out.println(\"Start!\");\n\t\t\tprocess();\n\t\t} catch (Exception e){\n\t\t\ttry{\n\t\t\t\tCaoAPI.giveArm();\n\t\t\t}catch (Exception e1) {\n\t\t\t\te1.printStackTrace();\n\t\t\t}\n\t\t\te.printStackTrace();\n\t\t}\n```\n\n\n\n### ※ 付録のソースコードは掲載しておりません\nしかし、とても良い機能なので、ぜひみなさんのプログラムに導入してください。\n",
+   "github": "",
+   "preVideo": "2170",
+   "preName": "干渉チェックの有効化",
+   "nextVideo": "",
+   "nextName": ""
+}

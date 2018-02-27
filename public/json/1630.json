@@ -1,0 +1,53 @@
+{
+   "title": "GUI2",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/Prog4/video/Java_GUI-Part2.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "アウトライン"
+      },
+      {
+         "time": "9",
+         "name": "コンポーネントの解説"
+      },
+      {
+         "time": "24",
+         "name": "外観の作成"
+      },
+      {
+         "time": "37",
+         "name": "行、列の追加"
+      },
+      {
+         "time": "81",
+         "name": "コンポーネントの設置"
+      },
+      {
+         "time": "84",
+         "name": "テキストフィールドの設置"
+      },
+      {
+         "time": "130",
+         "name": "ボタンの設置"
+      },
+      {
+         "time": "179",
+         "name": "ラベルの設置"
+      },
+      {
+         "time": "230",
+         "name": "ID設定"
+      },
+      {
+         "time": "256",
+         "name": "OnAction設定"
+      }
+   ],
+   "source": "# GUI2\n\n動画をご覧ください。",
+   "github": "",
+   "preVideo": "1620",
+   "preName": "GUI1",
+   "nextVideo": "1640",
+   "nextName": "GUI3"
+}

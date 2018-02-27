@@ -1,0 +1,33 @@
+{
+   "title": "干渉チェックの有効化",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/ie-exp3/video/WINCAPS3_InterferenceCheck.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "3",
+         "name": "アウトライン"
+      },
+      {
+         "time": "6",
+         "name": "干渉チェックについて"
+      },
+      {
+         "time": "27",
+         "name": "干渉チェックの有効化について"
+      },
+      {
+         "time": "67",
+         "name": "干渉チェックの不具合を解消"
+      },
+      {
+         "time": "116",
+         "name": "干渉チェック機能を用いたシミュレーションの実行"
+      }
+   ],
+   "source": "# 干渉チェックの有効化\n\nこの動画では干渉チェックについて説明します。",
+   "github": "",
+   "preVideo": "2160",
+   "preName": "各制御について",
+   "nextVideo": "2180",
+   "nextName": "制御権エラーについて"
+}

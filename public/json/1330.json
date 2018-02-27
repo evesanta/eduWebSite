@@ -1,0 +1,45 @@
+{
+   "title": "アクセス制御２",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/Prog4/video/Java_AccessControl-Part2.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "7",
+         "name": "概要"
+      },
+      {
+         "time": "14",
+         "name": "アウトライン"
+      },
+      {
+         "time": "23",
+         "name": "アクセス修飾子の説明"
+      },
+      {
+         "time": "44",
+         "name": "プログラムの紹介"
+      },
+      {
+         "time": "121",
+         "name": "package private の使い方"
+      },
+      {
+         "time": "156",
+         "name": "public の使い方"
+      },
+      {
+         "time": "229",
+         "name": "カプセル化"
+      },
+      {
+         "time": "595",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# アクセス制御２\n\n### 動画で紹介したプログラム\n\n```java\n// Hero.java\npublic class Hero {\n\t//勇者のステータス\n\tString name;\n\tint hp;\n\t\n\t//攻撃する\n\tpublic void attack(){\n\t\tSystem.out.println(\"勇者は攻撃をした\");\n\t}\n\t\n\t\n}\n```\n\n```java\n// Main.java\nimport java.until.Scanner;\n\npublic class Main{\n  public static void main(String[] args) {\n    // インスタンスを生成\n    Hero hero = new Hero();\n    Scanner scanner = new Scanner(System.in);\n    \n    // 勇者のステータスを入力\n    System.out.print(\"勇者の名前を入力：\");\n    hero.name = scanner.nextLine();\n    System.out.print(\"勇者のHPを入力：\");\n    hero.hp = scanner.nextInt();\n    \n    System.out.println(\"勇者を生成した\");\n    System.out.println(\"ステータス - 名前：\" + hero.name + \" HP：\" + hero.hp);\n    \n    // 勇者が倒れるまで戦う\n    while(true){\n      // 勇者の攻撃\n      hero.attack();\n      \n      // 敵の攻撃\n      System.out.print(\"勇者はダメージ\");\n      hero.hp -= scanner.nextInt();\n      // hpが0未満になったら0とする\n      if(hero.hp < 0) {\n        hero.hp = 0;\n      }\n      System.out.println(\"を受けた\");\n      System.out.println(\"勇者のHPは\" + hero.hp + \"になった\");\n      \n      // 生存判定\n      if(hero.hp == 0){\n        System.out.println(\"勇者は倒れた\");\n        break;\n      }\n    }\n  }\n}\n\n\n```\n\n#### 2:45頃に書き換えたコード\n```java\n// Hero.java\npublic String name;\npublic int hp;\n```\n\n#### 4:15頃に書き換えたコード\n```java\n// Hero.java\nprivate String name;\nprivate int hp;\n```\n\n#### 4:50頃に書き換えたコード\n```java\n// Hero.java\npublic void setHp(int hp) {\n  if(hp <= 0) {\n     System.out.println(\"不正な値が入力されました。プログラムを終了します。\");\n     System.exit(-1);\n  }\n  else {\n     this.hp = hp;\n  }\n}\n\npublic int getHp() {\n  return this.hp;\n}\n\npublic void setName(String name) {\n  this.name = name;\n}\n\npublic String getName() {\n  return this.name;\n}\n\n```\n\n#### 6:22頃に書き換えたコード\n```java\n// Main.java\nhero.setName(scanner.nextLine());\n\nhero.setHp(scanner.nextInt());\n\nSystem.out.println(\"ステータス - 名前：\" + hero.getName() + \" HP：\" + hero.getHp());\n\nSystem.out.println(\"勇者のHPは\" + hero.getHp() + \"になった\");\n```\n\n#### 7:29頃に書き換えたコード\n```java\n// Hero.java\npublic void damage(int damage){\n  this.hp -= damage;\n  if(this.hp < 0) {\n    this.hp = 0;\n  }\n}\n```\n\n#### 7:42頃に書き換えたコード\n```java\n// Main.java\nhero.damage(scanner.nextInt());\n```\n\n#### 8:13頃に書き換えたコード\n```java\n// Hero.java\npublic boolean isAlive(){\n  if(this.hp > 0) {\n    return true;\n  }\n  else {\n    return false;\n  }\n}\n```\n\n#### 8:24頃に書き換えたコード\n```java\n// Main.java\nif(!hero.isAlive()) {\n  System.out.println(\"勇者は倒れた\");\n  break;\n}\n```\n\n#### 9:40頃に書き換えたコード\n```java\n// Hero.java\nprivate String yobina;\n\nthis.yobina = name;\n\npublic String getName() {\n  return this.yobina;\n}\n```",
+   "github": "",
+   "preVideo": "1320",
+   "preName": "アクセス制御１",
+   "nextVideo": "1340",
+   "nextName": "アクセス制御３"
+}

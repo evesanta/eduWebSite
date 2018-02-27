@@ -1,0 +1,25 @@
+{
+   "title": "ティーチング2",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/ie-exp3/video/WINCAPS3_Teaching-Part2.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "0",
+         "name": "ティーチングの特徴"
+      },
+      {
+         "time": "16",
+         "name": "ティーチング開始"
+      },
+      {
+         "time": "73",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# ティーチング2\n\nこの動画では、大雑把に位置決め座標を読み取ることを行います。",
+   "github": "",
+   "preVideo": "2120",
+   "preName": "ティーチング1",
+   "nextVideo": "2140",
+   "nextName": "ティーチング3"
+}
