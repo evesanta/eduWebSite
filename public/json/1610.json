@@ -1,0 +1,41 @@
+{
+   "title": "スレッド処理",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_Thread.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "5",
+         "name": "アウトライン"
+      },
+      {
+         "time": "6",
+         "name": "スレッドとは？"
+      },
+      {
+         "time": "30",
+         "name": "プログラムの解説"
+      },
+      {
+         "time": "51",
+         "name": "メインスレッドの解説"
+      },
+      {
+         "time": "65",
+         "name": "サブスレッドの解説"
+      },
+      {
+         "time": "90",
+         "name": "プログラムの実行"
+      },
+      {
+         "time": "129",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# スレッド処理\n\n### 動画で紹介したプログラム\n```java\n// SampleThread.java\nimport java.until.Scanner;\n\npublic class SampleThread {\n  public static void main(String[] args){\n    int threadNo = 1; //スレッド番号\n    Scanner scan = new Scanner(System.in);\n    System.out.println(\"メインスレッド：サブスレッド起動は\\\"0\\\"を入力してください\");\n    while(true) {\n      String start = scan.next(); //入力待ち\n      if(start.equals(\"0\")){//0が入力された時\n        ThreadSub runnable = new ThreadSub(threadNo); //サブスレッドの生成を行う\n        Thread sub = new Thread(runnable);\n        sub.start();  //サブスレッド開始\n        threadNo++; //次のスレッド番号を1増やす\n      }\n    }\n  }\n}\n\n\nclass ThreadSub implements Runnable {\n  int settingTime = 5;  //タイマー設定時間\n  int threadNo; //スレッド番号\n  private boolean running = true; //stopThread用変数\n  public void stopThread(){ //スレッドの実行状態を変更するメソッド\n    this.running = false;\n  }\n  public ThreadSub(int Num) { //コンストラクタ\n    threadNo = Num; //スレッド番号を受け取る\n  }\n\n  @Override\n  public void run(){  //スレッドで実行したい処理をこの中に書き込む\n    while(this.running){  //runningがtrueの時（stopThreadが呼び出されていないとき）\n      System.out.println(\"スレッド\" + threadNo + \"：\" + settingTime);  //スレッド番号と残り時間を表示する\n      try{\n        Thread.sleep(1000*1); //1秒待つ\n        settingTime--;  //タイマーを1減らす\n      } catch(InterruptedException e) {\n        e.printStackTrace();\n      }\n      if(settingTime==0){ //0になったらstopThreadを呼び出してループを終了する\n        stopThread();\n      }\n      System.out.println(\"スレッド\" + threadNo + \"が終了しました\");  //サブスレッド終了時表示する\n    }\n  }\n}\n\n```",
+   "github": "",
+   "preVideo": "",
+   "preName": "",
+   "nextVideo": "1620",
+   "nextName": "GUI1"
+}

@@ -1,0 +1,33 @@
+{
+   "title": "ティーチング1",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/ie-exp3/video/WINCAPS3_Teaching-Part1.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "6",
+         "name": "目次"
+      },
+      {
+         "time": "10",
+         "name": "1.各軸によるティーチング"
+      },
+      {
+         "time": "133",
+         "name": "1.座標系によるティーチング"
+      },
+      {
+         "time": "134",
+         "name": "2.1.XY-直交系（ワーク座標系）"
+      },
+      {
+         "time": "179",
+         "name": "2.2.ツール系"
+      }
+   ],
+   "source": "# 各軸・XY直交系・ツール系によるティーチング \n\nティーチングとは、WINCAPSⅢに座標を学習させる作業のことです。これを行うことで、ロボットアームを動かす際の基準を作ることができます。\n\n動画では、WINCAPSⅢにおけるティーチングの手順を説明しています。Part1では、各軸・XY直交系・ツール系によるティーチングの手順を学ぶことができます。",
+   "github": "",
+   "preVideo": "2110",
+   "preName": "シミュレート操作方法",
+   "nextVideo": "2130",
+   "nextName": "ティーチング2"
+}

@@ -1,0 +1,33 @@
+{
+   "title": "アクセス制御３",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_AccessControl-Part3.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "7",
+         "name": "概要"
+      },
+      {
+         "time": "10",
+         "name": "アウトライン"
+      },
+      {
+         "time": "17",
+         "name": "アクセス修飾子の説明"
+      },
+      {
+         "time": "23",
+         "name": "protected の使い方"
+      },
+      {
+         "time": "210",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# アクセス制御３\n\n### 動画で紹介したプログラム\n\n```java\n// SuperHero.java\npackage access;\n\npublic class SuperHero extends Hero {\n  public void powerUp(){\n    System.out.println(name + \"は天才だった！\");\n    hp *= 2;\n    System.out.println(\"HPが\" + hp + \"になった\");\n  }\n}\n\n```\n\n#### 2:59頃に書き換えたコード\n``` java\n// Main.java\nhero.hp *= 2;\n\n```",
+   "github": "",
+   "preVideo": "1330",
+   "preName": "アクセス制御",
+   "nextVideo": "",
+   "nextName": ""
+}

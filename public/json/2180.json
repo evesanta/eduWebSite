@@ -1,0 +1,45 @@
+{
+   "title": "制御権エラーに関する対処方法",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/ie-exp3/video/WINCAPS3_ErrorHandling.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "6",
+         "name": "<本動画の目的>"
+      },
+      {
+         "time": "14",
+         "name": "目次"
+      },
+      {
+         "time": "16",
+         "name": "1.実際の制御権エラー事象"
+      },
+      {
+         "time": "118",
+         "name": "2.制御権について"
+      },
+      {
+         "time": "154",
+         "name": "3.エラー対策のためのコーディング"
+      },
+      {
+         "time": "190",
+         "name": "4.対策後の制御権エラー事象"
+      },
+      {
+         "time": "254",
+         "name": "5.その他気をつけること"
+      },
+      {
+         "time": "290",
+         "name": "6.付録"
+      }
+   ],
+   "source": "# 制御権エラーに関する対処方法\n\n",
+   "github": "",
+   "preVideo": "2170",
+   "preName": "干渉チェック機能の有効化",
+   "nextVideo": "",
+   "nextName": ""
+}

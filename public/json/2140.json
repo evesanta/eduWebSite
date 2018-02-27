@@ -1,0 +1,21 @@
+{
+   "title": "ティーチング3",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/ie-exp3/video/WINCAPS3_Teaching-Part3.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "実機によるティーチングの特徴"
+      },
+      {
+         "time": "22",
+         "name": "ティーチングの手順"
+      }
+   ],
+   "source": "# 実機によるティーチング\n\nPart3では、実機によるティーチングの手順を説明します。\n実機によるティーチングでは、現実世界でのロボットの位置から座標を学習します。",
+   "github": "",
+   "preVideo": "2130",
+   "preName": "ティーチング2",
+   "nextVideo": "2150",
+   "nextName": "コマンドの解説"
+}

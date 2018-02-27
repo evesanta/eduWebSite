@@ -1,0 +1,37 @@
+{
+   "title": "GUI3",
+   "url": "https://rjie.meijo-u.ac.jp/lectures/Prog4/video/Java_GUI-Part3.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "アウトライン"
+      },
+      {
+         "time": "13",
+         "name": "プログラムの解説"
+      },
+      {
+         "time": "27",
+         "name": "プログラムの解説 Main.java"
+      },
+      {
+         "time": "66",
+         "name": "プログラムの解説 SampleController.java"
+      },
+      {
+         "time": "202",
+         "name": "動作確認"
+      },
+      {
+         "time": "244",
+         "name": "まとめ"
+      }
+   ],
+   "source": "# GUI3\n\n### 動画で紹介されたコード\n```java\n// Main.java\npackage application;\n\nimport javafx.application.Application;\n\n\npublic class Main extends Application {\n\t@Override\n\tpublic void start(Stage primaryStage) {\n\t\ttry {\n\t\t\tVBox root = (GridPane)FXMLLoader.load(getClass().getResource(\"Sample.fxml\"));\n\t\t\tScene scene = new Scene(root, 400, 400);\n\t\t\tscene.getStylesheets().add(getClass().getResource(\"application.css\").toExternalForm());\n\t\t\tprimaryStage.setScene(scene);\n\t\t\tprimaryStage.show();\n\t\t} catch(Exception e) {\n\t\t\te.printStackTrace();\n\t\t}\n\t}\n\n\tpublic static void main(String[] args) {\n\t\tlaunch(args);\n\t}\n}\n\n```\n```java\n// SampleController.java\npackage application;\n\nimport javafx.event.ActionEvent;\nimport javafx.fxml.FXML;\nimport javafx.scene.control.Label;\nimport javafx.scene.control.TextField;\n\npublic class SampleController {\n  @FXML private Label labelSign;//符号を表示するラベル\n  @FXML private Label labelAns; //答えを表示するラベル\n  @FXML private TextField A;  //Aのテキストフィールド\n  @FXML private TextField B;  //Bのテキストフィールド\n\n  int a, b; //計算ボタンが押された時テキストフィールドから値を受け取る\n  @FXML protected void buttonPlus(ActionEvent event){ //+ボタンが押された時の動作\n    labelSign.setText(\"+\"); //符号のラベルを+に変更する\n  }\n  @FXML protected void buttonMinus(ActionEvent event){ //-ボタンが押された時の動作\n    labelSign.setText(\"-\"); //符号のラベルを-に変更する\n  }\n  @FXML protected void buttonCalc(ActionEvent event){ //計算ボタンが押された時の動作\n    try{\n      a = Integer.parseInt(A.getText());  //Aのテキストフィールドから文字を受け取りint型に変換\n      b = Integer.parseInt(B.getText());  //Bのテキストフィールドから文字を受け取りint型に変換\n      if(labelSign.getText().equals(\"+\")){  //符号が+の時\n        labelAns.setText(String.valueOf(a+b));  //aとbの値を加算しString型に変換して表示\n      }\n      else if(labelSign.getText().equals(\"-\")){  //符号が-の時\n        labelAns.setText(String.valueOf(a-b));  //aとbの値を減算しString型に変換して表示\n      }\n    } catch (NumberFormatException e) { //テキストフィールドに数字以外が入力されていた場合\n      labelAns.setText(\"エラー\");\n    }\n  }\n}\n\n```\n\n#### 0:39頃に書き換えたコード\n```java\n// Main.java\nprimaryStage.setTitle(\"MovieGUI\");\nScene scene = new Scene(root, 570, 200);\n```",
+   "github": "",
+   "preVideo": "1630",
+   "preName": "GUI2",
+   "nextVideo": "",
+   "nextName": ""
+}

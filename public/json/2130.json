@@ -1,0 +1,25 @@
+{
+   "title": "ティーチング2",
+   "url": "https://rprjie.meijo-u.ac.jp/lectures/ie-exp3/video/WINCAPS3_Teaching-Part2.mp4",
+   "subCategory": "",
+   "chapter": [
+      {
+         "time": "4",
+         "name": "3Dビューによるティーチングの特徴"
+      },
+      {
+         "time": "13",
+         "name": "ティーチングの手順"
+      },
+      {
+         "time": "73",
+         "name": "利点と欠点"
+      }
+   ],
+   "source": "# 3Dビューによるティーチング\n\nPart2では、3Dビューによるティーチングの手順を説明します。\n3Dビューによるティーチングでは、シミュレータ内の3Dモデルの位置から座標を学習します。",
+   "github": "",
+   "preVideo": "2120",
+   "preName": "ティーチング1",
+   "nextVideo": "2140",
+   "nextName": "ティーチング3"
+}
