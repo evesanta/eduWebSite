@@ -1,7 +1,7 @@
 # eduWebSite
 ## はじめに
 プロトタイプがfirebaseにデプロイされています。  
-[https://eduwebsite-1224.firebaseapp.com/#/video/333](https://eduwebsite-1224.firebaseapp.com/#/video/333)
+[https://eduwebsite-1224.firebaseapp.com/#/video/1110](https://eduwebsite-1224.firebaseapp.com/#/video/1110)
 
 ## このサイトには以下の技術・システムを使用しています
 ### 基本
